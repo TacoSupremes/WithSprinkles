@@ -12,15 +12,18 @@ public class ModBlocks {
 
 	public static List<Block> blocks = new ArrayList<Block>();
 	
-
+	public static Block autoDropper;
+	
+	public static Block enderHopper;
+	
 	public static void preInit() {
 		
+		autoDropper = new BlockAutoDropper();
 		
 	}
 
 	
-	
-public static void registerRenders(){
+	public static void registerRenders(){
 		
 		for(Block i : blocks){
 			ModItems.registerItemRender(Item.getItemFromBlock(i), 0);
