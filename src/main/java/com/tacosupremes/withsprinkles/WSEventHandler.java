@@ -15,9 +15,7 @@ import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class WSEventHandler {
-	
-	
-
+  
     @SubscribeEvent
     public void onPlayerBreaking(BreakEvent event) {
     	
@@ -29,9 +27,7 @@ public class WSEventHandler {
             ItemStack stack = event.getPlayer().getHeldItem(EnumHand.MAIN_HAND);
             
             if (stack.isItemEnchanted() && EnchantmentHelper.getEnchantmentLevel(ModEnchantments.exchange, stack) > 0) {
-               
-            	
-            	
+                	
             ItemStack replace = event.getPlayer().getHeldItem(EnumHand.OFF_HAND);
             
             if(replace == null || Block.getBlockFromItem(replace.getItem()) == null)

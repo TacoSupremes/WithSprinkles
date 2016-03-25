@@ -3,6 +3,8 @@ package com.tacosupremes.withsprinkles.common.items;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
@@ -19,6 +21,9 @@ public class ItemRefiller extends ItemMod{
 	@Override
 	public void onUpdate(ItemStack stack, World w, Entity e, int itemSlot, boolean isSelected) {
 	
+		if(stack.getItemDamage() == 0)
+			return;
+		
 		if(!(e instanceof EntityPlayer))
 			return;
 		
@@ -105,23 +110,36 @@ public class ItemRefiller extends ItemMod{
 				}else{
 					
 					player.inventory.setInventorySlotContents(i,new ItemStack(target.getItem(),target.stackSize + replace.stackSize-target.getMaxStackSize(),target.getItemDamage()));
+					
 					player.inventory.setInventorySlotContents(slot,new ItemStack(target.getItem(),target.getMaxStackSize(),target.getItemDamage()));
 					
 					continue outer;
-				
-				}
-				
-				
-				
-			}
-				
-			
-			
+				}	
+			}	
 		}
+	}		
+}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World worldIn, EntityPlayer player, EnumHand hand) {
+		
+		if(player.isSneaking()){
+			
+			if(stack.getItemDamage() == 0)
+				stack.setItemDamage(1);
+			else
+				stack.setItemDamage(0);
+		
+			return new ActionResult(EnumActionResult.SUCCESS, stack);
 		}
 		
+		return super.onItemRightClick(stack, worldIn, player, hand);
+	}
+
+	@Override
+	public boolean hasEffect(ItemStack stack) {
 		
-		
+		return stack.getItemDamage() == 1;
 	}
 	
 	
