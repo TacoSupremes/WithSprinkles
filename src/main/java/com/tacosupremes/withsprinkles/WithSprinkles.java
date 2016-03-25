@@ -3,6 +3,7 @@ package com.tacosupremes.withsprinkles;
 import com.tacosupremes.withsprinkles.common.blocks.ModBlocks;
 import com.tacosupremes.withsprinkles.common.enchantments.ModEnchantments;
 import com.tacosupremes.withsprinkles.common.items.ModItems;
+import com.tacosupremes.withsprinkles.proxy.CommonProxy;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
@@ -13,6 +14,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -21,8 +24,18 @@ public class WithSprinkles
 {
     public static final String MODID = "withsprinkles";
     public static final String VERSION = "1.0";
+	private static final String CLIENTPROXY = "com.tacosupremes.withsprinkles.proxy.ClientProxy";
+	private static final String COMMONPROXY = "com.tacosupremes.withsprinkles.proxy.CommonProxy";
 	public static CreativeTabs tab;
 	public static WSEventHandler events;
+	
+	@SidedProxy(clientSide = WithSprinkles.CLIENTPROXY, serverSide = WithSprinkles.COMMONPROXY)
+	public static CommonProxy proxy;
+	    
+	   
+	    
+    @Instance(WithSprinkles.MODID)
+    public static WithSprinkles instance;
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -39,6 +52,8 @@ public class WithSprinkles
     {
     	  events = new WSEventHandler();
           MinecraftForge.EVENT_BUS.register(events);
+          
+         proxy.registerRenders();
         
     }
 

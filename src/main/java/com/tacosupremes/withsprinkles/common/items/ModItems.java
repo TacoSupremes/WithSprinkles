@@ -17,9 +17,12 @@ public class ModItems {
 	public static List<ItemMod> items = new ArrayList<ItemMod>();
 	
 	public static List<Item> nitems = new ArrayList<Item>();
+	
+	public static Item refillGem;
 
 	public static void preInit() {
 		
+		refillGem = new ItemRefiller();
 		
 	}
 	
@@ -35,7 +38,7 @@ public class ModItems {
 				
 				for(int i2 = 0; i2<i.meta+1;i2++){
 					
-					s[i2] = new ResourceLocation("runomancy:" + i.getUnlocalizedName().substring(5) +(i2 == 0 ? "" : i2));
+					s[i2] = new ResourceLocation("withsprinkles:" + i.getUnlocalizedName().substring(5) +(i2 == 0 ? "" : i2));
 					
 				}
 				

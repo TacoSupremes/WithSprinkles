@@ -5,7 +5,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class ModEnchantments {
 	
-	
 	public static Enchantment exchange;
 	
 	
@@ -14,9 +13,7 @@ public class ModEnchantments {
 		exchange = new EnchantExchange();
 		
 		Enchantment.enchantmentRegistry.register(75, new ResourceLocation("exchange"), exchange);
-		
-		
-		
+
 	}
 
 }
