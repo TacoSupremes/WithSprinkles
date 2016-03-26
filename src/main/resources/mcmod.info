@@ -1,7 +1,7 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
+  "modid": "withsprinkles",
+  "name": "With Sprinkles",
   "description": "Example placeholder mod.",
   "version": "${version}",
   "mcversion": "${mcversion}",

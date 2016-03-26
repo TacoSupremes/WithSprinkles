@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ILockableContainer;
 import net.minecraft.world.World;
 
-public class InventoryHelper {
+public class InventoryUtils {
 	
 	public static void insertItem(ItemStack ism, IInventory ii){
 		
@@ -29,7 +29,7 @@ public class InventoryHelper {
 			
 			if(slot == null){
 				ii.setInventorySlotContents(i, is);
-				
+				ii.markDirty();
 				return;
 			}
 			
@@ -37,12 +37,13 @@ public class InventoryHelper {
 				
 				if(slot.stackSize +is.stackSize <= slot.getMaxStackSize()){
 					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.stackSize+is.stackSize,slot.getItemDamage()));
+					ii.markDirty();
 					break;
 				}else{
 					
 					is.splitStack(slot.getMaxStackSize()-slot.stackSize);
 					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getMaxStackSize(),slot.getItemDamage()));
-					
+					ii.markDirty();
 				}
 				
 				
