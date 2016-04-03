@@ -1,5 +1,7 @@
 package com.tacosupremes.withsprinkles.common.enchantments;
 
+import com.tacosupremes.withsprinkles.WithSprinkles;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -12,7 +14,7 @@ public class EnchantExchange extends Enchantment {
 
 	protected EnchantExchange() {
 		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
-		 this.setName("exchange");
+		 this.setName(WithSprinkles.MODID + ":" + "exchange");
 	}
 
 	@Override

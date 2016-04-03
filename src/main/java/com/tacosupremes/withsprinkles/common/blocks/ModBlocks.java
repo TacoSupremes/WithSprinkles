@@ -20,6 +20,7 @@ public class ModBlocks {
 		
 		autoDropper = new BlockAutoDropper();
 		
+		enderHopper = new BlockEnderHopper();		
 	}
 
 	

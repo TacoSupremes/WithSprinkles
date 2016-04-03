@@ -19,11 +19,14 @@ public class ModItems {
 	public static List<Item> nitems = new ArrayList<Item>();
 	
 	public static Item refillGem;
+	
+	public static Item portableEnderChest;
 
 	public static void preInit() {
 		
 		refillGem = new ItemRefiller();
 		
+		portableEnderChest = new ItemPortableEnderChest();
 	}
 	
 
@@ -38,7 +41,7 @@ public class ModItems {
 				
 				for(int i2 = 0; i2<i.meta+1;i2++){
 					
-					s[i2] = new ResourceLocation("withsprinkles:" + i.getUnlocalizedName().substring(5) +(i2 == 0 ? "" : i2));
+					s[i2] = new ResourceLocation(i.getUnlocalizedName().substring(5) +(i2 == 0 ? "" : i2));
 					
 				}
 				
@@ -68,7 +71,7 @@ public class ModItems {
 	}
 	
 	public static void registerItemRender(Item i, int meta){
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i, meta, new ModelResourceLocation(WithSprinkles.MODID+":"+i.getUnlocalizedName().substring(5)+ (meta == 0 ? "" : String.valueOf(meta)), "inventory"));
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i, meta, new ModelResourceLocation(i.getUnlocalizedName().substring(5)+ (meta == 0 ? "" : String.valueOf(meta)), "inventory"));
 	}
 	
 

@@ -11,7 +11,8 @@ public abstract class BlockModContainer extends BlockContainer {
 
 	public BlockModContainer(Material materialIn, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setUnlocalizedName(WithSprinkles.MODID+":"+s);
+		this.setRegistryName(s);
 		this.setCreativeTab(WithSprinkles.tab);
 		ModBlocks.blocks.add(this);
 		GameRegistry.registerBlock(this, s);

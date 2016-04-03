@@ -19,39 +19,45 @@ public class WSEventHandler {
     @SubscribeEvent
     public void onPlayerBreaking(BreakEvent event) {
     	
-    	if(event.getPlayer().isSneaking())
-    		return;
+    	
     	
         if (event.getPlayer().getHeldItem(EnumHand.MAIN_HAND) != null) {
         	
-            ItemStack stack = event.getPlayer().getHeldItem(EnumHand.MAIN_HAND);
-            
-            if (stack.isItemEnchanted() && EnchantmentHelper.getEnchantmentLevel(ModEnchantments.exchange, stack) > 0) {
-                	
-            ItemStack replace = event.getPlayer().getHeldItem(EnumHand.OFF_HAND);
-            
-            if(replace == null || Block.getBlockFromItem(replace.getItem()) == null)
-                return;
-            
-            Block replaceb =  Block.getBlockFromItem(replace.getItem()); 
-            
-            if(replaceb  == event.getState().getBlock() && replace.getItemDamage() == event.getState().getBlock().getMetaFromState(event.getState()))
-            	return;
-                  
-            event.getState().getBlock().dropBlockAsItem(event.getWorld(), event.getPos(), event.getState(), EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, stack));
-            
-            event.getPlayer().getEntityWorld().setBlockState(event.getPos(), Block.getBlockFromItem(replace.getItem()).getStateFromMeta(replace.getItemDamage()));
-            
-            if(replace.stackSize > 1)
-            	event.getPlayer().getHeldItem(EnumHand.OFF_HAND).stackSize --;
-            else
-            	event.getPlayer().setHeldItem(EnumHand.OFF_HAND, null);
-            
-           event.setCanceled(true);
-            
-            }
+        	if(!event.getPlayer().isSneaking())
+        		return;
+        	
+        	handleExchange(event);
             
         }
+    }
+    
+    private void handleExchange(BreakEvent event){
+    	  ItemStack stack = event.getPlayer().getHeldItem(EnumHand.MAIN_HAND);
+          
+          if (stack.isItemEnchanted() && EnchantmentHelper.getEnchantmentLevel(ModEnchantments.exchange, stack) > 0) {
+              	
+          ItemStack replace = event.getPlayer().getHeldItem(EnumHand.OFF_HAND);
+          
+          if(replace == null || Block.getBlockFromItem(replace.getItem()) == null)
+              return;
+          
+          Block replaceb =  Block.getBlockFromItem(replace.getItem()); 
+          
+          if(replaceb  == event.getState().getBlock() && replace.getItemDamage() == event.getState().getBlock().getMetaFromState(event.getState()))
+          	return;
+                
+          event.getState().getBlock().dropBlockAsItem(event.getWorld(), event.getPos(), event.getState(), EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, stack));
+          
+          event.getPlayer().getEntityWorld().setBlockState(event.getPos(), Block.getBlockFromItem(replace.getItem()).getStateFromMeta(replace.getItemDamage()));
+          
+          if(replace.stackSize > 1)
+          	event.getPlayer().getHeldItem(EnumHand.OFF_HAND).stackSize --;
+          else
+          	event.getPlayer().setHeldItem(EnumHand.OFF_HAND, null);
+          
+         event.setCanceled(true);
+          
+          }
     }
 
 }

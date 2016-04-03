@@ -50,6 +50,7 @@ public class BlockAutoDropper extends BlockModContainer {
 	    {
 	        super.onBlockAdded(worldIn, pos, state);
 	        this.setDefaultDirection(worldIn, pos, state);
+	        System.out.println(getUnlocalizedName()+">>>>>>"+this.getLocalizedName());
 	    }
 
 	    private void setDefaultDirection(World worldIn, BlockPos pos, IBlockState state)
@@ -169,6 +170,12 @@ public class BlockAutoDropper extends BlockModContainer {
 
 	        
 	    }
+
+		@Override
+		public String getLocalizedName() {
+			// TODO Auto-generated method stub
+			return super.getLocalizedName();
+		}
 
 
 

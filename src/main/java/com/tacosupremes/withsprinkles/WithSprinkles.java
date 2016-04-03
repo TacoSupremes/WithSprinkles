@@ -38,8 +38,6 @@ public class WithSprinkles
 	@SidedProxy(clientSide = WithSprinkles.CLIENTPROXY, serverSide = WithSprinkles.COMMONPROXY)
 	public static CommonProxy proxy;
 	    
-	   
-	    
     @Instance(WithSprinkles.MODID)
     public static WithSprinkles instance;
     
@@ -75,7 +73,7 @@ public class WithSprinkles
 		@Override
 		public Item getTabIconItem() {
 			
-			return Items.apple;
+			return ModItems.refillGem;
 		}
 
 		@Override

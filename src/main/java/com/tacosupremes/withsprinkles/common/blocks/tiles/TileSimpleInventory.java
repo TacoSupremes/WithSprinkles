@@ -5,6 +5,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.ITextComponent;
 
@@ -157,6 +160,43 @@ public abstract class TileSimpleInventory extends TileEntity implements IInvento
 			inventorySlots[index] = null;
 			 
 			return is;
+		}
+
+
+		@Override
+		public int getSizeInventory() {
+			
+			return 0;
+		}
+
+
+		@Override
+		public void readFromNBT(NBTTagCompound compound) {
+			
+			super.readFromNBT(compound);
+			readCustomNBT(compound);
+		}
+
+
+		@Override
+		public void writeToNBT(NBTTagCompound compound) {
+			
+			super.writeToNBT(compound);
+			writeCustomNBT(compound);
+		}
+		
+
+		@Override
+		public Packet getDescriptionPacket() {
+			NBTTagCompound nbttagcompound = new NBTTagCompound();
+			writeCustomNBT(nbttagcompound);
+			return new SPacketUpdateTileEntity(this.getPos(), -999, nbttagcompound);
+		}
+
+		@Override
+		public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
+			super.onDataPacket(net, packet);
+			readCustomNBT(packet.getNbtCompound());
 		}
 		
 }

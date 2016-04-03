@@ -14,7 +14,8 @@ public class ItemMod extends Item{
 	
 	
 	public ItemMod(String s, int meta){
-		this.setUnlocalizedName(s);
+		this.setUnlocalizedName(WithSprinkles.MODID+":"+s);
+		this.setRegistryName(s);
 		this.setCreativeTab(WithSprinkles.tab);
 		GameRegistry.registerItem(this, this.getUnlocalizedName().substring(5));
 		ModItems.items.add(this);

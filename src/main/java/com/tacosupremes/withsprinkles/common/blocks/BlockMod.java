@@ -10,7 +10,8 @@ public class BlockMod extends Block {
 
 	public BlockMod(Material materialIn, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setUnlocalizedName(WithSprinkles.MODID+":"+s);
+		this.setRegistryName(s);
 		this.setCreativeTab(WithSprinkles.tab);
 		GameRegistry.registerBlock(this, s);
 		ModBlocks.blocks.add(this);

@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=down": { "model": "withsprinkles:enderHopper_down" },
+        "facing=north": { "model": "withsprinkles:enderHopper_side" },
+        "facing=south": { "model": "withsprinkles:enderHopper_side", "y": 180 },
+        "facing=west": { "model": "withsprinkles:enderHopper_side", "y": 270 },
+        "facing=east": { "model": "withsprinkles:enderHopper_side", "y": 90 }
+    }
+}
