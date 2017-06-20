@@ -10,15 +10,21 @@ public class ModEnchantments {
 	
 	public static Enchantment exchange;
 	
+	public static Enchantment fiery;
+	
 	public static List<Enchantment> enchants = new ArrayList<Enchantment>();
-	
-	
+
 	public static void preInit(){
 		
 		exchange = new EnchantExchange();
 		
-		Enchantment.enchantmentRegistry.register(75, new ResourceLocation("exchange"), exchange);
+		fiery = new EnchantFiery();
+		
+		Enchantment.REGISTRY.register(75, new ResourceLocation("exchange"), exchange);
 		enchants.add(exchange);
+		
+		Enchantment.REGISTRY.register(76, new ResourceLocation("fiery"), fiery);
+		enchants.add(fiery);
 	}
 
 }

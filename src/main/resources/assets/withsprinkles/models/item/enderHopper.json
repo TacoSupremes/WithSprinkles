@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "withsprinkles:items/enderHopper"
+        "layer0": "withsprinkles:items/enderhopper"
     }
 }

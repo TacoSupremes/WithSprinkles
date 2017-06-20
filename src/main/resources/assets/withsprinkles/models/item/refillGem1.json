@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "withsprinkles:items/refillGem1"
+        "layer0": "withsprinkles:items/refillgem1"
     }
 }

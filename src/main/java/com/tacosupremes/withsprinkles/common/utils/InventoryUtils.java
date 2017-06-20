@@ -24,7 +24,7 @@ public class InventoryUtils {
 			
 			ItemStack slot = ii.getStackInSlot(i);
 			
-			if(is == null || is.stackSize == 0)
+			if(is == null || is.getCount() == 0)
 				return;
 			
 			if(slot == null){
@@ -35,13 +35,13 @@ public class InventoryUtils {
 			
 			if(slot.areItemsEqual(is, slot)){
 				
-				if(slot.stackSize +is.stackSize <= slot.getMaxStackSize()){
-					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.stackSize+is.stackSize,slot.getItemDamage()));
+				if(slot.getCount() +is.getCount() <= slot.getMaxStackSize()){
+					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getCount()+is.getCount(),slot.getItemDamage()));
 					ii.markDirty();
 					break;
 				}else{
 					
-					is.splitStack(slot.getMaxStackSize()-slot.stackSize);
+					is.splitStack(slot.getMaxStackSize()-slot.getCount());
 					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getMaxStackSize(),slot.getItemDamage()));
 					ii.markDirty();
 				}
@@ -63,7 +63,7 @@ public static int itemsLeft(ItemStack ism, IInventory iio){
 			
 			ItemStack slot = ii.getStackInSlot(i);
 			
-			if(is == null || is.stackSize == 0)
+			if(is == null || is.isEmpty() || is.getCount() == 0)
 				return 0;
 			
 			if(slot == null){
@@ -73,12 +73,12 @@ public static int itemsLeft(ItemStack ism, IInventory iio){
 			
 			if(slot.areItemsEqual(is, slot)){
 				
-				if(slot.stackSize +is.stackSize <= slot.getMaxStackSize()){
-					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.stackSize + is.stackSize,slot.getItemDamage()));
+				if(slot.getCount() +is.getCount() <= slot.getMaxStackSize()){
+					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getCount() + is.getCount(),slot.getItemDamage()));
 					return 0;
 				}else{
 					
-					is.splitStack(slot.getMaxStackSize()-slot.stackSize);
+					is.splitStack(slot.getMaxStackSize()-slot.getCount());
 					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getMaxStackSize(),slot.getItemDamage()));
 					
 				}
@@ -87,10 +87,10 @@ public static int itemsLeft(ItemStack ism, IInventory iio){
 			}
 		}
 		
-		if(is == null || is.stackSize == 0)
+		if(is == null  || is.isEmpty() || is.getCount() == 0)
 			return 0;
 		
-		return is.stackSize;
+		return is.getCount();
 	}
 
 public static IInventory getInventory(World w, BlockPos bp){
@@ -127,7 +127,7 @@ public static int countofItemStack(IInventory ii, ItemStack is){
 	for(int i =0; i< ii.getSizeInventory(); i++){
 		
 		if(ItemStack.areItemsEqual(is, ii.getStackInSlot(i)))		
-			amount += ii.getStackInSlot(i).stackSize;
+			amount += ii.getStackInSlot(i).getCount();
 			
 		
 	}

@@ -1,5 +1,7 @@
 itemGroup.withsprinkles=With Sprinkles
-tile.withsprinkles:autoDropper.name=Auto Dropper
-tile.withsprinkles:enderHopper.name=Obsidian Hopper
-item.withsprinkles:refillGem.name=Sorting Gem
+tile.autoDropper.name=Auto Dropper
+tile.enderHopper.name=Obsidian Hopper
+item.refillGem.name=Sorting Gem
+item.enderChest.name=Infused Eye of Ender
 enchantment.withsprinkles:exchange=Exchange
+enchantment.withsprinkles:fiery=Fiery Aura

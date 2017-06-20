@@ -27,7 +27,7 @@ public class BlockAutoDropper extends BlockModContainer {
 	   
 
 	public BlockAutoDropper() {
-		super(Material.rock,"autoDropper");
+		super(Material.ROCK,"autoDropper");
 		
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		 
@@ -158,7 +158,7 @@ public class BlockAutoDropper extends BlockModContainer {
 	    
 	    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
 	    {
-	        return this.getDefaultState().withProperty(FACING, BlockPistonBase.getFacingFromEntity(pos, placer));
+	        return this.getDefaultState().withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer));
 	    }
 
 	    /**
@@ -166,17 +166,11 @@ public class BlockAutoDropper extends BlockModContainer {
 	     */
 	    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
 	    {
-	        worldIn.setBlockState(pos, state.withProperty(FACING, BlockPistonBase.getFacingFromEntity(pos, placer)), 2);
+	        worldIn.setBlockState(pos, state.withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer)), 2);
 
 	        
 	    }
 
-		@Override
-		public String getLocalizedName() {
-			// TODO Auto-generated method stub
-			return super.getLocalizedName();
-		}
-
-
+	
 
 }

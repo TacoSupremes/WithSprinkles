@@ -13,7 +13,7 @@ import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
-public class TileEnderHopper extends TileSimpleInventory implements ITickable {
+public class TileEnderHopper extends TileSimpleInventory {
 
 	@Override
 	public int getSizeInventory() {
@@ -22,32 +22,39 @@ public class TileEnderHopper extends TileSimpleInventory implements ITickable {
 	}
 	
 	public String pName = "";
+	
+	int ticks = 0; 
 
 	@Override
 	public void update() {
 		
+		ticks++;
+		
+		if(ticks % 8 != 0)
+			return;
+		
 		EnumFacing enumf = BlockEnderHopper.getFacing(this.getBlockMetadata());
 		
-		if(InventoryUtils.getInventory(getWorld(), getPos().up()) != null && this.getWorld().getBlockState(getPos().up()).getBlock() != Blocks.ender_chest){
+		if(InventoryUtils.getInventory(getWorld(), getPos().up()) != null && this.getWorld().getBlockState(getPos().up()).getBlock() != Blocks.ENDER_CHEST){
 			
 			IInventory ii = InventoryUtils.getInventory(getWorld(), getPos().up());
 			
 			for(int i = 0; i < ii.getSizeInventory(); i++){
-				if(ii.getStackInSlot(i) == null)
+				if(ii.getStackInSlot(i).isEmpty())
 					continue;
 				
 				ItemStack is = ii.getStackInSlot(i);
 				
-				if(this.getStackInSlot(0) == null)
+				if(this.getStackInSlot(0).isEmpty())
 					this.setInventorySlotContents(0, ii.decrStackSize(i, 1));
-				else if(is.getItem() == this.getStackInSlot(0).getItem() && is.getItemDamage() == this.getStackInSlot(0).getItemDamage() && is.stackSize + ii.getStackInSlot(i).stackSize <= is.getMaxStackSize())
-					this.setInventorySlotContents(0, new ItemStack(is.getItem(),this.getStackInSlot(0).stackSize+ii.getStackInSlot(i).splitStack(1).stackSize,is.getItemDamage()));
+				else if(is.getItem() == this.getStackInSlot(0).getItem() && is.getItemDamage() == this.getStackInSlot(0).getItemDamage() && is.getCount() + ii.getStackInSlot(i).getCount() <= is.getMaxStackSize())
+					this.setInventorySlotContents(0, new ItemStack(is.getItem(),this.getStackInSlot(0).getCount()+ii.getStackInSlot(i).splitStack(1).getCount(),is.getItemDamage()));
 			
 			ii.markDirty();
 			this.markDirty();
 			}
 			
-		}else if(this.getWorld().getBlockState(getPos().up()).getBlock() == Blocks.ender_chest){
+		}else if(this.getWorld().getBlockState(getPos().up()).getBlock() == Blocks.ENDER_CHEST){
 			
 			ItemStack is = this.getStackInSlot(0);
 			
@@ -63,11 +70,11 @@ public class TileEnderHopper extends TileSimpleInventory implements ITickable {
 			int slotChosen = -1;
 			for(int i = 18; i<27; i++){
 				
-				if(ii.getStackInSlot(i) == null)
+				if(ii.getStackInSlot(i).isEmpty())
 					continue;
 				
 				
-				if(is == null){
+				if(is == null || is.isEmpty()){
 					this.setInventorySlotContents(0, ii.decrStackSize(i, 1));
 					ii.markDirty();
 					this.markDirty();
@@ -78,19 +85,19 @@ public class TileEnderHopper extends TileSimpleInventory implements ITickable {
 			
 		}
 		
-		if(InventoryUtils.getInventory(getWorld(), getPos().add(enumf.getDirectionVec())) != null && this.getWorld().getBlockState(getPos().up()).getBlock() == Blocks.ender_chest){
+		if(InventoryUtils.getInventory(getWorld(), getPos().add(enumf.getDirectionVec())) != null && this.getWorld().getBlockState(getPos().up()).getBlock() == Blocks.ENDER_CHEST){
 			
-			if(this.getStackInSlot(0) == null)
+			if(this.getStackInSlot(0).isEmpty())
 				return;
 			
-			TileEntityHopper.putStackInInventoryAllSlots(InventoryUtils.getInventory(getWorld(), getPos().add(enumf.getDirectionVec())), this.decrStackSize(0, 1), enumf.getOpposite());
+			TileEntityHopper.putStackInInventoryAllSlots(this, InventoryUtils.getInventory(getWorld(), getPos().add(enumf.getDirectionVec())), this.decrStackSize(0, 1), enumf.getOpposite());
 			this.markDirty();
 			InventoryUtils.getInventory(getWorld(), getPos().add(enumf.getDirectionVec())).markDirty();
 			
 			
-		}else if(this.getWorld().getBlockState(getPos().add(enumf.getDirectionVec())).getBlock() == Blocks.ender_chest){
+		}else if(this.getWorld().getBlockState(getPos().add(enumf.getDirectionVec())).getBlock() == Blocks.ENDER_CHEST){
 			
-			if(this.getStackInSlot(0) == null)
+			if(this.getStackInSlot(0).isEmpty())
 				return;
 			
 			ItemStack is = this.getStackInSlot(0);
@@ -105,25 +112,25 @@ public class TileEnderHopper extends TileSimpleInventory implements ITickable {
 			int slotChosen = -1;
 			for(int i = 18; i<27; i++){
 				
-				if(ii.getStackInSlot(i) != null){
+				if(!ii.getStackInSlot(i).isEmpty()){
 				
 				if(ii.getStackInSlot(i).getItem() == is.getItem() && ii.getStackInSlot(i).getItemDamage() == is.getItemDamage()){
 				
 					
-					if(ii.getStackInSlot(i).stackSize == ii.getStackInSlot(i).getMaxStackSize())
+					if(ii.getStackInSlot(i).getCount() == ii.getStackInSlot(i).getMaxStackSize())
 						continue;
 					
-					if(is.stackSize + ii.getStackInSlot(i).stackSize <= is.getMaxStackSize()){
+					if(is.getCount() + ii.getStackInSlot(i).getCount() <= is.getMaxStackSize()){
 						
-						ii.setInventorySlotContents(i, new ItemStack(is.getItem(),is.stackSize+ii.getStackInSlot(i).stackSize,is.getItemDamage()));
-						this.setInventorySlotContents(0, null);
+						ii.setInventorySlotContents(i, new ItemStack(is.getItem(),is.getCount()+ii.getStackInSlot(i).getCount(),is.getItemDamage()));
+						this.setInventorySlotContents(0, ItemStack.EMPTY);
 						ii.markDirty();
 						this.markDirty();
 						return;
 					}else{
 						
 						ii.setInventorySlotContents(i, new ItemStack(is.getItem(),is.getMaxStackSize(),is.getItemDamage()));
-						this.setInventorySlotContents(0, new ItemStack(is.getItem(),is.stackSize+ii.getStackInSlot(i).stackSize-is.getMaxStackSize(),is.getItemDamage()));
+						this.setInventorySlotContents(0, new ItemStack(is.getItem(),is.getCount()+ii.getStackInSlot(i).getCount()-is.getMaxStackSize(),is.getItemDamage()));
 						ii.markDirty();
 						this.markDirty();
 						return;
@@ -141,7 +148,7 @@ public class TileEnderHopper extends TileSimpleInventory implements ITickable {
 			
 			if(slotChosen != -1){
 				ii.setInventorySlotContents(slotChosen, is);
-				this.setInventorySlotContents(0, null);
+				this.setInventorySlotContents(0, ItemStack.EMPTY);
 				ii.markDirty();
 				this.markDirty();
 			}
@@ -158,6 +165,8 @@ public class TileEnderHopper extends TileSimpleInventory implements ITickable {
 		
 		this.pName = par1nbtTagCompound.getString("PNAME");
 		
+		this.ticks = par1nbtTagCompound.getInteger("TICKS");
+		
 	}
 
 	@Override
@@ -166,10 +175,9 @@ public class TileEnderHopper extends TileSimpleInventory implements ITickable {
 		super.writeCustomNBT(par1nbtTagCompound);
 		
 		par1nbtTagCompound.setString("PNAME", this.pName);
+		
+		par1nbtTagCompound.setInteger("TICKS", this.ticks);
 	}
-	
-	
-	
-	
 
+	
 }

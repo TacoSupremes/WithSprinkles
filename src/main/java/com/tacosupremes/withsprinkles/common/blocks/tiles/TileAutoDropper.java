@@ -21,10 +21,10 @@ public class TileAutoDropper extends TileSimpleInventory implements ITickable, I
 	@Override
 	public void update() {
 		
-		if(this.getStackInSlot(0) == null)
+		if(this.getStackInSlot(0) == null || this.getStackInSlot(0).isEmpty())
 			return;
 		
-	BlockPos bp = (getPos().add(((BlockAutoDropper)this.getWorld().getBlockState(getPos()).getBlock()).getFacing(this.getBlockMetadata()).getDirectionVec()));
+	BlockPos bp = getPos().add(((BlockAutoDropper)this.getWorld().getBlockState(getPos()).getBlock()).getFacing(this.getBlockMetadata()).getDirectionVec());
 		
 		if(InventoryUtils.getInventory(this.getWorld(), bp) == null){
 			
@@ -69,7 +69,7 @@ public class TileAutoDropper extends TileSimpleInventory implements ITickable, I
 			 }
 			
 			if(!this.getWorld().isRemote)
-				this.getWorld().spawnEntityInWorld(e);
+				this.getWorld().spawnEntity(e);
 				
 			
 		}else{
@@ -79,7 +79,7 @@ public class TileAutoDropper extends TileSimpleInventory implements ITickable, I
 			
 			IInventory t = InventoryUtils.getInventory(this.getWorld(), bp);
 			
-			ItemStack is = TileEntityHopper.putStackInInventoryAllSlots(t, this.getStackInSlot(0), enumfacing.getOpposite());
+			ItemStack is = TileEntityHopper.putStackInInventoryAllSlots(this, t, this.getStackInSlot(0), enumfacing.getOpposite());
 
 				this.setInventorySlotContents(0, is);
 				this.markDirty();
@@ -92,7 +92,7 @@ public class TileAutoDropper extends TileSimpleInventory implements ITickable, I
 		return 1;
 	}
 
-	
+
 
 	
 

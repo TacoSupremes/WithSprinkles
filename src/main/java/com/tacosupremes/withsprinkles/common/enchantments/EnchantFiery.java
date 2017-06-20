@@ -1,21 +1,21 @@
 package com.tacosupremes.withsprinkles.common.enchantments;
 
-import com.tacosupremes.withsprinkles.WithSprinkles;
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 
-public class EnchantExchange extends Enchantment {
+public class EnchantFiery extends Enchantment {
 
-	protected EnchantExchange() {
+	protected EnchantFiery() {
 		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
-		 this.setName(LibMisc.MODID + ":" + "exchange");
+		 this.setName(LibMisc.MODID + ":" + "fiery");
 	}
 
 	@Override
@@ -30,6 +30,4 @@ public class EnchantExchange extends Enchantment {
 		return canApply(stack);
 	}
 
-	
-	
 }

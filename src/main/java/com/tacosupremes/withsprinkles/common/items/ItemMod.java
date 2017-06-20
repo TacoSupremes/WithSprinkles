@@ -2,8 +2,11 @@ package com.tacosupremes.withsprinkles.common.items;
 
 import com.tacosupremes.withsprinkles.WithSprinkles;
 
+import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -13,11 +16,14 @@ public class ItemMod extends Item{
 	
 	
 	
-	public ItemMod(String s, int meta){
-		this.setUnlocalizedName(WithSprinkles.MODID+":"+s);
+	public ItemMod(String s, int meta){	
+		super();
+		this.setUnlocalizedName(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(WithSprinkles.tab);
-		GameRegistry.registerItem(this, this.getUnlocalizedName().substring(5));
+		if(meta > 0)
+			this.setHasSubtypes(true);
+		GameRegistry.register(this);
 		ModItems.items.add(this);
 		this.meta = meta;
 	}
@@ -53,9 +59,41 @@ public class ItemMod extends Item{
 	}
 	
 	
+	
+	
+	
+	@Override
+	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> l) {
+		if(!needsDifferentNames())
+		super.getSubItems(itemIn, tab, l);
+		else{
+			
+			for(int i = 0; i<=meta; i++){
+				l.add(new ItemStack(this,1,i));
+			}
+			
+			
+		}
+			
+	}
+
+	
+
 	public boolean needsDifferentNames(){
 		
 		return false;
+	}
+
+
+	public boolean skipVariants() {
+		
+		return false;
+	}
+	
+	public IItemColor getColor(){
+		
+		
+		return null;
 	}
 	
 	

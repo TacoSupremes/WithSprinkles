@@ -2,13 +2,13 @@
 {
   "modid": "withsprinkles",
   "name": "With Sprinkles",
-  "description": "Example placeholder mod.",
+  "description": "Minecraft Vanilla, but with Sprinkles",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["TacoSupremes"],
+  "credits": "The Forge and FML guys",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

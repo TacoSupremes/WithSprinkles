@@ -11,10 +11,17 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.ITextComponent;
 
-public abstract class TileSimpleInventory extends TileEntity implements IInventory{
+public abstract class TileSimpleInventory extends TileMod implements IInventory{
 
 		ItemStack[] inventorySlots = new ItemStack[getSizeInventory()];
-
+		//TODO : Eventually Move to NonNull list and remove hacky constructor
+		public TileSimpleInventory(){
+			
+			for(int i = 0; i < getSizeInventory(); i++)
+				inventorySlots[i] = ItemStack.EMPTY;
+			
+			
+		}
 	
 		public void readCustomNBT(NBTTagCompound par1NBTTagCompound) {
 			NBTTagList var2 = par1NBTTagCompound.getTagList("Items", 10);
@@ -23,7 +30,7 @@ public abstract class TileSimpleInventory extends TileEntity implements IInvento
 				NBTTagCompound var4 = var2.getCompoundTagAt(var3);
 				byte var5 = var4.getByte("Slot");
 				if (var5 >= 0 && var5 < inventorySlots.length)
-					inventorySlots[var5] = ItemStack.loadItemStackFromNBT(var4);
+					inventorySlots[var5] = new ItemStack(var4);
 			}
 		}
 
@@ -51,15 +58,15 @@ public abstract class TileSimpleInventory extends TileEntity implements IInvento
 			if (inventorySlots[i] != null) {
 				ItemStack stackAt;
 
-				if (inventorySlots[i].stackSize <= j) {
+				if (inventorySlots[i].getCount() <= j) {
 					stackAt = inventorySlots[i];
-					inventorySlots[i] = null;
+					inventorySlots[i] = ItemStack.EMPTY;
 					return stackAt;
 				} else {
 					stackAt = inventorySlots[i].splitStack(j);
 
-					if (inventorySlots[i].stackSize == 0)
-						inventorySlots[i] = null;
+					if (inventorySlots[i].getCount() == 0)
+						inventorySlots[i] = ItemStack.EMPTY;
 
 					return stackAt;
 				}
@@ -72,17 +79,16 @@ public abstract class TileSimpleInventory extends TileEntity implements IInvento
 
 		@Override
 		public void setInventorySlotContents(int i, ItemStack itemstack) {
-			inventorySlots[i] = itemstack;
+			
+			if(itemstack != null)
+				inventorySlots[i] = itemstack;
+			else
+				inventorySlots[i] = ItemStack.EMPTY;
 		}
 
 		@Override
 		public int getInventoryStackLimit() {
 			return 64;
-		}
-
-		@Override
-		public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-			return worldObj.getTileEntity(this.getPos()) != this ? false : entityplayer.getDistanceSq(this.getPos().add(0.5D, 0.5D, 0.5D)) <= 64;
 		}
 
 		@Override
@@ -143,7 +149,7 @@ public abstract class TileSimpleInventory extends TileEntity implements IInvento
 		public void clear() {
 			for(int i =0; i<inventorySlots.length; i++){
 			
-				inventorySlots[i] = null;
+				inventorySlots[i] = ItemStack.EMPTY;
 				
 			}
 			
@@ -152,12 +158,12 @@ public abstract class TileSimpleInventory extends TileEntity implements IInvento
 		@Override
 		public ItemStack removeStackFromSlot(int index) {
 			
-			if(inventorySlots[index] == null)
+			if(inventorySlots[index] == null || inventorySlots[index].isEmpty())
 				return null;
 			
 			ItemStack is =  inventorySlots[index].copy();
 			
-			inventorySlots[index] = null;
+			inventorySlots[index] = ItemStack.EMPTY;
 			 
 			return is;
 		}
@@ -168,35 +174,25 @@ public abstract class TileSimpleInventory extends TileEntity implements IInvento
 			
 			return 0;
 		}
-
-
-		@Override
-		public void readFromNBT(NBTTagCompound compound) {
-			
-			super.readFromNBT(compound);
-			readCustomNBT(compound);
-		}
-
-
-		@Override
-		public void writeToNBT(NBTTagCompound compound) {
-			
-			super.writeToNBT(compound);
-			writeCustomNBT(compound);
-		}
 		
-
 		@Override
-		public Packet getDescriptionPacket() {
-			NBTTagCompound nbttagcompound = new NBTTagCompound();
-			writeCustomNBT(nbttagcompound);
-			return new SPacketUpdateTileEntity(this.getPos(), -999, nbttagcompound);
+		public boolean isEmpty() {
+			
+			for(int i = 0; i < getSizeInventory(); i++){
+				
+				if(!inventorySlots[i].isEmpty())
+					return false;
+			}
+			
+			return true;
 		}
 
 		@Override
-		public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
-			super.onDataPacket(net, packet);
-			readCustomNBT(packet.getNbtCompound());
+		public boolean isUsableByPlayer(EntityPlayer player) {
+
+			return false;
 		}
-		
+
+
+
 }

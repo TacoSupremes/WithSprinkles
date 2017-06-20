@@ -2,16 +2,20 @@ package com.tacosupremes.withsprinkles.common.blocks;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import com.google.common.base.Predicate;
 import com.tacosupremes.withsprinkles.common.blocks.tiles.TileEnderHopper;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,15 +48,11 @@ public class BlockEnderHopper extends BlockModContainer {
 	        }
 	    });
 	 
-	 	protected static final AxisAlignedBB field_185571_c = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D);
-	    protected static final AxisAlignedBB field_185572_d = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.125D);
-	    protected static final AxisAlignedBB field_185573_e = new AxisAlignedBB(0.0D, 0.0D, 0.875D, 1.0D, 1.0D, 1.0D);
-	    protected static final AxisAlignedBB field_185574_f = new AxisAlignedBB(0.875D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
-	    protected static final AxisAlignedBB field_185575_g = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
+
 
 	//TODO: Make GUI TO SELECT TARGET SLOT 
 	public BlockEnderHopper() {
-		super(Material.rock, "enderHopper");
+		super(Material.ROCK, "enderHopper");
 		this.setHardness(0.1F);
 		
 	}
@@ -78,20 +78,13 @@ public class BlockEnderHopper extends BlockModContainer {
 		((TileEnderHopper)w.getTileEntity(pos)).pName = placer.getName();
 	}
 	
-	
+	@Override
 	  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
 	    {
 	        return FULL_BLOCK_AABB;
 	    }
 
-	    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB p_185477_4_, List<AxisAlignedBB> p_185477_5_, Entity p_185477_6_)
-	    {
-	        addCollisionBoxToList(pos, p_185477_4_, p_185477_5_, field_185571_c);
-	        addCollisionBoxToList(pos, p_185477_4_, p_185477_5_, field_185575_g);
-	        addCollisionBoxToList(pos, p_185477_4_, p_185477_5_, field_185574_f);
-	        addCollisionBoxToList(pos, p_185477_4_, p_185477_5_, field_185572_d);
-	        addCollisionBoxToList(pos, p_185477_4_, p_185477_5_, field_185573_e);
-	    }
+	 
 
 	    /**
 	     * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
@@ -136,7 +129,7 @@ public class BlockEnderHopper extends BlockModContainer {
 	            if (tileentity instanceof TileEntityHopper)
 	            {
 	                playerIn.displayGUIChest((TileEntityHopper)tileentity);
-	                playerIn.addStat(StatList.hopperInspected);
+	                playerIn.addStat(StatList.HOPPER_INSPECTED);
 	            }
 
 	            return true;
@@ -161,8 +154,77 @@ public class BlockEnderHopper extends BlockModContainer {
 	        super.breakBlock(worldIn, pos, state);
 	    }
 
+	
 	    /**
-	     * The type of render function called. 3 for standard block models, 2 for TESR's, 1 for liquids, -1 is no render
+	     * Get's the hopper's active status from the 8-bit of the metadata. Note that the metadata stores whether the block
+	     * is powered, so this returns true when that bit is 0.
+	     */
+	 
+	    
+	    protected static final AxisAlignedBB BASE_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D);
+	    protected static final AxisAlignedBB SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.125D);
+	    protected static final AxisAlignedBB NORTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.875D, 1.0D, 1.0D, 1.0D);
+	    protected static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(0.875D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
+	    protected static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
+
+	   
+
+	    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
+	    {
+	        addCollisionBoxToList(pos, entityBox, collidingBoxes, BASE_AABB);
+	        addCollisionBoxToList(pos, entityBox, collidingBoxes, EAST_AABB);
+	        addCollisionBoxToList(pos, entityBox, collidingBoxes, WEST_AABB);
+	        addCollisionBoxToList(pos, entityBox, collidingBoxes, SOUTH_AABB);
+	        addCollisionBoxToList(pos, entityBox, collidingBoxes, NORTH_AABB);
+	    }
+
+	    /**
+	     * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
+	     * IBlockstate
+	     */
+	    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+	    {
+	        EnumFacing enumfacing = facing.getOpposite();
+
+	        if (enumfacing == EnumFacing.UP)
+	        {
+	            enumfacing = EnumFacing.DOWN;
+	        }
+
+	        return this.getDefaultState().withProperty(FACING, enumfacing);
+	    }
+
+
+	   
+	    /**
+	     * Called when the block is right clicked by a player.
+	     */
+	    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	    {
+	        if (worldIn.isRemote)
+	        {
+	            return true;
+	        }
+	        else
+	        {
+	            TileEntity tileentity = worldIn.getTileEntity(pos);
+
+	            if (tileentity instanceof TileEntityHopper)
+	            {
+	                playerIn.displayGUIChest((TileEntityHopper)tileentity);
+	                playerIn.addStat(StatList.HOPPER_INSPECTED);
+	            }
+
+	            return true;
+	        }
+	    }
+
+	
+	   
+
+	    /**
+	     * The type of render function called. MODEL for mixed tesr and static model, MODELBLOCK_ANIMATED for TESR-only,
+	     * LIQUID for vanilla liquids, INVISIBLE to skip all rendering
 	     */
 	    public EnumBlockRenderType getRenderType(IBlockState state)
 	    {
