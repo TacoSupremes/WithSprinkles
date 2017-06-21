@@ -30,7 +30,7 @@ public class BlockAutoDropper extends BlockModContainer {
 
 	public BlockAutoDropper() {
 		super(Material.ROCK,"autoDropper");
-		this.setHardness(0.1F);
+		this.setHardness(0.3F);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		 
 		

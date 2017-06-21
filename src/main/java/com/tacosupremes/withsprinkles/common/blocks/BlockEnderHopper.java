@@ -54,7 +54,7 @@ public class BlockEnderHopper extends BlockModContainer {
 	//TODO: Make GUI TO SELECT TARGET SLOT 
 	public BlockEnderHopper() {
 		super(Material.ROCK, "enderHopper");
-		this.setHardness(0.1F);
+		this.setHardness(0.6F);
 		
 	}
 

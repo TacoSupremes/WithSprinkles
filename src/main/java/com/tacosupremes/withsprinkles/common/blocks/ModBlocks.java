@@ -16,11 +16,17 @@ public class ModBlocks {
 	
 	public static Block enderHopper;
 	
+	public static Block rainDetector;
+	
 	public static void preInit() {
 		
 		autoDropper = new BlockAutoDropper();
 		
-		enderHopper = new BlockEnderHopper();		
+		enderHopper = new BlockEnderHopper();
+		
+		rainDetector = new BlockRainDetector();
+		
+		
 	}
 
 	
