@@ -147,7 +147,7 @@ import net.minecraft.util.text.ITextComponent;
 
 		@Override
 		public boolean isUsableByPlayer(EntityPlayer player) {
-			// TODO Auto-generated method stub
+			
 			return false;
 		}
 		

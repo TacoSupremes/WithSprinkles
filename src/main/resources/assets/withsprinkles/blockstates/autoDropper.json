@@ -1,10 +1,10 @@
 {
     "variants": {
-        "facing=down":  { "model": "withsprinkles:autoDropper_vertical", "x": 180 },
-        "facing=up":    { "model": "withsprinkles:autoDropper_vertical" },
-        "facing=north": { "model": "withsprinkles:autoDropper" },
-        "facing=south": { "model": "withsprinkles:autoDropper", "y": 180 },
-        "facing=west":  { "model": "withsprinkles:autoDropper", "y": 270 },
-        "facing=east":  { "model": "withsprinkles:autoDropper", "y": 90 }
+        "facing=down":  { "model": "withsprinkles:autodropper_vertical", "x": 180 },
+        "facing=up":    { "model": "withsprinkles:autodropper_vertical" },
+        "facing=north": { "model": "withsprinkles:autodropper" },
+        "facing=south": { "model": "withsprinkles:autodropper", "y": 180 },
+        "facing=west":  { "model": "withsprinkles:autodropper", "y": 270 },
+        "facing=east":  { "model": "withsprinkles:autodropper", "y": 90 }
     }
 }

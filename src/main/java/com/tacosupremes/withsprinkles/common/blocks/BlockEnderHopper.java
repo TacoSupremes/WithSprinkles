@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
 import com.tacosupremes.withsprinkles.common.blocks.tiles.TileEnderHopper;
+import com.tacosupremes.withsprinkles.common.blocks.tiles.TileSimpleInventory;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
@@ -143,13 +144,7 @@ public class BlockEnderHopper extends BlockModContainer {
 
 	    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
 	    {
-	        TileEntity tileentity = worldIn.getTileEntity(pos);
-
-	        if (tileentity instanceof TileEntityHopper)
-	        {
-	            InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityHopper)tileentity);
-	            worldIn.updateComparatorOutputLevel(pos, this);
-	        }
+	        TileSimpleInventory.breakBlock(worldIn, pos, state);
 
 	        super.breakBlock(worldIn, pos, state);
 	    }

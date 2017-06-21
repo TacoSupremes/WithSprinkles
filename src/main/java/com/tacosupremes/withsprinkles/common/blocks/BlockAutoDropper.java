@@ -1,6 +1,7 @@
 package com.tacosupremes.withsprinkles.common.blocks;
 
 import com.tacosupremes.withsprinkles.common.blocks.tiles.TileAutoDropper;
+import com.tacosupremes.withsprinkles.common.blocks.tiles.TileSimpleInventory;
 
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.BlockPistonBase;
@@ -10,6 +11,7 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -28,7 +30,7 @@ public class BlockAutoDropper extends BlockModContainer {
 
 	public BlockAutoDropper() {
 		super(Material.ROCK,"autoDropper");
-		
+		this.setHardness(0.1F);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		 
 		
@@ -50,7 +52,7 @@ public class BlockAutoDropper extends BlockModContainer {
 	    {
 	        super.onBlockAdded(worldIn, pos, state);
 	        this.setDefaultDirection(worldIn, pos, state);
-	        System.out.println(getUnlocalizedName()+">>>>>>"+this.getLocalizedName());
+	       
 	    }
 
 	    private void setDefaultDirection(World worldIn, BlockPos pos, IBlockState state)
@@ -91,13 +93,7 @@ public class BlockAutoDropper extends BlockModContainer {
 	    
 	    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
 	    {
-	        TileEntity tileentity = worldIn.getTileEntity(pos);
-
-	        if (tileentity instanceof TileAutoDropper)
-	        {
-	            InventoryHelper.dropInventoryItems(worldIn, pos, (TileAutoDropper)tileentity);
-	            worldIn.updateComparatorOutputLevel(pos, this);
-	        }
+	        TileSimpleInventory.breakBlock(worldIn, pos, state);
 
 	        super.breakBlock(worldIn, pos, state);
 	    }
