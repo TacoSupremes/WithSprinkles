@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 public class EnchantExchange extends Enchantment {
 
 	protected EnchantExchange() {
-		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
+		super(Rarity.COMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
 		 this.setName(LibMisc.MODID + ":" + "exchange");
 	}
 

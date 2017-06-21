@@ -21,6 +21,8 @@ public class ModItems {
 	
 	public static Item refillGem;
 	
+	public static Item disEnchanter;
+	
 	public static Item portableEnderChest;
 
 	public static void preInit() {
