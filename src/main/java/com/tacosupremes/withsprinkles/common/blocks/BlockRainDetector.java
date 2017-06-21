@@ -38,31 +38,27 @@ public class BlockRainDetector extends BlockModContainer {
 	}
 	
 	
-	public void updatePower(World w, BlockPos pos, IBlockState state){
+	public void updatePower(World w, BlockPos pos)
+	{
+	
+		 IBlockState state = w.getBlockState(pos);
 		
-		if(w.getWorldInfo().isThundering()){
+		if(w.isRaining() && w.getBiome(pos).canRain() && w.canBlockSeeSky(pos)){
 			
-			if((Integer)state.getValue(POWER).intValue() != 8){
+			if(w.isThundering()){
 				
-				w.setBlockState(pos, state.withProperty(POWER, 8), 3);
+				if((Integer)state.getValue(POWER).intValue() != 8)	
+					w.setBlockState(pos, state.withProperty(POWER, 8), 3);
 				return;
 			}
-			
-			
-		}
-		
-		if(w.getWorldInfo().isRaining()){
 			
 			if((Integer)state.getValue(POWER).intValue() != 4){
 				
 				w.setBlockState(pos, state.withProperty(POWER, 4), 3);
 				return;
-			}
+			}			
 			
-			
-		}
-		
-		if((Integer)state.getValue(POWER).intValue() != 0)
+		}else if((Integer)state.getValue(POWER).intValue() != 0)
 			w.setBlockState(pos, state.withProperty(POWER, 0));
 	}
 	

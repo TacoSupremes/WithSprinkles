@@ -18,7 +18,7 @@ public class TileEntityRainDetector extends TileEntity implements ITickable{
 
 	            if (this.blockType instanceof BlockRainDetector)
 	            {
-	                ((BlockRainDetector)this.blockType).updatePower(this.world, this.pos, this.getWorld().getBlockState(this.pos));
+	                ((BlockRainDetector)this.blockType).updatePower(this.world, this.pos);
 	            }
 	        }
 	    }
