@@ -7,6 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class ModRecipes {
 
@@ -21,6 +22,9 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.autoDropper), "RRR", "RDR", "RRR", 'R', new ItemStack(Items.REDSTONE), 'D', new ItemStack(Blocks.DROPPER));		
 	
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.enderHopper), "OEO", "OHO", " O " , 'O', new ItemStack(Blocks.OBSIDIAN), 'H', new ItemStack(Blocks.HOPPER), 'E', new ItemStack(Items.ENDER_PEARL));
+	
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.rainDetector), "   ", "WBW", "WRW" , 'W', "plankWood", 'B', new ItemStack(Items.BUCKET), 'R', new ItemStack(Items.REDSTONE)));
+		
 	}
 
 }
