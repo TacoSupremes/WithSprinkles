@@ -6,3 +6,4 @@ item.refillGem.name=Sorting Gem
 item.enderChest.name=Infused Eye of Ender
 enchantment.withsprinkles:exchange=Exchange
 enchantment.withsprinkles:fiery=Fiery Aura
+withsprinkles.bound=Currently bound to
