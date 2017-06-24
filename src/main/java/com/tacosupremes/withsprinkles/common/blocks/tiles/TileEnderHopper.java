@@ -1,5 +1,7 @@
 package com.tacosupremes.withsprinkles.common.blocks.tiles;
 
+import java.util.UUID;
+
 import com.tacosupremes.withsprinkles.common.blocks.BlockEnderHopper;
 import com.tacosupremes.withsprinkles.common.utils.InventoryUtils;
 
@@ -12,6 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class TileEnderHopper extends TileSimpleInventory {
 
@@ -21,7 +24,7 @@ public class TileEnderHopper extends TileSimpleInventory {
 		return 1;
 	}
 	
-	public String pName = "";
+	public UUID uuid;
 	
 	int ticks = 0; 
 
@@ -31,6 +34,9 @@ public class TileEnderHopper extends TileSimpleInventory {
 		ticks++;
 		
 		if(ticks % 8 != 0)
+			return;
+		
+		if (this.getWorld().isRemote)
 			return;
 		
 		EnumFacing enumf = BlockEnderHopper.getFacing(this.getBlockMetadata());
@@ -59,11 +65,14 @@ public class TileEnderHopper extends TileSimpleInventory {
 			ItemStack is = this.getStackInSlot(0);
 			
 			
-			EntityPlayer player = this.getWorld().getPlayerEntityByName(pName);
+				
+			
+			
+			EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(uuid);
 			
 			if(player == null)
 				return;
-			
+			//TODO: FINISH OFFLINE MODE HOPPER
 			InventoryEnderChest ii = player.getInventoryEnderChest();
 			
 			
@@ -102,7 +111,7 @@ public class TileEnderHopper extends TileSimpleInventory {
 			
 			ItemStack is = this.getStackInSlot(0);
 			
-			EntityPlayer player = this.getWorld().getPlayerEntityByName(pName);
+			EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(uuid);
 			
 			if(player == null)
 				return;
@@ -163,7 +172,7 @@ public class TileEnderHopper extends TileSimpleInventory {
 		
 		super.readCustomNBT(par1nbtTagCompound);
 		
-		this.pName = par1nbtTagCompound.getString("PNAME");
+		this.uuid = UUID.fromString(par1nbtTagCompound.getString("PNAME"));
 		
 		this.ticks = par1nbtTagCompound.getInteger("TICKS");
 		
@@ -174,7 +183,7 @@ public class TileEnderHopper extends TileSimpleInventory {
 		
 		super.writeCustomNBT(par1nbtTagCompound);
 		
-		par1nbtTagCompound.setString("PNAME", this.pName);
+		par1nbtTagCompound.setString("PNAME", this.uuid.toString());
 		
 		par1nbtTagCompound.setInteger("TICKS", this.ticks);
 	}

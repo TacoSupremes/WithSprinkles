@@ -18,6 +18,8 @@ public class ModBlocks {
 	
 	public static Block rainDetector;
 	
+	public static Block sharedEnderChest; //TODO: Shared Ender Chest
+	
 	public static void preInit() {
 		
 		autoDropper = new BlockAutoDropper();

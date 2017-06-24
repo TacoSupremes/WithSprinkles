@@ -19,10 +19,12 @@ public class ModRecipes {
 	
 		GameRegistry.addRecipe(new ItemStack(ModItems.portableEnderChest), "OOO","PEP","OOO", 'O', new ItemStack(Blocks.OBSIDIAN), 'E', new ItemStack(Items.ENDER_EYE), 'P', new ItemStack(Items.ENDER_PEARL));		
 		
+		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.portableEnderChest, 1, 2), new ItemStack(Items.REDSTONE), new ItemStack(ModItems.portableEnderChest, 1, 0));
+		
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.autoDropper), "RRR", "RDR", "RRR", 'R', new ItemStack(Items.REDSTONE), 'D', new ItemStack(Blocks.DROPPER));		
 	
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.enderHopper), "OEO", "OHO", " O " , 'O', new ItemStack(Blocks.OBSIDIAN), 'H', new ItemStack(Blocks.HOPPER), 'E', new ItemStack(Items.ENDER_PEARL));
-	
+		
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.rainDetector), "   ", "WBW", "WRW" , 'W', "plankWood", 'B', new ItemStack(Items.BUCKET), 'R', new ItemStack(Items.REDSTONE)));
 		
 	}

@@ -76,7 +76,7 @@ public class BlockEnderHopper extends BlockModContainer {
 	public void onBlockPlacedBy(World w, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
 		
-		((TileEnderHopper)w.getTileEntity(pos)).pName = placer.getName();
+		((TileEnderHopper)w.getTileEntity(pos)).uuid = placer.getUniqueID();
 	}
 	
 	@Override
