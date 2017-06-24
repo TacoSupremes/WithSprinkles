@@ -13,18 +13,14 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.storage.SaveHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-public class OfflinePlayerUtils {
+public class OfflinePlayerUtils
+{
 	
-	
+	/**Writes an Offline Player's NBT**/
 	public static void writeOfflinePlayerNBT(UUID uuid, NBTTagCompound playerNBT)
 	{
 		
-		
-		
 		SaveHandler saveHandler = (SaveHandler)FMLCommonHandler.instance().getMinecraftServerInstance().worlds[0].getSaveHandler();
-		
-		
-		
 		
 		try {
 			
@@ -38,17 +34,15 @@ public class OfflinePlayerUtils {
 		        playerFile.delete();
 		    }
 		    temp.renameTo(playerFile);
-		} catch (Exception e) {
-			
-			throw new NullPointerException("Player Does NOT EXIST RIP");
-		  //  logger.warning("Failed to save player data for " + username);
 		}
-		
-		
-		
-		
+		catch (Exception e) 
+		{
+			throw new NullPointerException("Player Does NOT EXIST RIP");
+		}
+	
 	}
-
+	
+	/**Gets an Offline Player's NBT**/
 	public static NBTTagCompound getOfflinePlayerNBT(UUID uuid)
 	{
 	
@@ -65,9 +59,7 @@ public class OfflinePlayerUtils {
 			
 		}
 		catch (Exception exception)
-		{
-      //  LOGGER.warn("Failed to load player data for " + player.getName());
-			
+		{		
 			throw new NullPointerException("Player Does NOT EXIST RIP");
 		}
     return null;

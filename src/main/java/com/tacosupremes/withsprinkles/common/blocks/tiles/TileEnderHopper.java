@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.tacosupremes.withsprinkles.common.blocks.BlockEnderHopper;
 import com.tacosupremes.withsprinkles.common.utils.InventoryUtils;
+import com.tacosupremes.withsprinkles.common.utils.OfflinePlayerUtils;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -66,17 +67,21 @@ public class TileEnderHopper extends TileSimpleInventory {
 			
 			
 				
+			InventoryEnderChest ii;
 			
+			NBTTagCompound pNBT = OfflinePlayerUtils.getOfflinePlayerNBT(uuid);
 			
 			EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(uuid);
 			
-			if(player == null)
-				return;
-			//TODO: FINISH OFFLINE MODE HOPPER
-			InventoryEnderChest ii = player.getInventoryEnderChest();
-			
-			
-			int slotChosen = -1;
+			if(player == null){
+				
+				ii = new InventoryEnderChest();
+				
+				ii.loadInventoryFromNBT(pNBT.getTagList("EnderItems", 10));
+				
+			}else
+				ii = player.getInventoryEnderChest();	
+		
 			for(int i = 18; i<27; i++){
 				
 				if(ii.getStackInSlot(i).isEmpty())
@@ -88,10 +93,17 @@ public class TileEnderHopper extends TileSimpleInventory {
 					ii.markDirty();
 					this.markDirty();
 					
+					
+				
+					
 				}
 				
 			}
 			
+			if(player == null){
+				pNBT.setTag("EnderItems", ii.saveInventoryToNBT());
+				OfflinePlayerUtils.writeOfflinePlayerNBT(uuid, pNBT);
+			}
 		}
 		
 		if(InventoryUtils.getInventory(getWorld(), getPos().add(enumf.getDirectionVec())) != null && this.getWorld().getBlockState(getPos().up()).getBlock() == Blocks.ENDER_CHEST){
@@ -111,12 +123,20 @@ public class TileEnderHopper extends TileSimpleInventory {
 			
 			ItemStack is = this.getStackInSlot(0);
 			
+			InventoryEnderChest ii;
+			
+			NBTTagCompound pNBT = OfflinePlayerUtils.getOfflinePlayerNBT(uuid);
+			
 			EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(uuid);
 			
-			if(player == null)
-				return;
-			
-			InventoryEnderChest ii = player.getInventoryEnderChest();
+			if(player == null){
+				
+				ii = new InventoryEnderChest();
+				
+				ii.loadInventoryFromNBT(pNBT.getTagList("EnderItems", 10));
+				
+			}else
+				ii = player.getInventoryEnderChest();
 			
 			int slotChosen = -1;
 			for(int i = 18; i<27; i++){
@@ -135,6 +155,11 @@ public class TileEnderHopper extends TileSimpleInventory {
 						this.setInventorySlotContents(0, ItemStack.EMPTY);
 						ii.markDirty();
 						this.markDirty();
+						
+						if(player == null){
+							pNBT.setTag("EnderItems", ii.saveInventoryToNBT());
+							OfflinePlayerUtils.writeOfflinePlayerNBT(uuid, pNBT);
+						}
 						return;
 					}else{
 						
@@ -142,6 +167,12 @@ public class TileEnderHopper extends TileSimpleInventory {
 						this.setInventorySlotContents(0, new ItemStack(is.getItem(),is.getCount()+ii.getStackInSlot(i).getCount()-is.getMaxStackSize(),is.getItemDamage()));
 						ii.markDirty();
 						this.markDirty();
+						
+						if(player == null){
+							pNBT.setTag("EnderItems", ii.saveInventoryToNBT());
+							OfflinePlayerUtils.writeOfflinePlayerNBT(uuid, pNBT);
+						}
+						
 						return;
 					
 					}
@@ -160,6 +191,11 @@ public class TileEnderHopper extends TileSimpleInventory {
 				this.setInventorySlotContents(0, ItemStack.EMPTY);
 				ii.markDirty();
 				this.markDirty();
+				
+				if(player == null){
+					pNBT.setTag("EnderItems", ii.saveInventoryToNBT());
+					OfflinePlayerUtils.writeOfflinePlayerNBT(uuid, pNBT);
+				}
 			}
 		
 			

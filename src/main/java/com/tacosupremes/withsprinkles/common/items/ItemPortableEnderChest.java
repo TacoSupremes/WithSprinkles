@@ -21,6 +21,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.SaveHandler;
@@ -88,11 +89,13 @@ public class ItemPortableEnderChest extends ItemMod {
 		
 		if(playerIn != null)
 		 player.displayGUIChest(playerIn.getInventoryEnderChest());
-		else{
+		
 			
 		//TODO: Figure how to make player affect inventory	meme(UUID.fromString(player.getHeldItem(handIn).getTagCompound().getString("PLAYER")), player);
 			
-		}
+		//	FMLCommonHandler.instance().getMinecraftServerInstance().sendMessage(new ITextComponent(){});
+			
+		
 		 
 		
 		
@@ -106,9 +109,7 @@ public class ItemPortableEnderChest extends ItemMod {
 		
 		SaveHandler saveHandler = (SaveHandler)FMLCommonHandler.instance().getMinecraftServerInstance().worlds[0].getSaveHandler();
 		NBTTagCompound playerNbt = getPlayerNBT(saveHandler, uuid);
-		
-		
-		
+	
 		if (playerNbt.hasKey("EnderItems", 9))
         {
             NBTTagList nbttaglist1 = playerNbt.getTagList("EnderItems", 10);
@@ -182,7 +183,7 @@ public class ItemPortableEnderChest extends ItemMod {
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		
-		if(stack.getItemDamage() == 0 || stack.getItemDamage() == 2)
+		if((stack.getItemDamage() != 2 && stack.getItemDamage() != 3) || !stack.hasTagCompound())
 			return;
 		
 		if(worldIn.isRemote)
@@ -191,19 +192,22 @@ public class ItemPortableEnderChest extends ItemMod {
 		if(worldIn.getWorldTime() % 5 != 0)
 			return;
 		
-		/*
+	
 		
-		if(Minecraft.getMinecraft().currentScreen == null){
+		EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(UUID.fromString(stack.getTagCompound().getString("PLAYER")));
+		
+		if(player == null){
 			
-			if(stack.getItemDamage() == 1)
-				stack.setItemDamage(0);
-			
-			if(stack.getItemDamage() == 3)
+			if(stack.getItemDamage() != 2)
 				stack.setItemDamage(2);
 			
+		}else{
+			
+			if(stack.getItemDamage() != 3)
+				stack.setItemDamage(3);
 			
 		}
-			*/
+		
 		
 	}
 
@@ -219,7 +223,7 @@ public class ItemPortableEnderChest extends ItemMod {
 		
 		tooltip.add(I18n.translateToLocal(LibMisc.MODID+".bound") + " "+ stack.getTagCompound().getString("PLAYERNAME"));
 		
-	//	EntityPlayer.getOfflineUUID(username;)
+	
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}	
 	
