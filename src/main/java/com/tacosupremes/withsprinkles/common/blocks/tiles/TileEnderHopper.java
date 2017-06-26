@@ -77,6 +77,9 @@ public class TileEnderHopper extends TileSimpleInventory {
 				
 				ii = new InventoryEnderChest();
 				
+				if(pNBT == null)
+					return;
+				
 				ii.loadInventoryFromNBT(pNBT.getTagList("EnderItems", 10));
 				
 			}else
@@ -101,6 +104,10 @@ public class TileEnderHopper extends TileSimpleInventory {
 			}
 			
 			if(player == null){
+				
+				if(pNBT == null)
+					return;
+				
 				pNBT.setTag("EnderItems", ii.saveInventoryToNBT());
 				OfflinePlayerUtils.writeOfflinePlayerNBT(uuid, pNBT);
 			}
@@ -133,6 +140,9 @@ public class TileEnderHopper extends TileSimpleInventory {
 				
 				ii = new InventoryEnderChest();
 				
+				if(pNBT == null)
+					return;
+				
 				ii.loadInventoryFromNBT(pNBT.getTagList("EnderItems", 10));
 				
 			}else
@@ -157,6 +167,10 @@ public class TileEnderHopper extends TileSimpleInventory {
 						this.markDirty();
 						
 						if(player == null){
+							
+							if(pNBT == null)
+								return;
+							
 							pNBT.setTag("EnderItems", ii.saveInventoryToNBT());
 							OfflinePlayerUtils.writeOfflinePlayerNBT(uuid, pNBT);
 						}
@@ -169,6 +183,10 @@ public class TileEnderHopper extends TileSimpleInventory {
 						this.markDirty();
 						
 						if(player == null){
+							
+							if(pNBT == null)
+								return;
+							
 							pNBT.setTag("EnderItems", ii.saveInventoryToNBT());
 							OfflinePlayerUtils.writeOfflinePlayerNBT(uuid, pNBT);
 						}
@@ -193,6 +211,10 @@ public class TileEnderHopper extends TileSimpleInventory {
 				this.markDirty();
 				
 				if(player == null){
+					
+					if(pNBT == null)
+						return;
+					
 					pNBT.setTag("EnderItems", ii.saveInventoryToNBT());
 					OfflinePlayerUtils.writeOfflinePlayerNBT(uuid, pNBT);
 				}

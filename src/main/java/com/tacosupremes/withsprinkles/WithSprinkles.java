@@ -3,6 +3,8 @@ package com.tacosupremes.withsprinkles;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import com.tacosupremes.withsprinkles.common.blocks.ModBlocks;
 import com.tacosupremes.withsprinkles.common.enchantments.ModEnchantments;
@@ -43,6 +45,8 @@ public class WithSprinkles
 	    
     @Instance(LibMisc.MODID)
     public static WithSprinkles instance;
+    
+    public static final Logger logger = LogManager.getLogManager().getLogger(LibMisc.MODID);
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)

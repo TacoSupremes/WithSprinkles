@@ -4,12 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.UUID;
+import java.util.logging.Level;
+
+import com.tacosupremes.withsprinkles.WithSprinkles;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.storage.SaveHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
@@ -37,7 +41,7 @@ public class OfflinePlayerUtils
 		}
 		catch (Exception e) 
 		{
-			throw new NullPointerException("Player Does NOT EXIST RIP");
+			WithSprinkles.logger.log(Level.WARNING, "Player NOT found with UUID" + uuid.toString(), e);
 		}
 	
 	}
@@ -58,12 +62,13 @@ public class OfflinePlayerUtils
 				return CompressedStreamTools.readCompressed(new FileInputStream(file1));
 			
 		}
-		catch (Exception exception)
+		catch (Exception e)
 		{		
-			throw new NullPointerException("Player Does NOT EXIST RIP");
+			WithSprinkles.logger.log(Level.WARNING, "Player NOT found with UUID" + uuid.toString(), e);
 		}
-    return null;
-}
+		
+		return null;
+	}
 
 
 
