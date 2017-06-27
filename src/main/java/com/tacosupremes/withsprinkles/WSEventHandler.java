@@ -1,19 +1,29 @@
 package com.tacosupremes.withsprinkles;
 
+import java.util.Map;
+
 import com.tacosupremes.withsprinkles.common.enchantments.ModEnchantments;
+import com.tacosupremes.withsprinkles.common.lib.LibMisc;
 
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderTooltipEvent;
+import net.minecraftforge.client.event.RenderTooltipEvent.PostText;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -37,13 +47,201 @@ public class WSEventHandler {
         
      
     }
+     
+    @SubscribeEvent
+    public void onPlayerRightClick(RightClickItem event)
+    {
+    	
+    	handleMultiple(event);
+    	
+    }
     
-    private void handleFiery(BreakEvent event) {
+    @SubscribeEvent
+    public void renderText(ItemTooltipEvent event){
+    	
+    	
+    	
+    	if(event.getItemStack().isEmpty())
+    		return;
+    	
+    	handleMultiple(event);
+    	
+    	
+    }
+    
+    private void handleMultiple(RightClickItem event){
+    	
+    	if(!event.getEntityPlayer().isSneaking())
+    		return;
+    	
+    	if(event.getItemStack() == ItemStack.EMPTY)
+    		return;
+    	
+    	if(!event.getItemStack().hasTagCompound())
+    		return;
+    	
+    	if((EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()) > 0))
+    	{
+    		
+    	
+    		if(!event.getItemStack().getTagCompound().hasKey("MULTIPLELVL")){
+    		
+    			event.getItemStack().getTagCompound().setInteger("MULTIPLELVL", EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()));
+    			event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 1);
+    			
+    			event.getItemStack().getTagCompound().setTag("ench1", event.getItemStack().getTagCompound().getTagList("ench",10));
+    		
+    			event.getItemStack().getTagCompound().removeTag("ench");
+    			
+    			
+    		
+    		}else{
+    			
+    			
+    			
+    			
+    			if(event.getItemStack().getTagCompound().getInteger("MULTIPLELVL") > 1){
+    				
+    			int mode = event.getItemStack().getTagCompound().getInteger("MULTIPLEMODE");
+    			
+    			
+    			switch(mode){
+    			
+    			case(0):
+    			{
+    				event.getItemStack().getTagCompound().setTag("ench1", event.getItemStack().getEnchantmentTagList());
+    				event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench2", 10));
+    				event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 1);
+    				break;
+    			}
+    			
+    			case(1):
+    			{
+    				event.getItemStack().getTagCompound().setTag("ench2", event.getItemStack().getEnchantmentTagList());
+    				event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench3", 10));
+    				event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 2);
+    				break;
+    			}
+    			
+    			case(2):
+    			{  				
+    			event.getItemStack().getTagCompound().setTag("ench3", event.getItemStack().getEnchantmentTagList()); 	
+    			event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench1", 10));
+				event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 0);
+    			break;
+    			}
+    			
+    			
+    			}
+    			
+    			
+    			
+    				
+    			}else{
+    				
+    				NBTTagList ench = event.getItemStack().getTagCompound().getTagList("ench1", 10).copy();
+    				
+    				event.getItemStack().getTagCompound().setTag("ench1", event.getItemStack().getTagCompound().getTagList("ench", 10));
+    				
+    				event.getItemStack().getTagCompound().setTag("ench", ench);
+    				
+    				event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 1);
+    				
+    			}
+    			
+    		
+    		}
+    	
+    	}else{
+    		
+    		if(!event.getItemStack().getTagCompound().hasKey("MULTIPLELVL"))
+    			return;
+    		
+    		if(event.getItemStack().getTagCompound().getInteger("MULTIPLELVL") > 1){
+    			
+    			int mode = event.getItemStack().getTagCompound().getInteger("MULTIPLEMODE");
+    			
+    			
+    			switch(mode){
+    			
+    			case(0):
+    			{
+    				event.getItemStack().getTagCompound().setTag("ench1", event.getItemStack().getEnchantmentTagList());
+    				event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench2", 10));
+    				event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 1);
+    				break;
+    			}
+    			
+    			case(1):
+    			{
+    				event.getItemStack().getTagCompound().setTag("ench2", event.getItemStack().getEnchantmentTagList());
+    				event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench3", 10));
+    				event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 2);
+    				break;
+    			}
+    			
+    			case(2):
+    			{  				
+    			event.getItemStack().getTagCompound().setTag("ench3", event.getItemStack().getEnchantmentTagList()); 	
+    			event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench1", 10));
+				event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 0);
+    			break;
+    			}
+    			
+    			
+    			}
+    			
+    			
+    			
+    		}else{
+    			
+    			NBTTagList ench = event.getItemStack().getTagCompound().getTagList("ench1", 10).copy();
+				
+				event.getItemStack().getTagCompound().setTag("ench1", event.getItemStack().getTagCompound().getTagList("ench", 10));
+				
+				event.getItemStack().getTagCompound().setTag("ench", ench);
+    			
+				event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 0);
+    			
+    		}
+    	
+    	
+    	}
+    }
+    
+    private void handleMultiple(ItemTooltipEvent event){
+    	
+    	if(!event.getItemStack().hasTagCompound())
+    		return;
+    	
+    	if(event.getItemStack().getTagCompound().hasKey("MULTIPLEMODE")){
+   		
+    		Map<Enchantment, Integer> j = EnchantmentHelper.getEnchantments(event.getItemStack());
+    		
+    		if(!j.keySet().contains(ModEnchantments.multiple) && event.getItemStack().isItemEnchanted()){	
+
+    			Enchantment[] en = j.keySet().toArray(new Enchantment[j.keySet().size()]);
+    	
+    			int pos = event.getToolTip().indexOf(en[en.length-1].getTranslatedName(j.get(en[en.length-1])));
+    	
+    		event.getToolTip().add(pos + 1, ModEnchantments.multiple.getTranslatedName(event.getItemStack().getTagCompound().getInteger("MULTIPLELVL")));
+    	}
+ 		
+    	int pos = event.getToolTip().indexOf(ModEnchantments.multiple.getTranslatedName(event.getItemStack().getTagCompound().getInteger("MULTIPLELVL")));
+    	
+    	event.getToolTip().add(pos == -1 ? 1 : pos + 1, I18n.translateToLocal(LibMisc.MODID + ".mode") + ": " + (event.getItemStack().getTagCompound().getInteger("MULTIPLEMODE")+1));
+    	
+    	}
+    }
+    
+    private void handleFiery(BreakEvent event)
+    {
     	
     	
     	 ItemStack stack = event.getPlayer().getHeldItem(EnumHand.MAIN_HAND);
          
-         if (stack.isItemEnchanted() && EnchantmentHelper.getEnchantmentLevel(ModEnchantments.fiery, stack) > 0 && stack.getItem().canHarvestBlock(event.getState(), stack)) {
+         if (stack.isItemEnchanted() && EnchantmentHelper.getEnchantmentLevel(ModEnchantments.fiery, stack) > 0 && stack.getItem().canHarvestBlock(event.getState(), stack)) 
+         {
          
         	 ItemStack result = FurnaceRecipes.instance().getSmeltingResult(new ItemStack(event.getState().getBlock(), 1, event.getState().getBlock().getMetaFromState(event.getState())));
         	 if(result != ItemStack.EMPTY){
@@ -51,9 +249,10 @@ public class WSEventHandler {
         		 World w = event.getPlayer().getEntityWorld();
         		 BlockPos pos = event.getPos();
         		 
-        		 if(!w.isRemote){
-        		 w.destroyBlock(pos, false);
-        		 w.getBlockState(pos).getBlock().spawnAsEntity(w, pos, new ItemStack(result.getItem(), 1, result.getItemDamage()));
+        		 if(!w.isRemote)
+        		 {
+        			 w.destroyBlock(pos, false);
+        			 w.getBlockState(pos).getBlock().spawnAsEntity(w, pos, new ItemStack(result.getItem(), 1, result.getItemDamage()));
         		 }
         		 
         		 event.getPlayer().getHeldItem(EnumHand.MAIN_HAND).damageItem(1, event.getPlayer());
@@ -64,7 +263,8 @@ public class WSEventHandler {
 		
 	}
 
-	private void handleExchange(BreakEvent event){
+	private void handleExchange(BreakEvent event)
+	{
 		
     	  ItemStack stack = event.getPlayer().getHeldItem(EnumHand.MAIN_HAND);
           

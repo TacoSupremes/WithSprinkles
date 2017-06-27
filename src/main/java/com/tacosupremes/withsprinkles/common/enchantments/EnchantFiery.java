@@ -12,11 +12,10 @@ import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 
-public class EnchantFiery extends Enchantment {
+public class EnchantFiery extends ModEnchantment {
 
 	protected EnchantFiery() {
-		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
-		 this.setName(LibMisc.MODID + ":" + "fiery");
+		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND}, "fiery"); 	 
 	}
 
 	@Override
@@ -36,4 +35,15 @@ public class EnchantFiery extends Enchantment {
 	        return super.canApplyTogether(ench) && ench != Enchantments.SILK_TOUCH && ench != Enchantments.FORTUNE;
 	    }
 
+	 
+	 public int getMinEnchantability(int enchantmentLevel)
+	 {
+	        return 15;
+	 }
+
+	   
+	  public int getMaxEnchantability(int enchantmentLevel)
+	  {
+	        return super.getMinEnchantability(enchantmentLevel) + 50;
+	  }
 }

@@ -17,11 +17,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -95,15 +98,47 @@ public class WithSprinkles
 		public void displayAllRelevantItems(NonNullList<ItemStack> l) {
 			
 			super.displayAllRelevantItems(l);
+			
 			for(Enchantment e : ModEnchantments.enchants){
-			ItemStack is = new ItemStack(Items.ENCHANTED_BOOK, 1, 0);
-			Map<Enchantment, Integer> lm = new HashMap<Enchantment,Integer>();
-			lm.put(e, e.getMaxLevel());
-			EnchantmentHelper.setEnchantments(lm, is);
-			l.add(is);
+				
+				ItemStack is = new ItemStack(Items.ENCHANTED_BOOK, 1, 0);
+					
+					for(int i = 1; i <= e.getMaxLevel(); i++){
+						
+						ItemStack is2 = is.copy();
+						
+						enchantItem(is2, e, i);
+						
+						l.add(is2);
+						
+					}			
 			}
 		}
 	
+    }
+    
+    
+    public void enchantItem(ItemStack is, Enchantment e, int lvl){
+    	
+    	NBTTagList nbtl = new NBTTagList();
+    	
+    	NBTTagCompound nbt = new NBTTagCompound();
+    	
+    	nbt.setShort("id", (short)Enchantment.getEnchantmentID(e));
+        nbt.setShort("lvl", (short)lvl);
+        nbtl.appendTag(nbt);
+        
+        if (is.getItem() == Items.ENCHANTED_BOOK)
+        {
+            Items.ENCHANTED_BOOK.addEnchantment(is, new EnchantmentData(e, lvl));
+            return;
+        }
+        
+        if(!is.hasTagCompound())	
+        	is.setTagCompound(new NBTTagCompound());
+   
+        is.setTagInfo("ench", nbtl);
+    	
     }
     
 }

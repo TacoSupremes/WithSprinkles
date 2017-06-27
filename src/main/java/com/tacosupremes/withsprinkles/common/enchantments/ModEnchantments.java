@@ -12,6 +12,8 @@ public class ModEnchantments {
 	
 	public static Enchantment fiery;
 	
+	public static Enchantment multiple;
+	
 	public static List<Enchantment> enchants = new ArrayList<Enchantment>();
 
 	public static void preInit(){
@@ -20,11 +22,8 @@ public class ModEnchantments {
 		
 		fiery = new EnchantFiery();
 		
-		Enchantment.REGISTRY.register(75, new ResourceLocation("exchange"), exchange);
-		enchants.add(exchange);
+		multiple = new EnchantMultiple();
 		
-		Enchantment.REGISTRY.register(76, new ResourceLocation("fiery"), fiery);
-		enchants.add(fiery);
 	}
 
 }

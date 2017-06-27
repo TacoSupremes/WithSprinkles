@@ -20,6 +20,8 @@ public class ModBlocks {
 	
 	public static Block sharedEnderChest; //TODO: Shared Ender Chest
 	
+	public static Block enchantmentBuff;
+	
 	public static void preInit() {
 		
 		autoDropper = new BlockAutoDropper();
