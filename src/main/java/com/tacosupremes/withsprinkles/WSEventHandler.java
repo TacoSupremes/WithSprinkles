@@ -147,6 +147,13 @@ public class WSEventHandler {
     				
     			}else{
     				
+    				if((EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()) != event.getItemStack().getTagCompound().getInteger("MULTIPLELVL"))){
+        				event.getItemStack().getTagCompound().setInteger("MULTIPLELVL", EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()));
+        				handleMultiple(event);
+        				return;
+        				
+        			}
+    				
     				NBTTagList ench = event.getItemStack().getTagCompound().getTagList("ench2", 10);
 
     				event.getItemStack().getTagCompound().setTag("ench1", event.getItemStack().getEnchantmentTagList());
@@ -222,12 +229,7 @@ public class WSEventHandler {
 
     		}else{
     			
-    			if((EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()) != event.getItemStack().getTagCompound().getInteger("MULTIPLELVL"))){
-    				event.getItemStack().getTagCompound().setInteger("MULTIPLELVL", EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()));
-    				handleMultiple(event);
-    				return;
-    				
-    			}
+    			
     			
     			NBTTagList ench = event.getItemStack().getTagCompound().getTagList("ench1", 10);
 				
@@ -263,7 +265,11 @@ public class WSEventHandler {
  		
     	int pos = event.getToolTip().indexOf(ModEnchantments.multiple.getTranslatedName(event.getItemStack().getTagCompound().getInteger("MULTIPLELVL")));
     	
+    	System.out.println(pos + "" + ModEnchantments.multiple.getTranslatedName(event.getItemStack().getTagCompound().getInteger("MULTIPLELVL")));
+    	
     	event.getToolTip().add(pos == -1 ? 1 : pos + 1, I18n.translateToLocal(LibMisc.MODID + ".mode") + ": " + (event.getItemStack().getTagCompound().getInteger("MULTIPLEMODE")+1));
+    	
+    	
     	
     	}
     }

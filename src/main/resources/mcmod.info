@@ -3,7 +3,7 @@
   "modid": "withsprinkles",
   "name": "With Sprinkles",
   "description": "Minecraft Vanilla, but with Sprinkles",
-  "version": "1.03",
+  "version": "1.03a",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
