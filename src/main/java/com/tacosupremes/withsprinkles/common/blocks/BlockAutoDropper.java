@@ -28,7 +28,8 @@ public class BlockAutoDropper extends BlockModContainer {
 	  public static final PropertyDirection FACING = BlockDirectional.FACING;
 	   
 
-	public BlockAutoDropper() {
+	public BlockAutoDropper() 
+	{
 		super(Material.ROCK,"autoDropper");
 		this.setHardness(0.3F);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
@@ -37,13 +38,15 @@ public class BlockAutoDropper extends BlockModContainer {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
+	public TileEntity createNewTileEntity(World worldIn, int meta) 
+	{
 		
 		return new TileAutoDropper();
 	}
 
 	@Override
-	protected Class<? extends TileEntity> tile() {
+	protected Class<? extends TileEntity> tile()
+	{
 		
 		return TileAutoDropper.class;
 	}

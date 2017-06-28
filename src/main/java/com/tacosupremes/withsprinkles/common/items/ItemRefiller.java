@@ -53,14 +53,14 @@ public class ItemRefiller extends ItemMod{
 							
 							player.inventory.removeStackFromSlot(i);
 							
-							break;
+							return;
 							
 						}else{
 							
 							player.inventory.setInventorySlotContents(i,new ItemStack(target.getItem(),target.getCount() + replace.getCount()-target.getMaxStackSize(),target.getItemDamage()));
 							player.inventory.offHandInventory.set(0, new ItemStack(target.getItem(),target.getMaxStackSize(),target.getItemDamage()));
 							
-							break;
+							return;
 						
 						}
 						

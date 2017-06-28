@@ -34,24 +34,14 @@ public class EnchantMultiple extends ModEnchantment {
 	}
 		
 	@Override
-	public boolean canApply(ItemStack stack) {
-	
-		if(stack.hasTagCompound()){
-			
-			if(stack.getTagCompound().hasKey("MULTIPLEMODE")){
-				
-				if(stack.getTagCompound().getInteger("MULTIPLEMODE") != 0)
-					return false;
-			}
-			
-		}
-
-		return true;
+	public boolean canApply(ItemStack stack) 
+	{
+		return stack.hasTagCompound() ? stack.getTagCompound().getInteger("MULTIPLEMODE") == 0 : true;
 	}
 	
 	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		
+	public boolean canApplyAtEnchantingTable(ItemStack stack) 
+	{	
 		return stack.hasTagCompound() ? !stack.getTagCompound().hasKey("MULTIPLEMODE") : true;
 	}
 

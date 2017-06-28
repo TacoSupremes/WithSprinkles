@@ -22,10 +22,12 @@ public class ModItems {
 	
 	public static Item refillGem;
 	
-	public static Item disEnchanter;
+//	public static Item disEnchanter;
+	
+//	public static Item oreCompass;
 	
 	public static Item portableEnderChest;
-
+	
 	public static void preInit() {
 		
 		refillGem = new ItemRefiller();
@@ -36,33 +38,28 @@ public class ModItems {
 
 public static void registerRenders(){
 		
-		for(ItemMod i : items){
-			
-			
-			if(i.getColor() != null){
+		for(ItemMod i : items)
+		{
+
+			if(i.getColor() != null)		
 				Minecraft.getMinecraft().getItemColors().registerItemColorHandler(i.getColor(), i);
-			}
-			
-			if(i.meta !=0){
+
+			if(i.meta !=0)
+			{
 				
 				ResourceLocation[] s = new ResourceLocation[i.meta+1];
 				
-				for(int i2 = 0; i2<i.meta+1;i2++){
-					
+				for(int i2 = 0; i2<i.meta+1;i2++)			
 					s[i2] = new ResourceLocation(LibMisc.MODID + ":" + i.getUnlocalizedName().substring(5) +(i2 == 0 ? "" : i2));
-					
-					
-				}
-				
-				
+
 				ModelBakery.registerItemVariants(i, s);
 				
-				if(!i.skipVariants()){
-				for(int i2 = 0; i2<=i.meta;i2++){
-					ModItems.registerItemRender(i, i2);
-					
+				if(!i.skipVariants())
+				{
+					for(int i2 = 0; i2<=i.meta;i2++)
+						ModItems.registerItemRender(i, i2);
+
 				}
-			}
 				
 			}
 			
@@ -71,13 +68,8 @@ public static void registerRenders(){
 		}
 		
 		
-		for(Item i : nitems){
+		for(Item i : nitems)
 			registerItemRender(i, 0);
-		}
-		
-	
-		
-		
 		
 	}
 		
@@ -87,6 +79,7 @@ public static void registerRenders(){
 		
 		if(i == null)
 			return;
+		
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i, meta, new ModelResourceLocation(LibMisc.MODID+":"+i.getUnlocalizedName().substring(5)+ (meta == 0 ? "" : String.valueOf(meta)), "inventory"));
 	}
 	
@@ -94,6 +87,7 @@ public static void registerRenders(){
 		
 		if(i == null)
 			return;
+		
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i, meta, new ModelResourceLocation(LibMisc.MODID+":"+i.getUnlocalizedName().substring(5), "inventory"));
 	}
 

@@ -106,9 +106,9 @@ public class WSEventHandler {
     		
     		}else{
     			
-    			if((EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()) != event.getItemStack().getTagCompound().getInteger("MULTIPLELVL"))){
+    			if((EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()) != event.getItemStack().getTagCompound().getInteger("MULTIPLELVL")))
     				event.getItemStack().getTagCompound().setInteger("MULTIPLELVL", EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()));
-    			}
+    			
     			
     			
     			if(event.getItemStack().getTagCompound().getInteger("MULTIPLELVL") > 1){

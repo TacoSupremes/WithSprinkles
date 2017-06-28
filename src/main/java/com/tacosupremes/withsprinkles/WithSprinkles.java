@@ -55,12 +55,10 @@ public class WithSprinkles
     public void preInit(FMLPreInitializationEvent event)
     {
     	ModEnchantments.preInit();
-    	
     	tab = new WSTab();
     	ModItems.preInit();
     	ModBlocks.preInit();
-		
-    	
+
     }
     
     @EventHandler
@@ -81,21 +79,20 @@ public class WithSprinkles
 
     public class WSTab extends CreativeTabs{
 
-		public WSTab() {
-			super(CreativeTabs.getNextID(), LibMisc.MODID);
-			
+		public WSTab() 
+		{
+			super(CreativeTabs.getNextID(), LibMisc.MODID);		
 		}
 
 		@Override
-		public ItemStack getTabIconItem() {
-			
-		
-			
+		public ItemStack getTabIconItem() 
+		{
 			return new ItemStack(Items.CAKE);
 		}
 		
 		@Override
-		public void displayAllRelevantItems(NonNullList<ItemStack> l) {
+		public void displayAllRelevantItems(NonNullList<ItemStack> l) 
+		{
 			
 			super.displayAllRelevantItems(l);
 			
@@ -118,7 +115,8 @@ public class WithSprinkles
     }
     
     
-    public void enchantItem(ItemStack is, Enchantment e, int lvl){
+    public void enchantItem(ItemStack is, Enchantment e, int lvl)
+    {
     	
     	NBTTagList nbtl = new NBTTagList();
     	
