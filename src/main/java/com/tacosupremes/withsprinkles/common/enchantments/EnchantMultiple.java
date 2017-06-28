@@ -1,8 +1,14 @@
 package com.tacosupremes.withsprinkles.common.enchantments;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.ItemSpade;
+import net.minecraft.item.ItemStack;
 
 public class EnchantMultiple extends ModEnchantment {
 
@@ -26,8 +32,27 @@ public class EnchantMultiple extends ModEnchantment {
 	{
 	      return this.getMinEnchantability(enchantmentLevel) + 50;
 	}
+		
+	@Override
+	public boolean canApply(ItemStack stack) {
 	
+		if(stack.hasTagCompound()){
+			
+			if(stack.getTagCompound().hasKey("MULTIPLEMODE")){
+				
+				if(stack.getTagCompound().getInteger("MULTIPLEMODE") != 0)
+					return false;
+			}
+			
+		}
+
+		return true;
+	}
 	
-	
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack) {
+		
+		return stack.hasTagCompound() ? !stack.getTagCompound().hasKey("MULTIPLEMODE") : true;
+	}
 
 }
