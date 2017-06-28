@@ -265,8 +265,6 @@ public class WSEventHandler {
  		
     	int pos = event.getToolTip().indexOf(ModEnchantments.multiple.getTranslatedName(event.getItemStack().getTagCompound().getInteger("MULTIPLELVL")));
     	
-    	System.out.println(pos + "" + ModEnchantments.multiple.getTranslatedName(event.getItemStack().getTagCompound().getInteger("MULTIPLELVL")));
-    	
     	event.getToolTip().add(pos == -1 ? 1 : pos + 1, I18n.translateToLocal(LibMisc.MODID + ".mode") + ": " + (event.getItemStack().getTagCompound().getInteger("MULTIPLEMODE")+1));
     	
     	
