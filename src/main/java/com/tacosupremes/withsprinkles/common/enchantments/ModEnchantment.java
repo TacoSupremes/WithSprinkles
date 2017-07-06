@@ -1,6 +1,7 @@
 package com.tacosupremes.withsprinkles.common.enchantments;
 
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
+import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -13,9 +14,8 @@ public class ModEnchantment extends Enchantment {
 		super(rarityIn, typeIn, slots);
 
 		this.setName(LibMisc.MODID + ":" + name);
-		
-		Enchantment.REGISTRY.register(75 + ModEnchantments.enchants.size(), new ResourceLocation(name), this);
-		
+		this.setRegistryName(LibMisc.MODID, name);
+		ProxyRegistry.register(this);
 		ModEnchantments.enchants.add(this);
 		
 	}

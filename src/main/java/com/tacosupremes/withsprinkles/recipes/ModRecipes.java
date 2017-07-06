@@ -2,30 +2,34 @@ package com.tacosupremes.withsprinkles.recipes;
 
 import com.tacosupremes.withsprinkles.common.blocks.ModBlocks;
 import com.tacosupremes.withsprinkles.common.items.ModItems;
+import com.tacosupremes.withsprinkles.common.lib.LibMisc;
+import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
+import com.tacosupremes.withsprinkles.common.utils.RecipeHandler;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class ModRecipes {
 
 	public static void postInit() {
+				
+		RecipeHandler.addShapedRecipe(ProxyRegistry.newStack(ModItems.refillGem), "RGR","GEG","RGR", 'R', ProxyRegistry.newStack(Items.REDSTONE), 'G', ProxyRegistry.newStack(Items.GLOWSTONE_DUST), 'E', ProxyRegistry.newStack(Items.EMERALD));
 		
-		GameRegistry.addRecipe(new ItemStack(ModItems.refillGem), "RGR","GEG","RGR", 'R', new ItemStack(Items.REDSTONE), 'G', new ItemStack(Items.GLOWSTONE_DUST), 'E', new ItemStack(Items.EMERALD));
-		
-		GameRegistry.addRecipe(new ItemStack(ModItems.portableEnderChest), "OPO","OEO","OPO", 'O', new ItemStack(Blocks.OBSIDIAN), 'E', new ItemStack(Items.ENDER_EYE), 'P', new ItemStack(Items.ENDER_PEARL));
+		RecipeHandler.addShapedRecipe(ProxyRegistry.newStack(ModItems.portableEnderChest), "OPO","OEO","OPO", 'O', ProxyRegistry.newStack(Blocks.OBSIDIAN), 'E', ProxyRegistry.newStack(Items.ENDER_EYE), 'P', ProxyRegistry.newStack(Items.ENDER_PEARL));
 	
-		GameRegistry.addRecipe(new ItemStack(ModItems.portableEnderChest), "OOO","PEP","OOO", 'O', new ItemStack(Blocks.OBSIDIAN), 'E', new ItemStack(Items.ENDER_EYE), 'P', new ItemStack(Items.ENDER_PEARL));		
+		RecipeHandler.addShapedRecipe(ProxyRegistry.newStack(ModItems.portableEnderChest), "OOO","PEP","OOO", 'O', ProxyRegistry.newStack(Blocks.OBSIDIAN), 'E', ProxyRegistry.newStack(Items.ENDER_EYE), 'P', ProxyRegistry.newStack(Items.ENDER_PEARL));		
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.portableEnderChest, 1, 2), new ItemStack(Items.REDSTONE), new ItemStack(ModItems.portableEnderChest, 1, 0));
-		
-		GameRegistry.addRecipe(new ItemStack(ModBlocks.autoDropper), "RRR", "RDR", "RRR", 'R', new ItemStack(Items.REDSTONE), 'D', new ItemStack(Blocks.DROPPER));		
+		RecipeHandler.addShapedRecipe(ProxyRegistry.newStack(ModBlocks.autoDropper), "RRR", "RDR", "RRR", 'R', ProxyRegistry.newStack(Items.REDSTONE), 'D', ProxyRegistry.newStack(Blocks.DROPPER));		
 	
-		GameRegistry.addRecipe(new ItemStack(ModBlocks.enderHopper), "OEO", "OHO", " O " , 'O', new ItemStack(Blocks.OBSIDIAN), 'H', new ItemStack(Blocks.HOPPER), 'E', new ItemStack(Items.ENDER_PEARL));
+		RecipeHandler.addShapedRecipe(ProxyRegistry.newStack(ModBlocks.enderHopper), "OEO", "OHO", " O " , 'O', ProxyRegistry.newStack(Blocks.OBSIDIAN), 'H', ProxyRegistry.newStack(Blocks.HOPPER), 'E', ProxyRegistry.newStack(Items.ENDER_PEARL));
 		
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.rainDetector), "   ", "WBW", "WRW" , 'W', "plankWood", 'B', new ItemStack(Items.BUCKET), 'R', new ItemStack(Items.REDSTONE)));
+		RecipeHandler.addOreDictRecipe(ProxyRegistry.newStack(ModBlocks.rainDetector), "   ", "WBW", "WRW" , 'W', "plankWood", 'B', ProxyRegistry.newStack(Items.BUCKET), 'R', ProxyRegistry.newStack(Items.REDSTONE));
+		
 		
 	}
 

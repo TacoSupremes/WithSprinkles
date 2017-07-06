@@ -1,12 +1,15 @@
 package com.tacosupremes.withsprinkles.common.items;
 
 import com.tacosupremes.withsprinkles.WithSprinkles;
+import com.tacosupremes.withsprinkles.common.lib.LibMisc;
+import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
 
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -19,11 +22,9 @@ public class ItemMod extends Item{
 	public ItemMod(String s, int meta){	
 		super();
 		this.setUnlocalizedName(s);
-		this.setRegistryName(s);
 		this.setCreativeTab(WithSprinkles.tab);
 		if(meta > 0)
 			this.setHasSubtypes(true);
-		GameRegistry.register(this);
 		ModItems.items.add(this);
 		this.meta = meta;
 	}
@@ -33,6 +34,15 @@ public class ItemMod extends Item{
 		this(s,0);
 	}
 	
+	
+	@Override
+	public Item setUnlocalizedName(String name) {
+		super.setUnlocalizedName(name);
+		setRegistryName(new ResourceLocation(LibMisc.MODID + ":" + name));
+		ProxyRegistry.register(this);
+
+		return this;
+	}
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
@@ -62,22 +72,26 @@ public class ItemMod extends Item{
 	
 	
 	
+	
+	
+	
+
 	@Override
-	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> l) {
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		
 		if(!needsDifferentNames())
-		super.getSubItems(itemIn, tab, l);
-		else{
-			
-			for(int i = 0; i<=meta; i++){
-				l.add(new ItemStack(this,1,i));
+			super.getSubItems(tab, items);
+			else{
+				
+				for(int i = 0; i<=meta; i++){
+					items.add(new ItemStack(this,1,i));
+				}
+				
+				
 			}
-			
-			
-		}
-			
+	
 	}
 
-	
 
 	public boolean needsDifferentNames(){
 		

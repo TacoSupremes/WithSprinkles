@@ -15,7 +15,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class LibMisc {
 	
 	public static final String MODID = "withsprinkles";
-	public static final String VERSION = "1.03b";
+	public static final String VERSION = "1.04";
 	public static final String COMMONPROXY = "com.tacosupremes.withsprinkles.proxy.CommonProxy";
 	public static final String CLIENTPROXY = "com.tacosupremes.withsprinkles.proxy.ClientProxy";
 	

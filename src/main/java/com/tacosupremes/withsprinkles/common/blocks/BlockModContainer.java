@@ -1,7 +1,10 @@
 package com.tacosupremes.withsprinkles.common.blocks;
 
 import com.tacosupremes.withsprinkles.WithSprinkles;
+import com.tacosupremes.withsprinkles.common.lib.LibMisc;
+import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -17,9 +20,6 @@ public abstract class BlockModContainer extends BlockContainer {
 		this.setUnlocalizedName(s);
 		this.setCreativeTab(WithSprinkles.tab);
 		ModBlocks.blocks.add(this);
-		this.setRegistryName(s);
-		GameRegistry.register(this);
-		GameRegistry.register(new ItemBlock(this).setRegistryName(s));
 		GameRegistry.registerTileEntity(tile(), s);
 	}
 	
@@ -32,6 +32,13 @@ public abstract class BlockModContainer extends BlockContainer {
 	        return EnumBlockRenderType.MODEL;
 	    }
 	
-	
+		@Override
+		public Block setUnlocalizedName(String name) {
+			super.setUnlocalizedName(name);
+			setRegistryName(LibMisc.MODID + ":" + name);
+			ProxyRegistry.register(this);
+			ProxyRegistry.register(new ItemBlock(this).setRegistryName(LibMisc.MODID + ":" + name));
+			return this;
+		}
 
 }

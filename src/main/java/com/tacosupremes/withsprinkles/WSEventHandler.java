@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.tacosupremes.withsprinkles.common.enchantments.ModEnchantments;
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
+import com.tacosupremes.withsprinkles.common.utils.ToolUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -29,13 +30,14 @@ import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class WSEventHandler {
   
     @SubscribeEvent
     public void onPlayerBreaking(BreakEvent event) {
-    	
-    	
+
     	
         if (event.getPlayer().getHeldItem(EnumHand.MAIN_HAND) != null) {
         	
@@ -59,20 +61,20 @@ public class WSEventHandler {
     	
     }
     
+    
+    @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void renderText(ItemTooltipEvent event){
-    	
-    	
-    	
+    		
     	if(event.getItemStack().isEmpty())
     		return;
     	
     	handleMultiple(event);
-    	
-    	
+    	    	
     }
     
-    private void handleMultiple(RightClickItem event){
+    private void handleMultiple(RightClickItem event)
+    {
     	
     	if(!event.getEntityPlayer().isSneaking())
     		return;
@@ -87,13 +89,15 @@ public class WSEventHandler {
     	{
     		
     	
-    		if(event.getItemStack().getItem() instanceof ItemArmor || event.getItemStack().getItem() instanceof ItemFishingRod){
+    		if(event.getItemStack().getItem() instanceof ItemArmor || event.getItemStack().getItem() instanceof ItemFishingRod)
+    		{
     			
     			event.setCanceled(true);
     			event.setCancellationResult(EnumActionResult.FAIL);
     		}
     		
-    		if(!event.getItemStack().getTagCompound().hasKey("MULTIPLELVL")){
+    		if(!event.getItemStack().getTagCompound().hasKey("MULTIPLELVL"))
+    		{
     		
     			event.getItemStack().getTagCompound().setInteger("MULTIPLELVL", EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()));
     			event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 1);
@@ -111,12 +115,14 @@ public class WSEventHandler {
     			
     			
     			
-    			if(event.getItemStack().getTagCompound().getInteger("MULTIPLELVL") > 1){
+    			if(event.getItemStack().getTagCompound().getInteger("MULTIPLELVL") > 1)
+    			{
     				
     			int mode = event.getItemStack().getTagCompound().getInteger("MULTIPLEMODE");
     			
     			
-    			switch(mode){
+    			switch(mode)
+    			{
     			
     				case(0):
     				{
@@ -145,9 +151,12 @@ public class WSEventHandler {
     			
     			}
     				
-    			}else{
+    			}
+    			else
+    			{
     				
-    				if((EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()) != event.getItemStack().getTagCompound().getInteger("MULTIPLELVL"))){
+    				if((EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()) != event.getItemStack().getTagCompound().getInteger("MULTIPLELVL")))
+    				{
         				event.getItemStack().getTagCompound().setInteger("MULTIPLELVL", EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()));
         				handleMultiple(event);
         				return;
@@ -172,7 +181,8 @@ public class WSEventHandler {
     		if(!event.getItemStack().getTagCompound().hasKey("MULTIPLELVL"))
     			return;
 
-    		if(event.getItemStack().getTagCompound().getInteger("MULTIPLEMODE") == 0){
+    		if(event.getItemStack().getTagCompound().getInteger("MULTIPLEMODE") == 0)
+    		{
     			
     			event.getItemStack().getTagCompound().removeTag("MULTIPLELVL");
     			
@@ -188,17 +198,20 @@ public class WSEventHandler {
 				
 			}
 			
-    		if(event.getItemStack().getItem() instanceof ItemArmor || event.getItemStack().getItem() instanceof ItemFishingRod){
+    		if(event.getItemStack().getItem() instanceof ItemArmor || event.getItemStack().getItem() instanceof ItemFishingRod)
+    		{
     			
     			event.setCanceled(true);
     			event.setCancellationResult(EnumActionResult.FAIL);
     		}
     		
-    		if(event.getItemStack().getTagCompound().getInteger("MULTIPLELVL") > 1){
+    		if(event.getItemStack().getTagCompound().getInteger("MULTIPLELVL") > 1)
+    		{
 
     			int mode = event.getItemStack().getTagCompound().getInteger("MULTIPLEMODE");
 
-    			switch(mode){
+    			switch(mode)
+    			{
     			
     				case(0):
     				{
@@ -227,7 +240,9 @@ public class WSEventHandler {
     			
     			}
 
-    		}else{
+    		}
+    		else
+    		{
     			
     			
     			
@@ -245,16 +260,19 @@ public class WSEventHandler {
     	}
     }
     
-    private void handleMultiple(ItemTooltipEvent event){
+    private void handleMultiple(ItemTooltipEvent event)
+    {
     	
     	if(!event.getItemStack().hasTagCompound())
     		return;
     	
-    	if(event.getItemStack().getTagCompound().hasKey("MULTIPLEMODE")){
+    	if(event.getItemStack().getTagCompound().hasKey("MULTIPLEMODE"))
+    	{
    		
     		Map<Enchantment, Integer> j = EnchantmentHelper.getEnchantments(event.getItemStack());
     		
-    		if(!j.keySet().contains(ModEnchantments.multiple) && event.getItemStack().isItemEnchanted()){	
+    		if(!j.keySet().contains(ModEnchantments.multiple) && event.getItemStack().isItemEnchanted())
+    		{	
 
     			Enchantment[] en = j.keySet().toArray(new Enchantment[j.keySet().size()]);
     	
@@ -278,11 +296,13 @@ public class WSEventHandler {
     	
     	 ItemStack stack = event.getPlayer().getHeldItem(EnumHand.MAIN_HAND);
          
-         if (stack.isItemEnchanted() && EnchantmentHelper.getEnchantmentLevel(ModEnchantments.fiery, stack) > 0 && stack.getItem().canHarvestBlock(event.getState(), stack)) 
+         if (stack.isItemEnchanted() && EnchantmentHelper.getEnchantmentLevel(ModEnchantments.fiery, stack) > 0 && ToolUtils.isToolEffective(stack, event.getState())) 
          {
          
         	 ItemStack result = FurnaceRecipes.instance().getSmeltingResult(new ItemStack(event.getState().getBlock(), 1, event.getState().getBlock().getMetaFromState(event.getState())));
-        	 if(result != ItemStack.EMPTY){
+        	
+        	 if(result != ItemStack.EMPTY)
+        	 {
         		 
         		 World w = event.getPlayer().getEntityWorld();
         		 BlockPos pos = event.getPos();

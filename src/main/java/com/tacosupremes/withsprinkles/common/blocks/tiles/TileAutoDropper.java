@@ -59,7 +59,7 @@ public class TileAutoDropper extends TileSimpleInventory implements ITickable, I
 		        e.motionX += 0.007499999832361937D * (double)speed * (double)enumfacing.getFrontOffsetX();
 		        e.motionY += 0.007499999832361937D * (double)speed + (enumfacing.getAxis() == EnumFacing.Axis.Y ? 0.3D * (enumfacing == EnumFacing.UP ? 1 : -1) : 0);
 		        e.motionZ += 0.007499999832361937D * (double)speed * (double)enumfacing.getFrontOffsetZ();
-		        e.setEntityItemStack(this.getStackInSlot(0));
+		        e.setItem(this.getStackInSlot(0));
 			
 			this.setInventorySlotContents(0, null);
 			

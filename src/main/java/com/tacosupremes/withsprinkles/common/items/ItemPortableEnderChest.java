@@ -6,9 +6,12 @@ import java.io.FileOutputStream;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -213,8 +216,8 @@ public class ItemPortableEnderChest extends ItemMod {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-		
+	  public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {	
 		if(stack.getItemDamage() < 2)
 			return;
 		
@@ -224,7 +227,7 @@ public class ItemPortableEnderChest extends ItemMod {
 		tooltip.add(I18n.translateToLocal(LibMisc.MODID+".bound") + " "+ stack.getTagCompound().getString("PLAYERNAME"));
 		
 	
-		super.addInformation(stack, playerIn, tooltip, advanced);
+		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}	
 	
 	

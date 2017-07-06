@@ -10,6 +10,7 @@ import com.tacosupremes.withsprinkles.common.blocks.ModBlocks;
 import com.tacosupremes.withsprinkles.common.enchantments.ModEnchantments;
 import com.tacosupremes.withsprinkles.common.items.ModItems;
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
+import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
 import com.tacosupremes.withsprinkles.proxy.CommonProxy;
 import com.tacosupremes.withsprinkles.recipes.ModRecipes;
 
@@ -22,6 +23,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -55,9 +57,16 @@ public class WithSprinkles
     public void preInit(FMLPreInitializationEvent event)
     {
     	ModEnchantments.preInit();
+
+    	
     	tab = new WSTab();
+    	
+    	proxy.preInit(event);
+    	
     	ModItems.preInit();
     	ModBlocks.preInit();
+    	ModRecipes.postInit();
+    	
 
     }
     
@@ -65,16 +74,17 @@ public class WithSprinkles
     public void init(FMLInitializationEvent event)
     {
     	  events = new WSEventHandler();
-          MinecraftForge.EVENT_BUS.register(events);
+    	  
+    	  MinecraftForge.EVENT_BUS.register(events);
           
-         proxy.registerRenders();
+    	  proxy.registerRenders();
         
     }
     
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-    	  ModRecipes.postInit();
+    	  
     }
 
     public class WSTab extends CreativeTabs{
@@ -128,7 +138,7 @@ public class WithSprinkles
         
         if (is.getItem() == Items.ENCHANTED_BOOK)
         {
-            Items.ENCHANTED_BOOK.addEnchantment(is, new EnchantmentData(e, lvl));
+        	ItemEnchantedBook.addEnchantment(is, new EnchantmentData(e, lvl));
             return;
         }
         
