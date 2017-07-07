@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "withsprinkles:autodropper_vertical", "x": 180 },
+        "facing=up":    { "model": "withsprinkles:autodropper_vertical" },
+        "facing=north": { "model": "withsprinkles:autodropper" },
+        "facing=south": { "model": "withsprinkles:autodropper", "y": 180 },
+        "facing=west":  { "model": "withsprinkles:autodropper", "y": 270 },
+        "facing=east":  { "model": "withsprinkles:autodropper", "y": 90 }
+    }
+}
