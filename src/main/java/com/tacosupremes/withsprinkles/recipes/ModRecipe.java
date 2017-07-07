@@ -1,5 +1,6 @@
 package com.tacosupremes.withsprinkles.recipes;
 
+import com.tacosupremes.withsprinkles.common.lib.LibMisc;
 import com.tacosupremes.withsprinkles.common.utils.RecipeHandler;
 
 import net.minecraft.item.crafting.IRecipe;
@@ -11,5 +12,10 @@ public abstract class ModRecipe extends IForgeRegistryEntry.Impl<IRecipe> implem
 	public ModRecipe(ResourceLocation res) {
 		RecipeHandler.addRecipe(res, this);
 	}
+	
+	public ModRecipe(String name) {
+		this(new ResourceLocation(LibMisc.MODID, name));
+	}
+	
 	
 }

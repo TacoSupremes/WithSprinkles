@@ -20,11 +20,20 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootEntry;
+import net.minecraft.world.storage.loot.LootEntryTable;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.storage.loot.RandomValueRange;
+import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent.PostText;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
@@ -52,6 +61,33 @@ public class WSEventHandler {
         
      
     }
+    
+    @SubscribeEvent
+    public void onLootLoad(LootTableLoadEvent event) {
+    	String name = event.getName().toString();
+
+    	  try{
+    		  if(name.matches("minecraft:chests/spawn_bonus_chest")
+    			      || name.matches("minecraft:entities/chicken")){
+
+    	      WithSprinkles.logger.info("Matched our targets");
+    	      event.getTable().addPool(getAdditive("withsprinkles:Loot_Additive"));
+
+    	    }
+    	
+
+    	    WithSprinkles.logger.info(name);
+
+    	  }catch(Exception exc){}
+    	}
+
+    	private LootPool getAdditive(String entryName) {
+    	   return new LootPool(new LootEntry[] { getAdditiveEntry(entryName, 1) }, new LootCondition[0], new RandomValueRange(1), new RandomValueRange(0, 1), "Additive_pool");
+    	}
+
+    	private LootEntryTable getAdditiveEntry(String name, int weight) {
+    	    return new LootEntryTable(new ResourceLocation(name), weight, 0, new LootCondition[0], "Additive_entry");
+    	}
      
     @SubscribeEvent
     public void onPlayerRightClick(RightClickItem event)
@@ -296,7 +332,7 @@ public class WSEventHandler {
     	
     	 ItemStack stack = event.getPlayer().getHeldItem(EnumHand.MAIN_HAND);
          
-         if (stack.isItemEnchanted() && EnchantmentHelper.getEnchantmentLevel(ModEnchantments.fiery, stack) > 0 && ToolUtils.isToolEffective(stack, event.getState())) 
+         if (stack.isItemEnchanted() && EnchantmentHelper.getEnchantmentLevel(ModEnchantments.fiery, stack) > 0 && ForgeHooks.canToolHarvestBlock(event.getWorld(), event.getPos(), stack)) 
          {
          
         	 ItemStack result = FurnaceRecipes.instance().getSmeltingResult(new ItemStack(event.getState().getBlock(), 1, event.getState().getBlock().getMetaFromState(event.getState())));

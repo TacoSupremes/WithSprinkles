@@ -30,7 +30,7 @@ public class ModRecipes {
 		
 		RecipeHandler.addOreDictRecipe(ProxyRegistry.newStack(ModBlocks.rainDetector), "   ", "WBW", "WRW" , 'W', "plankWood", 'B', ProxyRegistry.newStack(Items.BUCKET), 'R', ProxyRegistry.newStack(Items.REDSTONE));
 		
-		
+		EnchantedBookRecipe r = new EnchantedBookRecipe();
 	}
 
 }

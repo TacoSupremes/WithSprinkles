@@ -10,6 +10,7 @@ import com.tacosupremes.withsprinkles.common.blocks.ModBlocks;
 import com.tacosupremes.withsprinkles.common.enchantments.ModEnchantments;
 import com.tacosupremes.withsprinkles.common.items.ModItems;
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
+import com.tacosupremes.withsprinkles.common.utils.EnchantUtils;
 import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
 import com.tacosupremes.withsprinkles.proxy.CommonProxy;
 import com.tacosupremes.withsprinkles.recipes.ModRecipes;
@@ -28,6 +29,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -53,6 +58,10 @@ public class WithSprinkles
     
     public static final Logger logger = LogManager.getLogManager().getLogger(LibMisc.MODID);
     
+    public static final ResourceLocation oldPagesLoot = register("old_pages_loot");
+
+    
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -68,6 +77,7 @@ public class WithSprinkles
     	
     	ModRecipes.preInit();
     	
+    
 
     }
     
@@ -115,7 +125,7 @@ public class WithSprinkles
 						
 						ItemStack is2 = is.copy();
 						
-						enchantItem(is2, e, i);
+						EnchantUtils.enchantItem(is2, e, i);
 						
 						l.add(is2);
 						
@@ -126,28 +136,8 @@ public class WithSprinkles
     }
     
     
-    public void enchantItem(ItemStack is, Enchantment e, int lvl)
-    {
-    	
-    	NBTTagList nbtl = new NBTTagList();
-    	
-    	NBTTagCompound nbt = new NBTTagCompound();
-    	
-    	nbt.setShort("id", (short)Enchantment.getEnchantmentID(e));
-        nbt.setShort("lvl", (short)lvl);
-        nbtl.appendTag(nbt);
-        
-        if (is.getItem() == Items.ENCHANTED_BOOK)
-        {
-        	ItemEnchantedBook.addEnchantment(is, new EnchantmentData(e, lvl));
-            return;
-        }
-        
-        if(!is.hasTagCompound())	
-        	is.setTagCompound(new NBTTagCompound());
-   
-        is.setTagInfo("ench", nbtl);
-    	
-    }
+    private static ResourceLocation register(String id) {
+        return LootTableList.register(new ResourceLocation(LibMisc.MODID, id));
+ }
     
 }

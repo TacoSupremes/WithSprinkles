@@ -29,6 +29,8 @@ public class ModItems {
 	public static Item enchantBook;
 	
 	public static Item portableEnderChest;
+
+	public static Item oldPaper;
 	
 	public static void preInit() {
 		
@@ -37,6 +39,8 @@ public class ModItems {
 		portableEnderChest = new ItemPortableEnderChest();
 		
 		enchantBook = new ItemEnchantBook();
+		
+		oldPaper = new ItemOldPaper();
 	}
 	
 
