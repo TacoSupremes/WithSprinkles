@@ -99,7 +99,7 @@ public class BlockRainDetector extends BlockModContainer {
 	    }
 
 	    public BlockRenderLayer getBlockLayer()
-		{
+	    {
 	        return BlockRenderLayer.CUTOUT_MIPPED;
 	    }
 
