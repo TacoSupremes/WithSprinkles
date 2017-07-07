@@ -1,20 +1,20 @@
 {
     "variants": {
-        "power=0": { "model": "withsprinkles:raindetector" },
-        "power=1": { "model": "withsprinkles:raindetector" },
-        "power=2": { "model": "withsprinkles:raindetector" },
-        "power=3": { "model": "withsprinkles:raindetector" },
-        "power=4": { "model": "withsprinkles:raindetector1" },
-        "power=5": { "model": "withsprinkles:raindetector" },
-        "power=6": { "model": "withsprinkles:raindetector" },
-        "power=7": { "model": "withsprinkles:raindetector" },
-        "power=8": { "model": "withsprinkles:raindetector1" },
-        "power=9": { "model": "withsprinkles:raindetector" },
-        "power=10": { "model": "withsprinkles:raindetector" },
-        "power=11": { "model": "withsprinkles:raindetector" },
-        "power=12": { "model": "withsprinkles:raindetector" },
-        "power=13": { "model": "withsprinkles:raindetector" },
-        "power=14": { "model": "withsprinkles:raindetector" },
-        "power=15": { "model": "withsprinkles:raindetector" }
+        "power=0": { "model": "withsprinkles:raindetector_empty" },
+        "power=1": { "model": "withsprinkles:raindetector_empty" },
+        "power=2": { "model": "withsprinkles:raindetector_empty" },
+        "power=3": { "model": "withsprinkles:raindetector_empty" },
+        "power=4": { "model": "withsprinkles:raindetector_full" },
+        "power=5": { "model": "withsprinkles:raindetector_empty" },
+        "power=6": { "model": "withsprinkles:raindetector_empty" },
+        "power=7": { "model": "withsprinkles:raindetector_empty" },
+        "power=8": { "model": "withsprinkles:raindetector_full" },
+        "power=9": { "model": "withsprinkles:raindetector_empty" },
+        "power=10": { "model": "withsprinkles:raindetector_empty" },
+        "power=11": { "model": "withsprinkles:raindetector_empty" },
+        "power=12": { "model": "withsprinkles:raindetector_empty" },
+        "power=13": { "model": "withsprinkles:raindetector_empty" },
+        "power=14": { "model": "withsprinkles:raindetector_empty" },
+        "power=15": { "model": "withsprinkles:raindetector_empty" }
     }
 }
