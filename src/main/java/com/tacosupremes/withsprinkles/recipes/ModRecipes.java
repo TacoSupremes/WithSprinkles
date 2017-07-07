@@ -16,7 +16,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class ModRecipes {
 
-	public static void postInit() {
+	public static void preInit() {
 				
 		RecipeHandler.addShapedRecipe(ProxyRegistry.newStack(ModItems.refillGem), "RGR","GEG","RGR", 'R', ProxyRegistry.newStack(Items.REDSTONE), 'G', ProxyRegistry.newStack(Items.GLOWSTONE_DUST), 'E', ProxyRegistry.newStack(Items.EMERALD));
 		

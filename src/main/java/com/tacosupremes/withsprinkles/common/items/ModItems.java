@@ -26,6 +26,8 @@ public class ModItems {
 	
 //	public static Item oreCompass;
 	
+	public static Item enchantBook;
+	
 	public static Item portableEnderChest;
 	
 	public static void preInit() {
@@ -33,6 +35,8 @@ public class ModItems {
 		refillGem = new ItemRefiller();
 		
 		portableEnderChest = new ItemPortableEnderChest();
+		
+		enchantBook = new ItemEnchantBook();
 	}
 	
 

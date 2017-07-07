@@ -57,15 +57,16 @@ public class WithSprinkles
     public void preInit(FMLPreInitializationEvent event)
     {
     	ModEnchantments.preInit();
-
     	
     	tab = new WSTab();
     	
     	proxy.preInit(event);
     	
     	ModItems.preInit();
+    	
     	ModBlocks.preInit();
-    	ModRecipes.postInit();
+    	
+    	ModRecipes.preInit();
     	
 
     }
