@@ -42,11 +42,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class WSEventHandler {
+public class WSEventHandler
+{
   
     @SubscribeEvent
-    public void onPlayerBreaking(BreakEvent event) {
-
+    public void onPlayerBreaking(BreakEvent event) 
+    {
     	
         if (event.getPlayer().getHeldItem(EnumHand.MAIN_HAND) != null) {
         	
@@ -54,51 +55,45 @@ public class WSEventHandler {
         	
         	if(!event.getPlayer().isSneaking())
         	handleExchange(event);
-        	
-        	
             
         }
-        
      
     }
     
     @SubscribeEvent
-    public void onLootLoad(LootTableLoadEvent event) {
+    public void onLootLoad(LootTableLoadEvent event) 
+    {
+    	
     	String name = event.getName().toString();
 
-    	
-
-    	  try{
+    	try{
     		  
-    		  if(name.contains("minecraft:chests")){
-	  
-    			 
+    		  if(name.contains("minecraft:chests"))
     			 event.getTable().addPool(getAdditive(WithSprinkles.oldPagesLoot));
-    		  }
 
-    	  }catch(Exception exc){}
+    	   }catch(Exception exc){}
     	}
 
-    	private LootPool getAdditive(ResourceLocation name) {
-    	   return new LootPool(new LootEntry[] { getAdditiveEntry(name, 1) }, new LootCondition[0], new RandomValueRange(1), new RandomValueRange(0, 1), "Additive_pool");
-    	}
+    private LootPool getAdditive(ResourceLocation name) 
+    {
+    	return new LootPool(new LootEntry[] { getAdditiveEntry(name, 1) }, new LootCondition[0], new RandomValueRange(1), new RandomValueRange(0, 1), "Additive_pool");
+   	}
 
-    	private LootEntryTable getAdditiveEntry(ResourceLocation name, int weight) {
-    	    return new LootEntryTable(name, weight, 0, new LootCondition[0], "Additive_entry");
-    	}
+    private LootEntryTable getAdditiveEntry(ResourceLocation name, int weight)
+    {
+    	return new LootEntryTable(name, weight, 0, new LootCondition[0], "Additive_entry");
+    }
      
     @SubscribeEvent
     public void onPlayerRightClick(RightClickItem event)
     {
-    	
-    	handleMultiple(event);
-    	
+    	handleMultiple(event);	
     }
-    
-    
+      
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void renderText(ItemTooltipEvent event){
+    public void renderText(ItemTooltipEvent event)
+    {
     		
     	if(event.getItemStack().isEmpty())
     		return;
@@ -142,7 +137,9 @@ public class WSEventHandler {
     			
     			
     		
-    		}else{
+    		}
+    		else
+    		{
     			
     			if((EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()) != event.getItemStack().getTagCompound().getInteger("MULTIPLELVL")))
     				event.getItemStack().getTagCompound().setInteger("MULTIPLELVL", EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()));
@@ -210,7 +207,9 @@ public class WSEventHandler {
     		
     		}
     	
-    	}else{
+    	}
+    	else
+    	{
     		
     		if(!event.getItemStack().getTagCompound().hasKey("MULTIPLELVL"))
     			return;

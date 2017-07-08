@@ -72,8 +72,6 @@ public final class RecipeHandler {
 		Map<String, Ingredient> key = Maps.newHashMap();
 		Iterator itr = Arrays.asList(inputs).iterator();
 		
-	//	System.out.println(output.getDisplayName()+"\n");
-
 		while(itr.hasNext()) {
 			Object obj = itr.next();
 

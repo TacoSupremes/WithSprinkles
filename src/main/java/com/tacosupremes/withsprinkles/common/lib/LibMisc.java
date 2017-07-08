@@ -21,8 +21,7 @@ public class LibMisc {
 	
 	
 	public static class Ores {
-		
-	
+
 	public static List<String> ores = new ArrayList<String>();
 	public static List<String> oreName = new ArrayList<String>();
 	public static List<String> dusts = new ArrayList<String>();

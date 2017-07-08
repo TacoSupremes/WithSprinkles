@@ -16,8 +16,7 @@ public class InventoryUtils {
 		
 		if(itemsLeft(ism, ii) != 0)	
 			return;
-		
-		
+
 		ItemStack is = ism.copy();
 		
 		for(int i = 0; i< ii.getSizeInventory();i++){

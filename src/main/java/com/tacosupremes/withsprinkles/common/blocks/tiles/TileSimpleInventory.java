@@ -27,8 +27,7 @@ public abstract class TileSimpleInventory extends TileMod implements IInventory
 			
 			for(int i = 0; i < getSizeInventory(); i++)
 				inventorySlots[i] = ItemStack.EMPTY;
-			
-			
+						
 		}
 	
 		public void readCustomNBT(NBTTagCompound par1NBTTagCompound)
