@@ -66,27 +66,25 @@ public class WSEventHandler {
     public void onLootLoad(LootTableLoadEvent event) {
     	String name = event.getName().toString();
 
-    	  try{
-    		  if(name.matches("minecraft:chests/spawn_bonus_chest")
-    			      || name.matches("minecraft:entities/chicken")){
-
-    	      WithSprinkles.logger.info("Matched our targets");
-    	      event.getTable().addPool(getAdditive("withsprinkles:Loot_Additive"));
-
-    	    }
     	
 
-    	    WithSprinkles.logger.info(name);
+    	  try{
+    		  
+    		  if(name.contains("minecraft:chests")){
+	  
+    			 
+    			 event.getTable().addPool(getAdditive(WithSprinkles.oldPagesLoot));
+    		  }
 
     	  }catch(Exception exc){}
     	}
 
-    	private LootPool getAdditive(String entryName) {
-    	   return new LootPool(new LootEntry[] { getAdditiveEntry(entryName, 1) }, new LootCondition[0], new RandomValueRange(1), new RandomValueRange(0, 1), "Additive_pool");
+    	private LootPool getAdditive(ResourceLocation name) {
+    	   return new LootPool(new LootEntry[] { getAdditiveEntry(name, 1) }, new LootCondition[0], new RandomValueRange(1), new RandomValueRange(0, 1), "Additive_pool");
     	}
 
-    	private LootEntryTable getAdditiveEntry(String name, int weight) {
-    	    return new LootEntryTable(new ResourceLocation(name), weight, 0, new LootCondition[0], "Additive_entry");
+    	private LootEntryTable getAdditiveEntry(ResourceLocation name, int weight) {
+    	    return new LootEntryTable(name, weight, 0, new LootCondition[0], "Additive_entry");
     	}
      
     @SubscribeEvent

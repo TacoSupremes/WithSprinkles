@@ -3,6 +3,7 @@ tile.autoDropper.name=Auto Dropper
 tile.enderHopper.name=Obsidian Hopper
 tile.rainDetector.name=Rain Detector
 item.refillGem.name=Sorting Gem
+item.oldPaper.name=Lost Pages
 item.enderChest.name=Infused Eye of Ender
 enchantment.withsprinkles:exchange=Exchange
 enchantment.withsprinkles:fiery=Fiery Aura

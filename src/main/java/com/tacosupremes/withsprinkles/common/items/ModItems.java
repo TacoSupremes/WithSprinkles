@@ -38,7 +38,7 @@ public class ModItems {
 		
 		portableEnderChest = new ItemPortableEnderChest();
 		
-		enchantBook = new ItemEnchantBook();
+//		enchantBook = new ItemEnchantBook();
 		
 		oldPaper = new ItemOldPaper();
 	}
