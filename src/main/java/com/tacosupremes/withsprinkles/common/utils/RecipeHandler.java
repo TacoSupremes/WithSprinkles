@@ -6,7 +6,6 @@
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  * 
  * Original: https://github.com/Glitchfiend/BiomesOPlenty/blob/0f8be0526e01d918cf8f22d4904a3b74981dee6f/src/main/java/biomesoplenty/common/util/inventory/CraftingUtil.java
- * (edited to work with multiple mods) 
  ******************************************************************************/
 package com.tacosupremes.withsprinkles.common.utils;
 

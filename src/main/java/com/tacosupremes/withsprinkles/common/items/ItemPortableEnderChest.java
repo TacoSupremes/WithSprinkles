@@ -64,10 +64,7 @@ public class ItemPortableEnderChest extends ItemMod {
 				
 				player.getHeldItem(handIn).getTagCompound().setString("PLAYER", player.getUniqueID().toString());
 				player.getHeldItem(handIn).getTagCompound().setString("PLAYERNAME", player.getName());
-				
-			
-				
-				
+		
 				
 			}
 			
@@ -228,10 +225,9 @@ public class ItemPortableEnderChest extends ItemMod {
 		
 	
 		super.addInformation(stack, worldIn, tooltip, flagIn);
-	}	
-	
-	
-	
+	}
+
+
 	
 	
 	

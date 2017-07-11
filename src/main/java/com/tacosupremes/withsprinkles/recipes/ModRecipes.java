@@ -30,6 +30,8 @@ public class ModRecipes {
 		
 		RecipeHandler.addOreDictRecipe(ProxyRegistry.newStack(ModBlocks.rainDetector), "   ", "WBW", "WRW" , 'W', "plankWood", 'B', ProxyRegistry.newStack(Items.BUCKET), 'R', ProxyRegistry.newStack(Items.REDSTONE));
 		
+		RecipeHandler.addShapelessRecipe(ProxyRegistry.newStack(ModItems.portableEnderChest, 1, 2), ProxyRegistry.newStack(Items.REDSTONE), ProxyRegistry.newStack(ModItems.portableEnderChest));
+		
 		EnchantedBookRecipe r = new EnchantedBookRecipe();
 	}
 

@@ -59,8 +59,6 @@ public class WithSprinkles
     public static final Logger logger = LogManager.getLogManager().getLogger(LibMisc.MODID);
     
     public static final ResourceLocation oldPagesLoot = register("old_pages_loot");
-
-    
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -76,9 +74,6 @@ public class WithSprinkles
     	ModBlocks.preInit();
     	
     	ModRecipes.preInit();
-    	
-    
-
     }
     
     @EventHandler
@@ -88,7 +83,7 @@ public class WithSprinkles
     	  
     	  MinecraftForge.EVENT_BUS.register(events);
           
-    	  proxy.registerRenders();
+   // 	  proxy.registerRenders();
         
     }
     

@@ -21,7 +21,7 @@ public class TileAutoDropper extends TileSimpleInventory implements ITickable, I
 	@Override
 	public void update() {
 		
-		if(this.getStackInSlot(0) == null || this.getStackInSlot(0).isEmpty())
+		if(this.getStackInSlot(0) == null || this.getStackInSlot(0).isEmpty() || this.getWorld().isBlockPowered(pos))
 			return;
 		
 	BlockPos bp = getPos().add(((BlockAutoDropper)this.getWorld().getBlockState(getPos()).getBlock()).getFacing(this.getBlockMetadata()).getDirectionVec());

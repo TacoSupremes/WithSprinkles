@@ -2,6 +2,7 @@ package com.tacosupremes.withsprinkles.proxy;
 
 import com.tacosupremes.withsprinkles.common.blocks.ModBlocks;
 import com.tacosupremes.withsprinkles.common.items.ModItems;
+import com.tacosupremes.withsprinkles.common.utils.ClientStuff;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,8 +26,9 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
-	
+		MinecraftForge.EVENT_BUS.register(ClientStuff.class);
 	}
+	
 	
 	
 }
