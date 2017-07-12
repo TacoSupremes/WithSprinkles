@@ -82,8 +82,6 @@ public class WithSprinkles
     	  events = new WSEventHandler();
     	  
     	  MinecraftForge.EVENT_BUS.register(events);
-          
-   // 	  proxy.registerRenders();
         
     }
     

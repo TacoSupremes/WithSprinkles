@@ -1,12 +1,15 @@
 package com.tacosupremes.withsprinkles;
 
+import java.util.List;
 import java.util.Map;
 
 import com.tacosupremes.withsprinkles.common.enchantments.ModEnchantments;
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
+import com.tacosupremes.withsprinkles.common.utils.BlockUtils;
 import com.tacosupremes.withsprinkles.common.utils.ToolUtils;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
@@ -49,18 +52,57 @@ public class WSEventHandler
     public void onPlayerBreaking(BreakEvent event) 
     {
     	
-        if (event.getPlayer().getHeldItem(EnumHand.MAIN_HAND) != null) {
+        if (event.getPlayer().getHeldItem(EnumHand.MAIN_HAND) != null)
+        {
         	
         	handleFiery(event);
         	
+        	handleFelling(event);
+        	
         	if(!event.getPlayer().isSneaking())
-        	handleExchange(event);
+        		handleExchange(event);
             
         }
      
     }
     
-    @SubscribeEvent
+    private void handleFelling(BreakEvent event) 
+    {
+    	ItemStack stack = event.getPlayer().getHeldItem(EnumHand.MAIN_HAND);
+         
+         if (stack.isItemEnchanted() && EnchantmentHelper.getEnchantmentLevel(ModEnchantments.felling, stack) > 0) 
+         {
+        	 
+        	 if(event.getState().getBlock().isWood(event.getWorld(), event.getPos()))
+        	 {    		 
+        		 
+        		 List<BlockPos> l = BlockUtils.getConnectedLogs(event.getWorld(), event.getPos());
+        		 
+        		 World w = event.getWorld();
+        		 
+        		 for(BlockPos bp : l)
+        		 {
+        			 
+        			 if(stack.isEmpty())
+        				 break;
+        			 
+        			IBlockState ib = w.getBlockState(bp);
+        			
+        			ib.getBlock().harvestBlock(w, event.getPlayer(), bp, ib, null, stack);
+        			
+        			w.setBlockToAir(bp);
+        			
+        			stack.damageItem(2, event.getPlayer());
+        			 
+        		 }
+        		 
+        		 event.setCanceled(true);
+        	 }
+ 
+         }
+	}
+
+	@SubscribeEvent
     public void onLootLoad(LootTableLoadEvent event) 
     {
     	
