@@ -14,6 +14,8 @@ public class ModEnchantments {
 	
 	public static Enchantment multiple;
 	
+	public static Enchantment felling;
+	
 	public static List<Enchantment> enchants = new ArrayList<Enchantment>();
 
 	public static void preInit(){
@@ -23,6 +25,8 @@ public class ModEnchantments {
 		fiery = new EnchantFiery();
 		
 		multiple = new EnchantMultiple();
+		
+		felling = new EnchantFelling();
 		
 	}
 

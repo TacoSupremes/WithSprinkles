@@ -2,6 +2,7 @@ package com.tacosupremes.withsprinkles.common.items;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.IntFunction;
 
 import com.tacosupremes.withsprinkles.WithSprinkles;
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
@@ -11,6 +12,7 @@ import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ModItems {
@@ -26,11 +28,13 @@ public class ModItems {
 	
 //	public static Item oreCompass;
 	
-	public static Item enchantBook;
+//	public static Item enchantBook;
 	
 	public static Item portableEnderChest;
 
 	public static Item oldPaper;
+	
+	public static Item testItem;
 	
 	public static void preInit() {
 		
@@ -43,8 +47,8 @@ public class ModItems {
 	
 
 public static void registerRenders(){
-		
-		for(ItemMod i : items)
+	
+	for(ItemMod i : items)
 		{
 
 			if(i.getColor() != null)		
@@ -53,10 +57,19 @@ public static void registerRenders(){
 			if(i.meta !=0)
 			{
 				
+				if(i.hasOneModel()){
+					
+					for(int i2 = 0; i2<i.meta+1;i2++)
+						registerItemRenderSameModel(i, i2);
+					
+					continue;
+				}
+				
+				
 				ResourceLocation[] s = new ResourceLocation[i.meta+1];
 				
 				for(int i2 = 0; i2<i.meta+1;i2++)			
-					s[i2] = new ResourceLocation(LibMisc.MODID + ":" + i.getUnlocalizedName().substring(5) +(i2 == 0 ? "" : i2));
+					s[i2] = new ResourceLocation(i.getRegistryName().toString() +(i2 == 0 ? "" : i2));
 
 				ModelBakery.registerItemVariants(i, s);
 				
@@ -70,12 +83,17 @@ public static void registerRenders(){
 			}
 			
 			if(i.meta == 0 || i.skipVariants())
-				ModItems.registerItemRender(i, 0);
+				registerItemRender(i, 0);
 		}
 		
 		
 		for(Item i : nitems)
 			registerItemRender(i, 0);
+		
+		
+		
+		
+		
 		
 	}
 		
@@ -86,15 +104,39 @@ public static void registerRenders(){
 		if(i == null)
 			return;
 		
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i, meta, new ModelResourceLocation(LibMisc.MODID+":"+i.getUnlocalizedName().substring(5)+ (meta == 0 ? "" : String.valueOf(meta)), "inventory"));
+	//	System.out.println(":"+i.getUnlocalizedName()+meta);
+	//	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i, meta, new ModelResourceLocation(i.getRegistryName()+ (meta == 0 ? "" : String.valueOf(meta)), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(i, meta, new ModelResourceLocation(i.getRegistryName() + (meta == 0 ? "" : String.valueOf(meta)), "inventory"));
+
 	}
+	
+
 	
 	public static void registerItemRenderSameModel(Item i, int meta){
 		
 		if(i == null)
 			return;
 		
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i, meta, new ModelResourceLocation(LibMisc.MODID+":"+i.getUnlocalizedName().substring(5), "inventory"));
+	//	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i, meta, new ModelResourceLocation(i.getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(i, meta, new ModelResourceLocation(i.getRegistryName(), "inventory"));
+
 	}
 
+	public static void registerItemAllMeta(Item item, int range) {
+		registerItemMetas(item, range, i -> item.getRegistryName().getResourcePath());
+	}
+
+	public static void registerItemAppendMeta(Item item, int maxExclusive, String loc) {
+		registerItemMetas(item, maxExclusive, i -> loc + i);
+	}
+
+	public static void registerItemMetas(Item item, int maxExclusive, IntFunction<String> metaToName) {
+		for (int i = 0; i < maxExclusive; i++) {
+			ModelLoader.setCustomModelResourceLocation(
+					item, i,
+					new ModelResourceLocation(LibMisc.MODID + ":" + metaToName.apply(i), "inventory")
+					);
+		}
+	}
+	
 }

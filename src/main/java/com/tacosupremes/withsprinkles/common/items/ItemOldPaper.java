@@ -24,34 +24,4 @@ public class ItemOldPaper extends ItemMod {
 		super("oldPaper");
 	}
 	
-	
-	
-	
-	@Override
-	 public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-    {
-		
-		IBlockState iblockstate = Blocks.CHEST.getDefaultState();
-		world.setBlockState(pos, Blocks.CHEST.correctFacing(world, pos, iblockstate), 2);
-        TileEntity tileentity = world.getTileEntity(pos);
-        
-        Random random = new Random();
-
-        if (tileentity instanceof TileEntityChest)   
-        {
-        	/**Our Custom Loot**/
-        	ResourceLocation location = WithSprinkles.oldPagesLoot;
-        	
-        	if(player.isSneaking()){
-        		/**Our modified Spawn Chest Loot**/
-        		location = LootTableList.CHESTS_SPAWN_BONUS_CHEST;
-        	}        	
-        	
-            ((TileEntityChest)tileentity).setLootTable(location, random.nextLong());
-        }
-		
-		
-		return EnumActionResult.SUCCESS;
-	}
-
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import com.tacosupremes.withsprinkles.common.items.ModItems;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
 public class ModBlocks {

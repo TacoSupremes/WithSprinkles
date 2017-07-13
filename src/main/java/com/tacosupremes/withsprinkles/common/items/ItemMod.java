@@ -32,6 +32,7 @@ public class ItemMod extends Item{
 	
 	public ItemMod(String s){
 		this(s,0);
+		
 	}
 	
 	
@@ -57,24 +58,14 @@ public class ItemMod extends Item{
 
 
 	@Override
-	public String getItemStackDisplayName(ItemStack stack) {
+	public String getItemStackDisplayName(ItemStack stack) 
+	{
 		
 		if(this.meta == 0 || needsDifferentNames())
 			return super.getItemStackDisplayName(stack);
 		
-		
-		
-		
 		return I18n.translateToLocal(this.getUnlocalizedName(stack).replace(String.valueOf(stack.getMetadata()), "")+".name");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
@@ -92,24 +83,26 @@ public class ItemMod extends Item{
 	
 	}
 
-
-	public boolean needsDifferentNames(){
-		
+	public boolean needsDifferentNames()
+	{		
 		return false;
 	}
 
 
-	public boolean skipVariants() {
-		
+	public boolean skipVariants()
+	{
 		return false;
 	}
 	
-	public IItemColor getColor(){
-		
-		
+	public boolean hasOneModel()
+	{
+		return false;
+	}
+	
+	
+	public IItemColor getColor()
+	{	
 		return null;
 	}
-	
-	
-	
+
 }

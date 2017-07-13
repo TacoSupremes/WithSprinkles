@@ -32,10 +32,17 @@ public class TileEnderHopper extends TileSimpleInventory {
 	@Override
 	public void update() {
 		
+		
+		if(this.getWorld().isBlockPowered(pos))
+			return;
+		
 		ticks++;
 		
 		if(ticks % 8 != 0)
 			return;
+		
+		
+		
 		
 		if (this.getWorld().isRemote)
 			return;
