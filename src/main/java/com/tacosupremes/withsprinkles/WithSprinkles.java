@@ -60,8 +60,6 @@ public class WithSprinkles
     
     public static final ResourceLocation oldPagesLoot = register("old_pages_loot");
 
-    
-    
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
