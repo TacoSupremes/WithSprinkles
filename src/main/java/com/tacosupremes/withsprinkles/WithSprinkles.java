@@ -75,7 +75,7 @@ public class WithSprinkles
     	
     	ModRecipes.preInit();
     	
-    
+    	LibMisc.Ores.preInit();
 
     }
     
@@ -84,9 +84,9 @@ public class WithSprinkles
     {
     	  events = new WSEventHandler();
     	  
+    	  LibMisc.Ores.init();
+    	  
     	  MinecraftForge.EVENT_BUS.register(events);
-          
-    	  proxy.registerRenders();
         
     }
     

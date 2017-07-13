@@ -10,6 +10,7 @@ import com.tacosupremes.withsprinkles.common.utils.BlockUtils;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class LibMisc {
@@ -25,6 +26,7 @@ public class LibMisc {
 	public static List<String> ores = new ArrayList<String>();
 	public static List<String> oreName = new ArrayList<String>();
 	public static List<String> dusts = new ArrayList<String>();
+	public static List<String> oresCleaned = new ArrayList<String>();
 	
 	public static Map<String, ItemStack> oL = new HashMap<String, ItemStack>();
 	
@@ -47,10 +49,11 @@ public class LibMisc {
 				addOre("oreFzDarkIron", Color.black); // Factorization (newer versions)
 				addOre("oreDiamond", Color.BLUE); // Vanilla
 				addOre("oreEmerald", Color.GREEN); // Vanilla
+				addOre("oreQuartz", Color.WHITE); // Vanilla
 				addOre("oreGalena", Color.green); // Factorization
 				addOre("oreGold", Color.YELLOW); // Vanilla
 				addOre("oreInfusedAir", Color.yellow); // Thaumcraft
-				addOre("oreInfusedEarth", Color.red); // Thaumcraft
+				addOre("oreInfusedEarth", Color.GREEN); // Thaumcraft
 				addOre("oreInfusedEntropy", Color.black); // Thaumcraft
 				addOre("oreInfusedFire", Color.red); // Thaumcraft
 				addOre("oreInfusedOrder", Color.white); // Thaumcraft
@@ -87,7 +90,7 @@ public class LibMisc {
 		
 		
 		
-	//	cleanOres();
+	
 		makeDusts();
 	}
 	
@@ -97,8 +100,8 @@ public class LibMisc {
 		
 		for(int i =0; i< ores.size();i++){
 			String s = ores.get(i);
-			if(OreDictionary.getOres(s) == null || OreDictionary.getOres(s).isEmpty())
-				ores.remove(s);	
+			if(OreDictionary.doesOreNameExist(s))
+				oresCleaned.add(s);
 		}
 		
 	}
@@ -120,12 +123,15 @@ public class LibMisc {
 		oC.put(s, c);
 	}
 	
-	public static boolean isOre(IBlockState b){
+	
+public static boolean isOre(ItemStack is3){
 		
+		if(is3 == null)
+			return false;
 		
-		ItemStack is = new ItemStack(b.getBlock(), 1, b.getBlock().getMetaFromState(b));
+		ItemStack is = is3.copy().splitStack(1);
 		
-		for(String s : ores){
+		for(String s : oresCleaned){
 			
 			for(ItemStack is2 : OreDictionary.getOres(s)){
 				
@@ -139,8 +145,19 @@ public class LibMisc {
 		
 		return false;
 	}
+
+public static boolean isOre(IBlockState i){
 	
-	public static boolean isOre(ItemStack is3){
+	return isOre(BlockUtils.toItemStack(i));
+}
+	
+	
+	public static boolean isOreInefficiently(IBlockState b){
+		
+		return isOreInefficiently(BlockUtils.toItemStack(b));
+	}
+	
+	public static boolean isOreInefficiently(ItemStack is3){
 		
 		if(is3 == null)
 			return false;
@@ -161,6 +178,8 @@ public class LibMisc {
 		
 		return false;
 	}
+	
+
 	
 	public static String getName(IBlockState b){
 		
@@ -303,6 +322,12 @@ public static Color getColor(String s){
 		}
 		
 		return null;
+	}
+
+	public static void init() {
+		
+		cleanOres();
+		
 	}
 	
 	

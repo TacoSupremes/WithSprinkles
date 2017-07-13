@@ -3,6 +3,8 @@ package com.tacosupremes.withsprinkles.common.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tacosupremes.withsprinkles.common.lib.LibMisc;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -125,6 +127,59 @@ public static List<BlockPos> getConnectedLogs(World w, BlockPos start)
 					IBlockState ib_ = w.getBlockState(pos_);	
 		
 					if(ib_.getBlock().isWood(w, pos_) && !checked.contains(pos_.toString()))
+					{
+			
+						l.add(pos_);
+						
+						checked.add(pos_.toString());
+						
+						toCheck.add(pos_);
+			
+					}
+				}
+			}
+		}
+	}
+	
+	return l;
+}
+
+public static List<BlockPos> getConnectedOres(World w, BlockPos start)
+{
+	
+	List<BlockPos> l = new ArrayList<BlockPos>();
+	
+	List<String> checked = new ArrayList<String>();
+	
+	List<BlockPos> toCheck = new ArrayList<BlockPos>();
+	
+	IBlockState ib = w.getBlockState(start);
+	
+	l.add(start);
+	
+	toCheck.add(start);
+	
+	checked.add(start.toString());
+	
+	while(!toCheck.isEmpty())
+	{
+		
+		BlockPos pos = toCheck.remove(0);
+
+		for(int x = -2; x <= 2; x++)
+		{
+			
+			for(int y = -2; y <= 2; y++)
+			{
+				
+				for(int z = -2; z <= 2; z++)
+				{		
+		
+					BlockPos pos_ = pos.add(x,y,z);
+		
+					IBlockState ib_ = w.getBlockState(pos_);	
+		
+					if(LibMisc.Ores.isOre(ib_) && !checked.contains(pos_.toString()))
 					{
 			
 						l.add(pos_);

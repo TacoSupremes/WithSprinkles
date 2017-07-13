@@ -47,7 +47,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class WSEventHandler
 {
-  
     @SubscribeEvent
     public void onPlayerBreaking(BreakEvent event) 
     {
@@ -58,6 +57,8 @@ public class WSEventHandler
         	handleFiery(event);
         	
         	handleFelling(event);
+        	
+        	handleFracking(event);
         	
         	if(!event.getPlayer().isSneaking())
         		handleExchange(event);
@@ -77,6 +78,42 @@ public class WSEventHandler
         	 {    		 
         		 
         		 List<BlockPos> l = BlockUtils.getConnectedLogs(event.getWorld(), event.getPos());
+        		 
+        		 World w = event.getWorld();
+        		 
+        		 for(BlockPos bp : l)
+        		 {
+        			 
+        			 if(stack.isEmpty())
+        				 break;
+        			 
+        			IBlockState ib = w.getBlockState(bp);
+        			
+        			ib.getBlock().harvestBlock(w, event.getPlayer(), bp, ib, null, stack);
+        			
+        			w.setBlockToAir(bp);
+        			
+        			stack.damageItem(2, event.getPlayer());
+        			 
+        		 }
+        		 
+        		 event.setCanceled(true);
+        	 }
+ 
+         }
+	}
+    
+    private void handleFracking(BreakEvent event) 
+    {
+    	ItemStack stack = event.getPlayer().getHeldItem(EnumHand.MAIN_HAND);
+         
+         if (stack.isItemEnchanted() && EnchantmentHelper.getEnchantmentLevel(ModEnchantments.fracking, stack) > 0) 
+         {
+        	     	 
+        	 if(LibMisc.Ores.isOre(event.getState()))
+        	 {    		 
+        		 
+        		 List<BlockPos> l = BlockUtils.getConnectedOres(event.getWorld(), event.getPos());
         		 
         		 World w = event.getWorld();
         		 

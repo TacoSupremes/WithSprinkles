@@ -16,6 +16,8 @@ public class ModEnchantments {
 	
 	public static Enchantment felling;
 	
+	public static Enchantment fracking;
+	
 	public static List<Enchantment> enchants = new ArrayList<Enchantment>();
 
 	public static void preInit(){
@@ -27,6 +29,8 @@ public class ModEnchantments {
 		multiple = new EnchantMultiple();
 		
 		felling = new EnchantFelling();
+		
+		fracking = new EnchantFracking();
 		
 	}
 
