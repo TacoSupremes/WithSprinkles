@@ -9,6 +9,7 @@ import java.util.Map;
 import com.tacosupremes.withsprinkles.common.utils.BlockUtils;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
@@ -147,6 +148,9 @@ public static boolean isOre(ItemStack is3){
 	}
 
 public static boolean isOre(IBlockState i){
+	
+	if(i.getBlock() == Blocks.REDSTONE_ORE || i.getBlock() == Blocks.LIT_REDSTONE_ORE)
+		return true;
 	
 	return isOre(BlockUtils.toItemStack(i));
 }
