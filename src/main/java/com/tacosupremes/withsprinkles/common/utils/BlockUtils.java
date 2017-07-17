@@ -32,7 +32,7 @@ public static IBlockState fromItemStack(ItemStack is)
 
 public static ItemStack toItemStack(IBlockState s)
 {
-	return new ItemStack(s.getBlock(),1,s.getBlock().getMetaFromState(s));
+	return new ItemStack(s.getBlock(), 1, s.getBlock().getMetaFromState(s));
 }
 
 public static int getMeta(World w, BlockPos pos)

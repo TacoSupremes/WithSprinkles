@@ -31,6 +31,8 @@ public class ModBlocks {
 		
 		rainDetector = new BlockRainDetector();
 		
+		sharedEnderChest = new BlockSharedEnderChest();
+		
 		
 	}
 

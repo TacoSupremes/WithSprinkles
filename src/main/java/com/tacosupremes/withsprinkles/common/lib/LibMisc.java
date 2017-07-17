@@ -83,23 +83,22 @@ public class LibMisc {
 		
 	}
 	
-	public static void postInit(){
+	public static void postInit()
+	{
 		
-		for(String s : oL.keySet()){
+		for(String s : oL.keySet())
+		{
 			OreDictionary.registerOre(s, oL.get(s));		
 		}
 		
-		
-		
-	
 		makeDusts();
 	}
 	
-
-
-	private static void cleanOres() {
+	private static void cleanOres() 
+	{
 		
-		for(int i =0; i< ores.size();i++){
+		for(int i =0; i< ores.size();i++)
+		{
 			String s = ores.get(i);
 			if(OreDictionary.doesOreNameExist(s))
 				oresCleaned.add(s);
@@ -107,34 +106,40 @@ public class LibMisc {
 		
 	}
 	
-	private static void makeDusts() {
+	private static void makeDusts() 
+	{
 		
-		for(String s2 : ores){
+		for(String s2 : ores)
+		{
 			String s = s2.replace("ore", "dust");
-			if(OreDictionary.getOres(s) != null && !OreDictionary.getOres(s).isEmpty())
+			if(OreDictionary.doesOreNameExist(s2) && !OreDictionary.doesOreNameExist(s))
 				dusts.add(s);	
 		}
 		
 		
 	}
 
-	public static void addOre(String s, Color c){
+	public static void addOre(String s, Color c)
+	{
 		ores.add(s);
 		oreName.add(s.substring(3));
 		oC.put(s, c);
 	}
 	
 	
-public static boolean isOre(ItemStack is3){
+public static boolean isOre(ItemStack is3)
+{
 		
 		if(is3 == null)
 			return false;
 		
 		ItemStack is = is3.copy().splitStack(1);
 		
-		for(String s : oresCleaned){
+		for(String s : oresCleaned)
+		{
 			
-			for(ItemStack is2 : OreDictionary.getOres(s)){
+			for(ItemStack is2 : OreDictionary.getOres(s))
+			{
 				
 				if(is2.areItemsEqual(is, is2))
 					return true;
@@ -147,30 +152,35 @@ public static boolean isOre(ItemStack is3){
 		return false;
 	}
 
-public static boolean isOre(IBlockState i){
+public static boolean isOre(IBlockState i)
+{
 	
-	if(i.getBlock() == Blocks.REDSTONE_ORE || i.getBlock() == Blocks.LIT_REDSTONE_ORE)
+	if(i.getBlock() == Blocks.LIT_REDSTONE_ORE)
 		return true;
 	
 	return isOre(BlockUtils.toItemStack(i));
 }
 	
 	
-	public static boolean isOreInefficiently(IBlockState b){
+	public static boolean isOreInefficiently(IBlockState b)
+	{
 		
 		return isOreInefficiently(BlockUtils.toItemStack(b));
 	}
 	
-	public static boolean isOreInefficiently(ItemStack is3){
+	public static boolean isOreInefficiently(ItemStack is3)
+	{
 		
 		if(is3 == null)
 			return false;
 		
 		ItemStack is = is3.copy().splitStack(1);
 		
-		for(String s : ores){
+		for(String s : ores)
+		{
 			
-			for(ItemStack is2 : OreDictionary.getOres(s)){
+			for(ItemStack is2 : OreDictionary.getOres(s))
+			{
 				
 				if(is2.areItemsEqual(is, is2))
 					return true;
@@ -185,14 +195,17 @@ public static boolean isOre(IBlockState i){
 	
 
 	
-	public static String getName(IBlockState b){
+	public static String getName(IBlockState b)
+	{
 		
 		
 		ItemStack is = new ItemStack(b.getBlock(), 1, b.getBlock().getMetaFromState(b));
 		
-		for(String s : ores){
+		for(String s : ores)
+		{
 			
-			for(ItemStack is2 : OreDictionary.getOres(s)){
+			for(ItemStack is2 : OreDictionary.getOres(s))
+			{
 				
 				if(is2.areItemsEqual(is, is2))
 					return s;
@@ -205,7 +218,8 @@ public static boolean isOre(IBlockState i){
 		return null;
 	}
 
-	public static String getName(ItemStack is3){
+	public static String getName(ItemStack is3)
+	{
 	
 		
 	if(is3 == null)
@@ -213,9 +227,11 @@ public static boolean isOre(IBlockState i){
 	ItemStack is = is3.copy().splitStack(1);
 	
 	
-	for(String s : ores){
+	for(String s : ores)
+	{
 		
-		for(ItemStack is2 : OreDictionary.getOres(s)){
+		for(ItemStack is2 : OreDictionary.getOres(s))
+		{
 			
 			if(is2.areItemsEqual(is, is2))
 				return s;
@@ -228,7 +244,8 @@ public static boolean isOre(IBlockState i){
 	return null;
 }
 
-public ItemStack getOtherForms(ItemStack i){
+public ItemStack getOtherForms(ItemStack i)
+{
 	
 	
 	String s = getName(i);
@@ -240,7 +257,8 @@ public ItemStack getOtherForms(ItemStack i){
 	if(l == null || l.size() == 1 || l.size() == 0)
 		return null;
 	
-	for(ItemStack is : l){
+	for(ItemStack is : l)
+	{
 		if(is.isItemEqual(is))
 			continue;
 		
@@ -253,7 +271,8 @@ public ItemStack getOtherForms(ItemStack i){
 	
 }
 /**From Ore to Color **/
-public static Color getColor(String s){
+public static Color getColor(String s)
+{
 	
 	return oC.get(s);
 	
@@ -261,7 +280,8 @@ public static Color getColor(String s){
 
 
 	/**From Ore to Dust **/
-	public static String toDust(String s){
+	public static String toDust(String s)
+	{
 	
 		if(s == null || !s.contains("ore"))
 			return null;
@@ -276,7 +296,8 @@ public static Color getColor(String s){
 	}
 	
 	/**From Ore to Dust **/
-	public static ItemStack toDust(ItemStack is){
+	public static ItemStack toDust(ItemStack is)
+	{
 	
 		
 		
@@ -285,13 +306,15 @@ public static Color getColor(String s){
 	}
 	
 	/**From Ore to Dust **/
-	public static ItemStack toDust(IBlockState state){
+	public static ItemStack toDust(IBlockState state)
+	{
 		
 		return toDust(BlockUtils.toItemStack(state));
 	}
 	
 	/**From Dust to Ore **/
-	public static String toOre(String s){
+	public static String toOre(String s)
+	{
 
 		return s.replace("dust", "ore");
 
@@ -302,20 +325,24 @@ public static Color getColor(String s){
 	
 	
 	/**From Dust to Ingot **/
-	public static String toIngot(String s){
+	public static String toIngot(String s)
+	{
 		
 		return s.replace("dust", "ingot");
 	}
 	
 	
-	public static String getDustName(ItemStack is3){
+	public static String getDustName(ItemStack is3)
+	{
 		
 		ItemStack is = is3.copy().splitStack(1);
 		
 		
-		for(String s : dusts){
+		for(String s : dusts)
+		{
 			
-			for(ItemStack is2 : OreDictionary.getOres(s)){
+			for(ItemStack is2 : OreDictionary.getOres(s))
+			{
 				
 				if(is2.areItemsEqual(is, is2))
 					return s;
@@ -328,26 +355,22 @@ public static Color getColor(String s){
 		return null;
 	}
 
-	public static void init() {
-		
-		cleanOres();
-		
+	public static void init() 
+	{	
+		cleanOres();	
 	}
-	
-	
-	
-	
+
 	
 	}
 	
 	
-	public static class GuiIDs {
+	public static class GuiIDs 
+	{
 
 		public static int MODBOOK = 0;
 		
-		
-		
-		public static class Buttons {
+		public static class Buttons
+		{
 			
 			public static final int NEXT = 46583;
 			public static final int BACK = 45673;
