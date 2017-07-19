@@ -16,6 +16,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 public abstract class TileSimpleInventory extends TileMod implements IInventory
@@ -118,7 +119,7 @@ public abstract class TileSimpleInventory extends TileMod implements IInventory
 		public ITextComponent getDisplayName()
 		{
 			
-			return null;
+			return new TextComponentString("chest");
 		}
 
 		@Override

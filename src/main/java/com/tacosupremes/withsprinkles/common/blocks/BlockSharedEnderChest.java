@@ -2,7 +2,9 @@ package com.tacosupremes.withsprinkles.common.blocks;
 
 import java.util.Random;
 
+import com.tacosupremes.withsprinkles.WithSprinkles;
 import com.tacosupremes.withsprinkles.common.blocks.tiles.TileSharedEnderChest;
+import com.tacosupremes.withsprinkles.gui.GuiHandler;
 
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -44,7 +46,6 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	    {
 	        super(Material.ROCK,"sharedEnderChest");
 	        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-	        this.setCreativeTab(CreativeTabs.DECORATIONS);
 	    }
 
 	    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
@@ -115,33 +116,28 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	     */
 	    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
 	    {
-	        worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
+	    //    worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
+	        
+	        ((TileSharedEnderChest)worldIn.getTileEntity(pos)).uuid = placer.getUniqueID();
 	    }
 
+	    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+	    {
+			return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+	    	
+	    }
 	    /**
 	     * Called when the block is right clicked by a player.
 	     */
 	    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	    {
 	     
-	        TileEntity tileentity = worldIn.getTileEntity(pos);
-
-	        
-	            if (worldIn.getBlockState(pos.up()).isNormalCube())
-	            {
-	                return true;
-	            }
-	            else if (worldIn.isRemote)
-	            {
-	                return true;
-	            }
-	            else
-	            {
-	             
-	                playerIn.displayGUIChest((IInventory)tileentity);
+	 
+	             	if(!worldIn.isRemote)
+	            	 playerIn.openGui(WithSprinkles.instance, GuiHandler.SHARED_ENDER_CHEST_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());            	  
 	             
 	                return true;
-	            }
+	            
 	    }
 	    
 
@@ -150,7 +146,7 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	     */
 	    public TileEntity createNewTileEntity(World worldIn, int meta)
 	    {
-	        return new TileEntityEnderChest();
+	        return new TileSharedEnderChest();
 	    }
 
 	    @SideOnly(Side.CLIENT)

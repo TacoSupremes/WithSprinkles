@@ -71,5 +71,25 @@ public class OfflinePlayerUtils
 	}
 
 
+	
+	public static int requests = 0;
+	
+	private static boolean working = false;
+	
+	public static void work(){
+		
+		if(working)
+			return;
+		else
+			working = true;
+		while(requests > 0)
+		{
+			
+		}
+		
+		
+		
+		
+	}
 
 }

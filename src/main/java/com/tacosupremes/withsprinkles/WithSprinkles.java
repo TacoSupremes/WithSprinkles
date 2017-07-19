@@ -12,6 +12,7 @@ import com.tacosupremes.withsprinkles.common.items.ModItems;
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
 import com.tacosupremes.withsprinkles.common.utils.EnchantUtils;
 import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
+import com.tacosupremes.withsprinkles.gui.GuiHandler;
 import com.tacosupremes.withsprinkles.proxy.CommonProxy;
 import com.tacosupremes.withsprinkles.recipes.ModRecipes;
 
@@ -42,6 +43,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 @Mod(modid = LibMisc.MODID, version = LibMisc.VERSION)
 public class WithSprinkles
@@ -88,6 +90,7 @@ public class WithSprinkles
     	  
     	  MinecraftForge.EVENT_BUS.register(events);
         
+    	  NetworkRegistry.INSTANCE.registerGuiHandler(WithSprinkles.instance, new GuiHandler());
     }
     
     @EventHandler
