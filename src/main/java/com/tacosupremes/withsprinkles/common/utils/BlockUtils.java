@@ -45,7 +45,7 @@ public static boolean equals(IBlockState i, IBlockState i2)
 	return i.getBlock() == i2.getBlock() && i.getBlock().getMetaFromState(i) == i2.getBlock().getMetaFromState(i2);	
 }
 
-public static List<BlockPos> getConnectedBlocks(World w, BlockPos start)
+public static List<BlockPos> getConnectedBlocks(World w, BlockPos start, int limit)
 {
 	List<BlockPos> l = new ArrayList<BlockPos>();
 	
@@ -64,10 +64,15 @@ public static List<BlockPos> getConnectedBlocks(World w, BlockPos start)
 	while(!toCheck.isEmpty())
 	{
 		
+		
+		
 		BlockPos pos = toCheck.remove(0);
 
 		for(EnumFacing f : EnumFacing.VALUES)
 		{
+			
+			if(l.size() >= limit)
+				return l;
 		
 			BlockPos pos_ = pos.add(f.getDirectionVec());
 		
@@ -91,7 +96,7 @@ public static List<BlockPos> getConnectedBlocks(World w, BlockPos start)
 	return l;
 }
 
-public static List<BlockPos> getConnectedLogs(World w, BlockPos start)
+public static List<BlockPos> getConnectedLogs(World w, BlockPos start, int limit)
 {
 	
 	List<BlockPos> l = new ArrayList<BlockPos>();
@@ -121,6 +126,9 @@ public static List<BlockPos> getConnectedLogs(World w, BlockPos start)
 				
 				for(int z = -2; z <= 2; z++)
 				{		
+					
+					if(l.size() >= limit)
+						return l;
 		
 					BlockPos pos_ = pos.add(x,y,z);
 		
@@ -144,7 +152,7 @@ public static List<BlockPos> getConnectedLogs(World w, BlockPos start)
 	return l;
 }
 
-public static List<BlockPos> getConnectedOres(World w, BlockPos start)
+public static List<BlockPos> getConnectedOres(World w, BlockPos start, int limit)
 {
 	
 	List<BlockPos> l = new ArrayList<BlockPos>();
@@ -174,6 +182,9 @@ public static List<BlockPos> getConnectedOres(World w, BlockPos start)
 				
 				for(int z = -2; z <= 2; z++)
 				{		
+					
+					if(l.size() >= limit)
+						return l;
 		
 					BlockPos pos_ = pos.add(x,y,z);
 		

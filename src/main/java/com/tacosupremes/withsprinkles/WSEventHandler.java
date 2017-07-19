@@ -77,7 +77,7 @@ public class WSEventHandler
         	 if(event.getState().getBlock().isWood(event.getWorld(), event.getPos()))
         	 {    		 
         		 
-        		 List<BlockPos> l = BlockUtils.getConnectedLogs(event.getWorld(), event.getPos());
+        		 List<BlockPos> l = BlockUtils.getConnectedLogs(event.getWorld(), event.getPos(), Math.round(((float)stack.getMaxDamage()-(float)stack.getItemDamage())/2F));
         		 
         		 World w = event.getWorld();
         		 
@@ -113,7 +113,7 @@ public class WSEventHandler
         	 if(LibMisc.Ores.isOre(event.getState()))
         	 {    		 
         		 
-        		 List<BlockPos> l = BlockUtils.getConnectedOres(event.getWorld(), event.getPos());
+        		 List<BlockPos> l = BlockUtils.getConnectedOres(event.getWorld(), event.getPos(), Math.round(((float)stack.getMaxDamage()-(float)stack.getItemDamage())/2F));
         		 
         		 World w = event.getWorld();
         		 

@@ -141,6 +141,15 @@ public class ContainerSharedEnderChest extends Container {
 	    }
 	    
 	    
+static class AddOrRemoveSlot extends Slot{
 
+	public AddOrRemoveSlot(IInventory inventoryIn, int index, int xPosition, int yPosition) {
+		super(inventoryIn, index, xPosition, yPosition);
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
+}
 	    
 	}
