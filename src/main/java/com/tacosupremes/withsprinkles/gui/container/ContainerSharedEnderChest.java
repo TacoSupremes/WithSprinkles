@@ -20,9 +20,7 @@ public class ContainerSharedEnderChest extends Container {
 	    private final int numRows;
 	    
 	    private InventoryEnderChest te;
-		
-		private NBTTagCompound pNBT = null; 
-
+	
 	    public ContainerSharedEnderChest(IInventory playerInventory, TileSharedEnderChest chestInventory, EntityPlayer playerOpen)
 	    {
 	        this.lowerChestInventory = chestInventory;
@@ -35,11 +33,9 @@ public class ContainerSharedEnderChest extends Container {
 			
 			if(player == null)
 			{
-				te = new InventoryEnderChest();
+				te = OfflinePlayerUtils.getOfflineEnderChest(chestInventory.uuid);
 				
-				pNBT = OfflinePlayerUtils.getOfflinePlayerNBT(lowerChestInventory.uuid);
-				
-				te.loadInventoryFromNBT(pNBT.getTagList("EnderItems", 10));
+		
 				
 			}
 			else
@@ -132,12 +128,12 @@ public class ContainerSharedEnderChest extends Container {
 	        
 	        this.lowerChestInventory.closeInventory(playerIn);
 	        
-	        if(pNBT != null)
-	        {
-	        	pNBT.setTag("EnderItems", te.saveInventoryToNBT());
+	  //      if(pNBT != null)
+	   // //    {
+	        //	pNBT.setTag("EnderItems", te.saveInventoryToNBT());
 	        	
-	        	OfflinePlayerUtils.writeOfflinePlayerNBT(lowerChestInventory.uuid, pNBT);
-	        }
+	        	//OfflinePlayerUtils.writeOfflinePlayerNBT(lowerChestInventory.uuid, pNBT);
+	        //}
 	    }
 	    
 	    

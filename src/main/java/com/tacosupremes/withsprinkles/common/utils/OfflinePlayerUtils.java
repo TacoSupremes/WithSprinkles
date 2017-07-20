@@ -3,6 +3,11 @@ package com.tacosupremes.withsprinkles.common.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -15,14 +20,24 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.storage.SaveHandler;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.LoadFromFile;
+import net.minecraftforge.event.world.WorldEvent.Unload;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class OfflinePlayerUtils
 {
 	
-	/**Writes an Offline Player's NBT**/
-	public static void writeOfflinePlayerNBT(UUID uuid, NBTTagCompound playerNBT)
+	private static Map<UUID, NBTTagCompound> map = new HashMap<UUID, NBTTagCompound>(); 
+	
+	private static Map<UUID, InventoryEnderChest> mapEnder = new HashMap<UUID, InventoryEnderChest>(); 
+
+	private static void writeOfflinePlayerNBT(UUID uuid)
 	{
+		
+		
 		
 		SaveHandler saveHandler = (SaveHandler)FMLCommonHandler.instance().getMinecraftServerInstance().worlds[0].getSaveHandler();
 		
@@ -32,12 +47,15 @@ public class OfflinePlayerUtils
 
 		    File temp = new File(playersDirectory, uuid.toString() + ".dat.tmp");
 		    File playerFile = new File(playersDirectory, uuid.toString() + ".dat");
-		    CompressedStreamTools.writeCompressed(playerNBT, new FileOutputStream(temp));
+		    CompressedStreamTools.writeCompressed(map.get(uuid), new FileOutputStream(temp));
 
 		   if (playerFile.exists()) {
 		        playerFile.delete();
 		    }
 		    temp.renameTo(playerFile);
+		    
+		    map.remove(uuid);
+		 
 		}
 		catch (Exception e) 
 		{
@@ -47,9 +65,12 @@ public class OfflinePlayerUtils
 	}
 	
 	/**Gets an Offline Player's NBT**/
-	public static NBTTagCompound getOfflinePlayerNBT(UUID uuid)
+	private static NBTTagCompound getOfflinePlayerNBT(UUID uuid)
 	{
 	
+		if(map.containsKey(uuid))
+			return map.get(uuid);		
+		
 		SaveHandler saveHandler = (SaveHandler)FMLCommonHandler.instance().getMinecraftServerInstance().worlds[0].getSaveHandler();
  
 		File playersDirectory = new File(saveHandler.getWorldDirectory(), "playerdata");
@@ -58,9 +79,12 @@ public class OfflinePlayerUtils
 		{
 			File file1 = new File(playersDirectory, uuid.toString() + ".dat");
 
-			if (file1.exists() && file1.isFile())	
-				return CompressedStreamTools.readCompressed(new FileInputStream(file1));
-			
+			if (file1.exists() && file1.isFile())
+			{	
+				map.put(uuid, CompressedStreamTools.readCompressed(new FileInputStream(file1)));
+
+				return map.get(uuid);
+			}
 		}
 		catch (Exception e)
 		{		
@@ -70,28 +94,81 @@ public class OfflinePlayerUtils
 		return null;
 	}
 
-
-	
-	public static int requests = 0;
-	
-	private static boolean working = false;
-	
-	public static void work(){
+	public static InventoryEnderChest getOfflineEnderChest(UUID uuid)
+	{
 		
-		if(working)
-			return;
-		else
-			working = true;
-		while(requests > 0)
-		{
-			
-		}
+		if(mapEnder.containsKey(uuid))
+			return mapEnder.get(uuid);
 		
 		
+		NBTTagCompound nbt = getOfflinePlayerNBT(uuid);
 		
+		InventoryEnderChest ii = new InventoryEnderChest();
+		
+		ii.loadInventoryFromNBT(nbt.getTagList("EnderItems", 10));
+		
+		mapEnder.put(uuid, ii);
+		
+		return ii;
+		
+	}
+		
+	private static void saveOfflineEnderChest(UUID uuid)
+	{
+		NBTTagCompound nbt = OfflinePlayerUtils.getOfflinePlayerNBT(uuid);
+		
+		nbt.setTag("EnderItems", OfflinePlayerUtils.getOfflineEnderChest(uuid).saveInventoryToNBT());
+		
+		map.put(uuid, nbt);
+		
+		mapEnder.remove(uuid);
 		
 	}
 	
-	//TODO: Make queue
+	private static void saveOfflineNBT(UUID uuid)
+	{
+		
+		NBTTagCompound nbt = OfflinePlayerUtils.getOfflinePlayerNBT(uuid);
+		
+		map.put(uuid, nbt);
+		
+		writeOfflinePlayerNBT(uuid);
+	
+	}
+	
+	@SubscribeEvent
+	public static void onPlayerJoinWorld(LoadFromFile event) {
+		
+		UUID uuid = event.getEntityPlayer().getUniqueID();
+		
+			if(map.containsKey(uuid))
+			{
+				if(mapEnder.containsKey(uuid))
+					OfflinePlayerUtils.saveOfflineEnderChest(uuid);
+				
+				OfflinePlayerUtils.saveOfflineNBT(uuid);
+			}
+	}
+	
+	@SubscribeEvent
+	public static void onWorldClose(Unload event)
+	{
+		
+		Iterator iterator = map.keySet().iterator();
+		
+		while(iterator.hasNext())
+		{
+		
+			UUID uuid = (UUID)iterator.next();
+			
+			if(map.containsKey(uuid))
+			{
+				if(mapEnder.containsKey(uuid))
+					OfflinePlayerUtils.saveOfflineEnderChest(uuid);
+				
+				OfflinePlayerUtils.saveOfflineNBT(uuid);
+			}
+		}
+	}
 
 }

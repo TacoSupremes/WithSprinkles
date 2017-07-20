@@ -11,6 +11,7 @@ import com.tacosupremes.withsprinkles.common.enchantments.ModEnchantments;
 import com.tacosupremes.withsprinkles.common.items.ModItems;
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
 import com.tacosupremes.withsprinkles.common.utils.EnchantUtils;
+import com.tacosupremes.withsprinkles.common.utils.OfflinePlayerUtils;
 import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
 import com.tacosupremes.withsprinkles.gui.GuiHandler;
 import com.tacosupremes.withsprinkles.proxy.CommonProxy;
@@ -89,6 +90,8 @@ public class WithSprinkles
     	  LibMisc.Ores.init();
     	  
     	  MinecraftForge.EVENT_BUS.register(events);
+    	  
+    	  MinecraftForge.EVENT_BUS.register(OfflinePlayerUtils.class);
         
     	  NetworkRegistry.INSTANCE.registerGuiHandler(WithSprinkles.instance, new GuiHandler());
     }
