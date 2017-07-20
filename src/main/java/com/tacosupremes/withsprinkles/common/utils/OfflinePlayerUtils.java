@@ -37,7 +37,7 @@ public class OfflinePlayerUtils
 	private static Map<UUID, String> UUIDtoName = new HashMap<UUID, String>(); 
 	
 
-	private static void writeOfflinePlayerNBT(UUID uuid, boolean remove)
+	private static void writeOfflinePlayerNBT(UUID uuid)
 	{
 
 		SaveHandler saveHandler = (SaveHandler)FMLCommonHandler.instance().getMinecraftServerInstance().worlds[0].getSaveHandler();
@@ -54,9 +54,7 @@ public class OfflinePlayerUtils
 		        playerFile.delete();
 		    }
 		    temp.renameTo(playerFile);
-		    
-		    if(remove)
-		    map.remove(uuid);
+		 
 		 
 		}
 		catch (Exception e) 
@@ -114,7 +112,7 @@ public class OfflinePlayerUtils
 		
 	}
 		
-	private static void saveOfflineEnderChest(UUID uuid, boolean remove)
+	private static void saveOfflineEnderChest(UUID uuid)
 	{
 		NBTTagCompound nbt = OfflinePlayerUtils.getOfflinePlayerNBT(uuid);
 		
@@ -122,19 +120,18 @@ public class OfflinePlayerUtils
 		
 		map.put(uuid, nbt);
 		
-		if(remove)
-		mapEnder.remove(uuid);
+		
 		
 	}
 	
-	private static void saveOfflineNBT(UUID uuid, boolean remove)
+	private static void saveOfflineNBT(UUID uuid)
 	{
 		
 		NBTTagCompound nbt = OfflinePlayerUtils.getOfflinePlayerNBT(uuid);
 		
 		map.put(uuid, nbt);
 		
-		writeOfflinePlayerNBT(uuid, remove);
+		writeOfflinePlayerNBT(uuid);
 	
 	}
 	
@@ -146,9 +143,11 @@ public class OfflinePlayerUtils
 			if(map.containsKey(uuid))
 			{
 				if(mapEnder.containsKey(uuid))
-					OfflinePlayerUtils.saveOfflineEnderChest(uuid, true);
-				
-				OfflinePlayerUtils.saveOfflineNBT(uuid, true);
+				{
+					event.getEntityPlayer().getInventoryEnderChest().loadInventoryFromNBT(mapEnder.get(uuid).saveInventoryToNBT());
+					mapEnder.remove(uuid);
+				}
+				map.remove(uuid);
 			}
 	}
 	
@@ -162,9 +161,9 @@ public class OfflinePlayerUtils
 			if(map.containsKey(uuid))
 			{
 				if(mapEnder.containsKey(uuid))
-					OfflinePlayerUtils.saveOfflineEnderChest(uuid, false);
+					OfflinePlayerUtils.saveOfflineEnderChest(uuid);
 				
-				OfflinePlayerUtils.saveOfflineNBT(uuid, false);
+				OfflinePlayerUtils.saveOfflineNBT(uuid);
 				
 			}
 		}
