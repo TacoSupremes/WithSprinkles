@@ -31,8 +31,7 @@ public class TileEnderHopper extends TileSimpleInventory {
 
 	@Override
 	public void update() {
-		
-		
+			
 		if(this.getWorld().isBlockPowered(pos))
 			return;
 		
@@ -40,10 +39,7 @@ public class TileEnderHopper extends TileSimpleInventory {
 		
 		if(ticks % 8 != 0)
 			return;
-		
-		
-		
-		
+
 		if (this.getWorld().isRemote)
 			return;
 		
@@ -71,20 +67,10 @@ public class TileEnderHopper extends TileSimpleInventory {
 		}else if(this.getWorld().getBlockState(getPos().up()).getBlock() == Blocks.ENDER_CHEST){
 			
 			ItemStack is = this.getStackInSlot(0);
-			
-			
-				
-			InventoryEnderChest ii;
-			
 						
 			EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(uuid);
 			
-			if(player == null){
-				
-				ii = OfflinePlayerUtils.getOfflineEnderChest(uuid);
-				
-			}else
-				ii = player.getInventoryEnderChest();	
+			InventoryEnderChest ii = player == null ? OfflinePlayerUtils.getOfflineEnderChest(uuid) : player.getInventoryEnderChest();
 		
 			for(int i = 18; i<27; i++){
 				
@@ -123,22 +109,13 @@ public class TileEnderHopper extends TileSimpleInventory {
 				return;
 			
 			ItemStack is = this.getStackInSlot(0);
-			
-			InventoryEnderChest ii;
-			
-			//NBTTagCompound pNBT = OfflinePlayerUtils.getOfflinePlayerNBT(uuid);
-			
+		
 			EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(uuid);
 			
-			if(player == null){
-				
-				ii = OfflinePlayerUtils.getOfflineEnderChest(uuid);
-			
-				
-			}else
-				ii = player.getInventoryEnderChest();
+			InventoryEnderChest ii = player == null ? OfflinePlayerUtils.getOfflineEnderChest(uuid) : player.getInventoryEnderChest();
 			
 			int slotChosen = -1;
+			
 			for(int i = 18; i<27; i++){
 				
 				if(!ii.getStackInSlot(i).isEmpty()){

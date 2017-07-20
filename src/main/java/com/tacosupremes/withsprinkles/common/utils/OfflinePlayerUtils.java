@@ -33,12 +33,13 @@ public class OfflinePlayerUtils
 	private static Map<UUID, NBTTagCompound> map = new HashMap<UUID, NBTTagCompound>(); 
 	
 	private static Map<UUID, InventoryEnderChest> mapEnder = new HashMap<UUID, InventoryEnderChest>(); 
+	
+	private static Map<UUID, String> UUIDtoName = new HashMap<UUID, String>(); 
+	
 
-	private static void writeOfflinePlayerNBT(UUID uuid)
+	private static void writeOfflinePlayerNBT(UUID uuid, boolean remove)
 	{
-		
-		
-		
+
 		SaveHandler saveHandler = (SaveHandler)FMLCommonHandler.instance().getMinecraftServerInstance().worlds[0].getSaveHandler();
 		
 		try {
@@ -54,6 +55,7 @@ public class OfflinePlayerUtils
 		    }
 		    temp.renameTo(playerFile);
 		    
+		    if(remove)
 		    map.remove(uuid);
 		 
 		}
@@ -98,8 +100,7 @@ public class OfflinePlayerUtils
 	{
 		
 		if(mapEnder.containsKey(uuid))
-			return mapEnder.get(uuid);
-		
+			return mapEnder.get(uuid);	
 		
 		NBTTagCompound nbt = getOfflinePlayerNBT(uuid);
 		
@@ -113,7 +114,7 @@ public class OfflinePlayerUtils
 		
 	}
 		
-	private static void saveOfflineEnderChest(UUID uuid)
+	private static void saveOfflineEnderChest(UUID uuid, boolean remove)
 	{
 		NBTTagCompound nbt = OfflinePlayerUtils.getOfflinePlayerNBT(uuid);
 		
@@ -121,32 +122,33 @@ public class OfflinePlayerUtils
 		
 		map.put(uuid, nbt);
 		
+		if(remove)
 		mapEnder.remove(uuid);
 		
 	}
 	
-	private static void saveOfflineNBT(UUID uuid)
+	private static void saveOfflineNBT(UUID uuid, boolean remove)
 	{
 		
 		NBTTagCompound nbt = OfflinePlayerUtils.getOfflinePlayerNBT(uuid);
 		
 		map.put(uuid, nbt);
 		
-		writeOfflinePlayerNBT(uuid);
+		writeOfflinePlayerNBT(uuid, remove);
 	
 	}
 	
 	@SubscribeEvent
 	public static void onPlayerJoinWorld(LoadFromFile event) {
 		
-		UUID uuid = event.getEntityPlayer().getUniqueID();
+		UUID uuid = event.getEntityPlayer().getUniqueID();		
 		
 			if(map.containsKey(uuid))
 			{
 				if(mapEnder.containsKey(uuid))
-					OfflinePlayerUtils.saveOfflineEnderChest(uuid);
+					OfflinePlayerUtils.saveOfflineEnderChest(uuid, true);
 				
-				OfflinePlayerUtils.saveOfflineNBT(uuid);
+				OfflinePlayerUtils.saveOfflineNBT(uuid, true);
 			}
 	}
 	
@@ -154,19 +156,16 @@ public class OfflinePlayerUtils
 	public static void onWorldClose(Unload event)
 	{
 		
-		Iterator iterator = map.keySet().iterator();
-		
-		while(iterator.hasNext())
+		for(UUID uuid : map.keySet())
 		{
-		
-			UUID uuid = (UUID)iterator.next();
 			
 			if(map.containsKey(uuid))
 			{
 				if(mapEnder.containsKey(uuid))
-					OfflinePlayerUtils.saveOfflineEnderChest(uuid);
+					OfflinePlayerUtils.saveOfflineEnderChest(uuid, false);
 				
-				OfflinePlayerUtils.saveOfflineNBT(uuid);
+				OfflinePlayerUtils.saveOfflineNBT(uuid, false);
+				
 			}
 		}
 	}

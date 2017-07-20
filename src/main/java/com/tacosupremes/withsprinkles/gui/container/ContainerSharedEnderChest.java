@@ -31,17 +31,8 @@ public class ContainerSharedEnderChest extends Container {
 				
 	        player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(lowerChestInventory.uuid);
 			
-			if(player == null)
-			{
-				te = OfflinePlayerUtils.getOfflineEnderChest(chestInventory.uuid);
-				
-		
-				
-			}
-			else
-			{
-				te = player.getInventoryEnderChest();
-			}
+	    	te = player == null ? OfflinePlayerUtils.getOfflineEnderChest(chestInventory.uuid) : player.getInventoryEnderChest();
+			
 	        
 	      //TODO: MAKE ENDER CHEST SHOW HERE THIS WILL ALLOW FOR EASY SYNC  InventoryEnderChest ii =  
 	        int i = (this.numRows - 4) * 18;
@@ -114,9 +105,6 @@ public class ContainerSharedEnderChest extends Container {
 
 	        return itemstack;
 	    }
-	    
-	    
-	    
 
 	    /**
 	     * Called when the container is closed.
@@ -125,27 +113,7 @@ public class ContainerSharedEnderChest extends Container {
 	    {
 	        super.onContainerClosed(playerIn);
 	        
-	        
 	        this.lowerChestInventory.closeInventory(playerIn);
-	        
-	  //      if(pNBT != null)
-	   // //    {
-	        //	pNBT.setTag("EnderItems", te.saveInventoryToNBT());
-	        	
-	        	//OfflinePlayerUtils.writeOfflinePlayerNBT(lowerChestInventory.uuid, pNBT);
-	        //}
 	    }
-	    
-	    
-static class AddOrRemoveSlot extends Slot{
-
-	public AddOrRemoveSlot(IInventory inventoryIn, int index, int xPosition, int yPosition) {
-		super(inventoryIn, index, xPosition, yPosition);
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-	
-}
 	    
 	}
