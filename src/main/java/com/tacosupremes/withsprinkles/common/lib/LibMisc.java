@@ -11,7 +11,6 @@ import com.tacosupremes.withsprinkles.common.utils.BlockUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class LibMisc {
@@ -141,7 +140,7 @@ public static boolean isOre(ItemStack is3)
 			for(ItemStack is2 : OreDictionary.getOres(s))
 			{
 				
-				if(is2.areItemsEqual(is, is2))
+				if(ItemStack.areItemsEqual(is, is2))
 					return true;
 				
 			}
@@ -182,7 +181,7 @@ public static boolean isOre(IBlockState i)
 			for(ItemStack is2 : OreDictionary.getOres(s))
 			{
 				
-				if(is2.areItemsEqual(is, is2))
+				if(ItemStack.areItemsEqual(is, is2))
 					return true;
 				
 			}
@@ -207,7 +206,7 @@ public static boolean isOre(IBlockState i)
 			for(ItemStack is2 : OreDictionary.getOres(s))
 			{
 				
-				if(is2.areItemsEqual(is, is2))
+				if(ItemStack.areItemsEqual(is, is2))
 					return s;
 				
 			}
@@ -233,7 +232,7 @@ public static boolean isOre(IBlockState i)
 		for(ItemStack is2 : OreDictionary.getOres(s))
 		{
 			
-			if(is2.areItemsEqual(is, is2))
+			if(ItemStack.areItemsEqual(is, is2))
 				return s;
 			
 		}
@@ -344,7 +343,7 @@ public static Color getColor(String s)
 			for(ItemStack is2 : OreDictionary.getOres(s))
 			{
 				
-				if(is2.areItemsEqual(is, is2))
+				if(ItemStack.areItemsEqual(is, is2))
 					return s;
 				
 			}

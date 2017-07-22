@@ -6,7 +6,6 @@ import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.util.ResourceLocation;
 
 public class ModEnchantment extends Enchantment {
 

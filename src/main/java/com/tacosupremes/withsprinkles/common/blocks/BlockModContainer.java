@@ -27,7 +27,8 @@ public abstract class BlockModContainer extends BlockContainer {
 
 	
 
-	 public EnumBlockRenderType getRenderType(IBlockState state)
+	 @Override
+	public EnumBlockRenderType getRenderType(IBlockState state)
 	    {
 	        return EnumBlockRenderType.MODEL;
 	    }

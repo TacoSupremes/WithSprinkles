@@ -1,8 +1,5 @@
 package com.tacosupremes.withsprinkles;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -12,31 +9,18 @@ import com.tacosupremes.withsprinkles.common.items.ModItems;
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
 import com.tacosupremes.withsprinkles.common.utils.EnchantUtils;
 import com.tacosupremes.withsprinkles.common.utils.OfflinePlayerUtils;
-import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
 import com.tacosupremes.withsprinkles.gui.GuiHandler;
 import com.tacosupremes.withsprinkles.proxy.CommonProxy;
 import com.tacosupremes.withsprinkles.recipes.ModRecipes;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableList;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;

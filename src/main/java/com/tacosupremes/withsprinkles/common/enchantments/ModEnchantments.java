@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.util.ResourceLocation;
 
 public class ModEnchantments {
 	

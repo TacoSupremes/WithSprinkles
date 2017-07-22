@@ -2,7 +2,6 @@ package com.tacosupremes.withsprinkles.common.utils;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemPickaxe;
@@ -34,7 +33,7 @@ public class ToolUtils
 	private static boolean isToolEffective(ToolType t, IBlockState i)
 	{
 		
-		if(t == t.Items)
+		if(t == ToolType.Items)
 			return false;
 		
 		for(Material m : t.effective)

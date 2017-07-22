@@ -32,7 +32,7 @@ public class InventoryUtils {
 				return;
 			}
 			
-			if(slot.areItemsEqual(is, slot)){
+			if(ItemStack.areItemsEqual(is, slot)){
 				
 				if(slot.getCount() +is.getCount() <= slot.getMaxStackSize()){
 					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getCount()+is.getCount(),slot.getItemDamage()));
@@ -70,7 +70,7 @@ public static int itemsLeft(ItemStack ism, IInventory iio){
 				return 0;
 			}
 			
-			if(slot.areItemsEqual(is, slot)){
+			if(ItemStack.areItemsEqual(is, slot)){
 				
 				if(slot.getCount() +is.getCount() <= slot.getMaxStackSize()){
 					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getCount() + is.getCount(),slot.getItemDamage()));

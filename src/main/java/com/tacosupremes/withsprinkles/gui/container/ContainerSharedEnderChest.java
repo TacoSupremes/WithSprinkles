@@ -1,7 +1,5 @@
 package com.tacosupremes.withsprinkles.gui.container;
 
-import java.util.UUID;
-
 import com.tacosupremes.withsprinkles.common.blocks.tiles.TileSharedEnderChest;
 import com.tacosupremes.withsprinkles.common.utils.OfflinePlayerUtils;
 
@@ -11,7 +9,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class ContainerSharedEnderChest extends Container {
@@ -63,7 +60,8 @@ public class ContainerSharedEnderChest extends Container {
 	    /**
 	     * Determines whether supplied player can use this container
 	     */
-	    public boolean canInteractWith(EntityPlayer playerIn)
+	    @Override
+		public boolean canInteractWith(EntityPlayer playerIn)
 	    {
 	        return true;
 	    }
@@ -72,7 +70,8 @@ public class ContainerSharedEnderChest extends Container {
 	     * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player
 	     * inventory and the other inventory(s).
 	     */
-	    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+	    @Override
+		public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
 	    {
 	        ItemStack itemstack = ItemStack.EMPTY;
 	        Slot slot = this.inventorySlots.get(index);
@@ -110,7 +109,8 @@ public class ContainerSharedEnderChest extends Container {
 	    /**
 	     * Called when the container is closed.
 	     */
-	    public void onContainerClosed(EntityPlayer playerIn)
+	    @Override
+		public void onContainerClosed(EntityPlayer playerIn)
 	    {
 	        super.onContainerClosed(playerIn);
 	        

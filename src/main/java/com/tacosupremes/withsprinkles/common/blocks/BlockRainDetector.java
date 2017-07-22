@@ -44,30 +44,32 @@ public class BlockRainDetector extends BlockModContainer {
 			
 			if(w.isThundering()){
 				
-				if((Integer)state.getValue(POWER).intValue() != 8)	
+				if(state.getValue(POWER).intValue() != 8)	
 					w.setBlockState(pos, state.withProperty(POWER, 8), 3);
 				return;
 			}
 			
-			if((Integer)state.getValue(POWER).intValue() != 4){
+			if(state.getValue(POWER).intValue() != 4){
 				
 				w.setBlockState(pos, state.withProperty(POWER, 4), 3);
 				return;
 			}			
 			
-		}else if((Integer)state.getValue(POWER).intValue() != 0)
+		}else if(state.getValue(POWER).intValue() != 0)
 			w.setBlockState(pos, state.withProperty(POWER, 0));
 	}
 	
 
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    @Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return DAYLIGHT_DETECTOR_AABB;
     }
 
-    public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
+    @Override
+	public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
     {
-        return ((Integer)blockState.getValue(POWER)).intValue();
+        return blockState.getValue(POWER).intValue();
     }
 
 	@Override
@@ -76,7 +78,8 @@ public class BlockRainDetector extends BlockModContainer {
 		return TileEntityRainDetector.class;
 	}
 	
-	 public boolean isFullCube(IBlockState state)
+	 @Override
+	public boolean isFullCube(IBlockState state)
 	    {
 	        return false;
 	    }
@@ -84,7 +87,8 @@ public class BlockRainDetector extends BlockModContainer {
 	    /**
 	     * Used to determine ambient occlusion and culling when rebuilding chunks for render
 	     */
-	    public boolean isOpaqueCube(IBlockState state)
+	    @Override
+		public boolean isOpaqueCube(IBlockState state)
 	    {
 	        return false;
 	    }
@@ -93,12 +97,14 @@ public class BlockRainDetector extends BlockModContainer {
 	     * The type of render function called. MODEL for mixed tesr and static model, MODELBLOCK_ANIMATED for TESR-only,
 	     * LIQUID for vanilla liquids, INVISIBLE to skip all rendering
 	     */
-	    public EnumBlockRenderType getRenderType(IBlockState state)
+	    @Override
+		public EnumBlockRenderType getRenderType(IBlockState state)
 	    {
 	        return EnumBlockRenderType.MODEL;
 	    }
 
-	    public BlockRenderLayer getBlockLayer()
+	    @Override
+		public BlockRenderLayer getBlockLayer()
 	    {
 	        return BlockRenderLayer.CUTOUT_MIPPED;
 	    }
@@ -106,7 +112,8 @@ public class BlockRainDetector extends BlockModContainer {
 	    /**
 	     * Can this block provide power. Only wire currently seems to have this change based on its state.
 	     */
-	    public boolean canProvidePower(IBlockState state)
+	    @Override
+		public boolean canProvidePower(IBlockState state)
 	    {
 	        return true;
 	    }
@@ -116,7 +123,8 @@ public class BlockRainDetector extends BlockModContainer {
 	    /**
 	     * Convert the given metadata into a BlockState for this Block
 	     */
-	    public IBlockState getStateFromMeta(int meta)
+	    @Override
+		public IBlockState getStateFromMeta(int meta)
 	    {
 	        return this.getDefaultState().withProperty(POWER, Integer.valueOf(meta));
 	    }
@@ -124,12 +132,14 @@ public class BlockRainDetector extends BlockModContainer {
 	    /**
 	     * Convert the BlockState into the correct metadata value
 	     */
-	    public int getMetaFromState(IBlockState state)
+	    @Override
+		public int getMetaFromState(IBlockState state)
 	    {
-	        return ((Integer)state.getValue(POWER)).intValue();
+	        return state.getValue(POWER).intValue();
 	    }
 
-	    protected BlockStateContainer createBlockState()
+	    @Override
+		protected BlockStateContainer createBlockState()
 	    {
 	        return new BlockStateContainer(this, new IProperty[] {POWER});
 	    }

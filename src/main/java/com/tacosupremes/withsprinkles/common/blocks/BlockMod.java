@@ -6,10 +6,7 @@ import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockMod extends Block {
 

@@ -2,17 +2,11 @@ package com.tacosupremes.withsprinkles.recipes;
 
 import com.tacosupremes.withsprinkles.common.blocks.ModBlocks;
 import com.tacosupremes.withsprinkles.common.items.ModItems;
-import com.tacosupremes.withsprinkles.common.lib.LibMisc;
 import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
 import com.tacosupremes.withsprinkles.common.utils.RecipeHandler;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class ModRecipes {
 
@@ -32,6 +26,8 @@ public class ModRecipes {
 		
 		RecipeHandler.addShapelessRecipe(ProxyRegistry.newStack(ModItems.portableEnderChest, 1, 2), ProxyRegistry.newStack(Items.REDSTONE), ProxyRegistry.newStack(ModItems.portableEnderChest));
 		
+		RecipeHandler.addShapedRecipe(ProxyRegistry.newStack(ModBlocks.sharedEnderChest), "RER", "RDR", "RRR", 'R', ProxyRegistry.newStack(Blocks.OBSIDIAN), 'D', ProxyRegistry.newStack(Blocks.ENDER_CHEST), 'E', ProxyRegistry.newStack(Items.ENDER_PEARL));		
+			
 		EnchantedBookRecipe r = new EnchantedBookRecipe();
 	}
 

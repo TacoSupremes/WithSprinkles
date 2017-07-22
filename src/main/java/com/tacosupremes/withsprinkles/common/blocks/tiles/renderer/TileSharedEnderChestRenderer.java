@@ -5,7 +5,6 @@ import com.tacosupremes.withsprinkles.common.blocks.tiles.TileSharedEnderChest;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntityEnderChest;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -16,7 +15,8 @@ public class TileSharedEnderChestRenderer extends TileEntitySpecialRenderer<Tile
     private static final ResourceLocation ENDER_CHEST_TEXTURE = new ResourceLocation("withsprinkles:textures/blocks/tile/ender.png");
     private final ModelChest modelChest = new ModelChest();
 
-    public void render(TileSharedEnderChest te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
+    @Override
+	public void render(TileSharedEnderChest te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     {
         int i = 0;
 
@@ -67,7 +67,7 @@ public class TileSharedEnderChestRenderer extends TileEntitySpecialRenderer<Tile
             j = -90;
         }
 
-        GlStateManager.rotate((float)j, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(j, 0.0F, 1.0F, 0.0F);
         GlStateManager.translate(-0.5F, -0.5F, -0.5F);
         float f = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
         f = 1.0F - f;

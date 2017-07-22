@@ -4,18 +4,14 @@ import com.tacosupremes.withsprinkles.common.blocks.tiles.TileAutoDropper;
 import com.tacosupremes.withsprinkles.common.blocks.tiles.TileSimpleInventory;
 
 import net.minecraft.block.BlockDirectional;
-import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
@@ -51,7 +47,8 @@ public class BlockAutoDropper extends BlockModContainer {
 		return TileAutoDropper.class;
 	}
 	
-	  public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+	  @Override
+	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
 	    {
 	        super.onBlockAdded(worldIn, pos, state);
 	        this.setDefaultDirection(worldIn, pos, state);
@@ -62,7 +59,7 @@ public class BlockAutoDropper extends BlockModContainer {
 	    {
 	        if (!worldIn.isRemote)
 	        {
-	            EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+	            EnumFacing enumfacing = state.getValue(FACING);
 	            boolean flag = worldIn.getBlockState(pos.north()).isFullBlock();
 	            boolean flag1 = worldIn.getBlockState(pos.south()).isFullBlock();
 
@@ -94,14 +91,16 @@ public class BlockAutoDropper extends BlockModContainer {
 	        }
 	    }
 	    
-	    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+	    @Override
+		public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
 	    {
 	        TileSimpleInventory.breakBlock(worldIn, pos, state);
 
 	        super.breakBlock(worldIn, pos, state);
 	    }
 	    
-	    public EnumBlockRenderType getRenderType(IBlockState state)
+	    @Override
+		public EnumBlockRenderType getRenderType(IBlockState state)
 	    {
 	        return EnumBlockRenderType.MODEL;
 	    }
@@ -114,7 +113,8 @@ public class BlockAutoDropper extends BlockModContainer {
 	    /**
 	     * Convert the given metadata into a BlockState for this Block
 	     */
-	    public IBlockState getStateFromMeta(int meta)
+	    @Override
+		public IBlockState getStateFromMeta(int meta)
 	    {
 	        return this.getDefaultState().withProperty(FACING, getFacing(meta));
 	    }
@@ -122,10 +122,11 @@ public class BlockAutoDropper extends BlockModContainer {
 	    /**
 	     * Convert the BlockState into the correct metadata value
 	     */
-	    public int getMetaFromState(IBlockState state)
+	    @Override
+		public int getMetaFromState(IBlockState state)
 	    {
 	        int i = 0;
-	        i = i | ((EnumFacing)state.getValue(FACING)).getIndex();
+	        i = i | state.getValue(FACING).getIndex();
 
 	      
 
@@ -136,21 +137,24 @@ public class BlockAutoDropper extends BlockModContainer {
 	     * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
 	     * blockstate.
 	     */
-	    public IBlockState withRotation(IBlockState state, Rotation rot)
+	    @Override
+		public IBlockState withRotation(IBlockState state, Rotation rot)
 	    {
-	        return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
+	        return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
 	    }
 
 	    /**
 	     * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
 	     * blockstate.
 	     */
-	    public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
+	    @Override
+		public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
 	    {
-	        return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
+	        return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
 	    }
 
-	    protected BlockStateContainer createBlockState()
+	    @Override
+		protected BlockStateContainer createBlockState()
 	    {
 	        return new BlockStateContainer(this, new IProperty[] {FACING});
 	    }
@@ -163,7 +167,8 @@ public class BlockAutoDropper extends BlockModContainer {
 	    /**
 	     * Called by ItemBlocks after a block is set in the world, to allow post-place logic
 	     */
-	    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+	    @Override
+		public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
 	    {
 	        worldIn.setBlockState(pos, state.withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer)), 2);
 

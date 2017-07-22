@@ -7,7 +7,7 @@ import com.tacosupremes.withsprinkles.common.items.ModItems;
 import com.tacosupremes.withsprinkles.common.utils.ClientStuff;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.common.MinecraftForge;
@@ -26,7 +26,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public boolean isShiftDown()
 	{	
-		return Minecraft.getMinecraft().currentScreen != null ? Minecraft.getMinecraft().currentScreen.isShiftKeyDown() : false;	
+		return Minecraft.getMinecraft().currentScreen != null ? GuiScreen.isShiftKeyDown() : false;	
 	}
 
 	@Override

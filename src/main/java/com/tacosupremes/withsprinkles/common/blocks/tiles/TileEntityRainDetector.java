@@ -2,8 +2,6 @@ package com.tacosupremes.withsprinkles.common.blocks.tiles;
 
 import com.tacosupremes.withsprinkles.common.blocks.BlockRainDetector;
 
-import net.minecraft.block.BlockDaylightDetector;
-import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 

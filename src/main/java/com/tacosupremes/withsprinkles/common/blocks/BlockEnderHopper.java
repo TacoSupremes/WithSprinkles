@@ -8,20 +8,15 @@ import com.google.common.base.Predicate;
 import com.tacosupremes.withsprinkles.common.blocks.tiles.TileEnderHopper;
 import com.tacosupremes.withsprinkles.common.blocks.tiles.TileSimpleInventory;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
@@ -43,7 +38,8 @@ public class BlockEnderHopper extends BlockModContainer {
 	
 	 public static final PropertyDirection FACING = PropertyDirection.create("facing", new Predicate<EnumFacing>()
 	    {
-	        public boolean apply(EnumFacing p_apply_1_)
+	        @Override
+			public boolean apply(EnumFacing p_apply_1_)
 	        {
 	            return p_apply_1_ != EnumFacing.UP;
 	        }
@@ -142,7 +138,8 @@ public class BlockEnderHopper extends BlockModContainer {
 	     */
 	   
 
-	    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+	    @Override
+		public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
 	    {
 	        TileSimpleInventory.breakBlock(worldIn, pos, state);
 
@@ -164,7 +161,8 @@ public class BlockEnderHopper extends BlockModContainer {
 
 	   
 
-	    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
+	    @Override
+		public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
 	    {
 	        addCollisionBoxToList(pos, entityBox, collidingBoxes, BASE_AABB);
 	        addCollisionBoxToList(pos, entityBox, collidingBoxes, EAST_AABB);
@@ -177,7 +175,8 @@ public class BlockEnderHopper extends BlockModContainer {
 	     * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
 	     * IBlockstate
 	     */
-	    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+	    @Override
+		public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
 	    {
 	        EnumFacing enumfacing = facing.getOpposite();
 
@@ -194,7 +193,8 @@ public class BlockEnderHopper extends BlockModContainer {
 	    /**
 	     * Called when the block is right clicked by a player.
 	     */
-	    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	    @Override
+		public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	    {
 	        if (worldIn.isRemote)
 	        {
@@ -221,12 +221,14 @@ public class BlockEnderHopper extends BlockModContainer {
 	     * The type of render function called. MODEL for mixed tesr and static model, MODELBLOCK_ANIMATED for TESR-only,
 	     * LIQUID for vanilla liquids, INVISIBLE to skip all rendering
 	     */
-	    public EnumBlockRenderType getRenderType(IBlockState state)
+	    @Override
+		public EnumBlockRenderType getRenderType(IBlockState state)
 	    {
 	        return EnumBlockRenderType.MODEL;
 	    }
 
-	    public boolean isFullCube(IBlockState state)
+	    @Override
+		public boolean isFullCube(IBlockState state)
 	    {
 	        return false;
 	    }
@@ -234,12 +236,14 @@ public class BlockEnderHopper extends BlockModContainer {
 	    /**
 	     * Used to determine ambient occlusion and culling when rebuilding chunks for render
 	     */
-	    public boolean isOpaqueCube(IBlockState state)
+	    @Override
+		public boolean isOpaqueCube(IBlockState state)
 	    {
 	        return false;
 	    }
 
-	    @SideOnly(Side.CLIENT)
+	    @Override
+		@SideOnly(Side.CLIENT)
 	    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
 	    {
 	        return true;
@@ -259,17 +263,20 @@ public class BlockEnderHopper extends BlockModContainer {
 	        return (meta & 8) != 8;
 	    }
 
-	    public boolean hasComparatorInputOverride(IBlockState state)
+	    @Override
+		public boolean hasComparatorInputOverride(IBlockState state)
 	    {
 	        return true;
 	    }
 
-	    public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos)
+	    @Override
+		public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos)
 	    {
 	        return Container.calcRedstone(worldIn.getTileEntity(pos));
 	    }
 
-	    @SideOnly(Side.CLIENT)
+	    @Override
+		@SideOnly(Side.CLIENT)
 	    public BlockRenderLayer getBlockLayer()
 	    {
 	        return BlockRenderLayer.CUTOUT_MIPPED;
@@ -278,7 +285,8 @@ public class BlockEnderHopper extends BlockModContainer {
 	    /**
 	     * Convert the given metadata into a BlockState for this Block
 	     */
-	    public IBlockState getStateFromMeta(int meta)
+	    @Override
+		public IBlockState getStateFromMeta(int meta)
 	    {
 	        return this.getDefaultState().withProperty(FACING, getFacing(meta));
 	    }
@@ -286,10 +294,11 @@ public class BlockEnderHopper extends BlockModContainer {
 	    /**
 	     * Convert the BlockState into the correct metadata value
 	     */
-	    public int getMetaFromState(IBlockState state)
+	    @Override
+		public int getMetaFromState(IBlockState state)
 	    {
 	        int i = 0;
-	        i = i | ((EnumFacing)state.getValue(FACING)).getIndex();
+	        i = i | state.getValue(FACING).getIndex();
 
 	      
 
@@ -300,21 +309,24 @@ public class BlockEnderHopper extends BlockModContainer {
 	     * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
 	     * blockstate.
 	     */
-	    public IBlockState withRotation(IBlockState state, Rotation rot)
+	    @Override
+		public IBlockState withRotation(IBlockState state, Rotation rot)
 	    {
-	        return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
+	        return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
 	    }
 
 	    /**
 	     * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
 	     * blockstate.
 	     */
-	    public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
+	    @Override
+		public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
 	    {
-	        return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
+	        return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
 	    }
 
-	    protected BlockStateContainer createBlockState()
+	    @Override
+		protected BlockStateContainer createBlockState()
 	    {
 	        return new BlockStateContainer(this, new IProperty[] {FACING});
 	    }

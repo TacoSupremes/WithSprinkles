@@ -1,8 +1,6 @@
 package com.tacosupremes.withsprinkles.gui;
 
 import com.tacosupremes.withsprinkles.common.blocks.tiles.TileSharedEnderChest;
-import com.tacosupremes.withsprinkles.gui.container.ContainerSharedEnderChest;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -38,7 +36,8 @@ public class GuiSharedEnderChest extends GuiContainer
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    @Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
@@ -48,7 +47,8 @@ public class GuiSharedEnderChest extends GuiContainer
     /**
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
+    @Override
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         this.fontRenderer.drawString(Blocks.ENDER_CHEST.getLocalizedName(), 8, 6, 4210752);
         this.fontRenderer.drawString(this.upperChestInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
@@ -57,7 +57,8 @@ public class GuiSharedEnderChest extends GuiContainer
     /**
      * Draws the background layer of this container (behind the items).
      */
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
+    @Override
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(CHEST_GUI_TEXTURE);

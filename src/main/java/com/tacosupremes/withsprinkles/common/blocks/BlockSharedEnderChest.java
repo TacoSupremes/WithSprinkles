@@ -13,17 +13,10 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryEnderChest;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityEnderChest;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -49,7 +42,8 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	        this.setHardness(0.7F);
 	    }
 
-	    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+	    @Override
+		public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
 	    {
 	        return ENDER_CHEST_AABB;
 	    }
@@ -57,17 +51,20 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	    /**
 	     * Used to determine ambient occlusion and culling when rebuilding chunks for render
 	     */
-	    public boolean isOpaqueCube(IBlockState state)
+	    @Override
+		public boolean isOpaqueCube(IBlockState state)
 	    {
 	        return false;
 	    }
 
-	    public boolean isFullCube(IBlockState state)
+	    @Override
+		public boolean isFullCube(IBlockState state)
 	    {
 	        return false;
 	    }
 
-	    @SideOnly(Side.CLIENT)
+	    @Override
+		@SideOnly(Side.CLIENT)
 	    public boolean hasCustomBreakingProgress(IBlockState state)
 	    {
 	        return true;
@@ -77,7 +74,8 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	     * The type of render function called. MODEL for mixed tesr and static model, MODELBLOCK_ANIMATED for TESR-only,
 	     * LIQUID for vanilla liquids, INVISIBLE to skip all rendering
 	     */
-	    public EnumBlockRenderType getRenderType(IBlockState state)
+	    @Override
+		public EnumBlockRenderType getRenderType(IBlockState state)
 	    {
 	        return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
 	    }
@@ -86,7 +84,8 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	     * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
 	     * IBlockstate
 	     */
-	    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+	    @Override
+		public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
 	    {
 	        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
 	    }
@@ -94,7 +93,8 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	    /**
 	     * Called by ItemBlocks after a block is set in the world, to allow post-place logic
 	     */
-	    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+	    @Override
+		public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
 	    {
 	         ((TileSharedEnderChest)worldIn.getTileEntity(pos)).uuid = placer.getUniqueID();
 	    }
@@ -107,7 +107,8 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	    /**
 	     * Called when the block is right clicked by a player.
 	     */
-	    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	    @Override
+		public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	    {
 
 	             	if(!worldIn.isRemote)
@@ -123,24 +124,26 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	    /**
 	     * Returns a new instance of a block's tile entity class. Called on placing the block.
 	     */
-	    public TileEntity createNewTileEntity(World worldIn, int meta)
+	    @Override
+		public TileEntity createNewTileEntity(World worldIn, int meta)
 	    {
 	        return new TileSharedEnderChest();
 	    }
 
-	    @SideOnly(Side.CLIENT)
+	    @Override
+		@SideOnly(Side.CLIENT)
 	    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
 	    {
 	        for (int i = 0; i < 3; ++i)
 	        {
 	            int j = rand.nextInt(2) * 2 - 1;
 	            int k = rand.nextInt(2) * 2 - 1;
-	            double d0 = (double)pos.getX() + 0.5D + 0.25D * (double)j;
-	            double d1 = (double)((float)pos.getY() + rand.nextFloat());
-	            double d2 = (double)pos.getZ() + 0.5D + 0.25D * (double)k;
-	            double d3 = (double)(rand.nextFloat() * (float)j);
-	            double d4 = ((double)rand.nextFloat() - 0.5D) * 0.125D;
-	            double d5 = (double)(rand.nextFloat() * (float)k);
+	            double d0 = pos.getX() + 0.5D + 0.25D * j;
+	            double d1 = pos.getY() + rand.nextFloat();
+	            double d2 = pos.getZ() + 0.5D + 0.25D * k;
+	            double d3 = rand.nextFloat() * j;
+	            double d4 = (rand.nextFloat() - 0.5D) * 0.125D;
+	            double d5 = rand.nextFloat() * k;
 	            worldIn.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
 	        }
 	    }
@@ -148,7 +151,8 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	    /**
 	     * Convert the given metadata into a BlockState for this Block
 	     */
-	    public IBlockState getStateFromMeta(int meta)
+	    @Override
+		public IBlockState getStateFromMeta(int meta)
 	    {
 	        EnumFacing enumfacing = EnumFacing.getFront(meta);
 
@@ -163,35 +167,40 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	    /**
 	     * Convert the BlockState into the correct metadata value
 	     */
-	    public int getMetaFromState(IBlockState state)
+	    @Override
+		public int getMetaFromState(IBlockState state)
 	    {
-	        return ((EnumFacing)state.getValue(FACING)).getIndex();
+	        return state.getValue(FACING).getIndex();
 	    }
 
 	    /**
 	     * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
 	     * blockstate.
 	     */
-	    public IBlockState withRotation(IBlockState state, Rotation rot)
+	    @Override
+		public IBlockState withRotation(IBlockState state, Rotation rot)
 	    {
-	        return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
+	        return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
 	    }
 
 	    /**
 	     * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
 	     * blockstate.
 	     */
-	    public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
+	    @Override
+		public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
 	    {
-	        return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
+	        return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
 	    }
 
-	    protected BlockStateContainer createBlockState()
+	    @Override
+		protected BlockStateContainer createBlockState()
 	    {
 	        return new BlockStateContainer(this, new IProperty[] {FACING});
 	    }
 
-	    public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_, EnumFacing p_193383_4_)
+	    @Override
+		public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_, EnumFacing p_193383_4_)
 	    {
 	        return BlockFaceShape.UNDEFINED;
 	    }

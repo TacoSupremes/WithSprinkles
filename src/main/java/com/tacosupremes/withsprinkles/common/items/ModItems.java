@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntFunction;
 
-import com.tacosupremes.withsprinkles.WithSprinkles;
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
 
 import net.minecraft.client.Minecraft;
@@ -13,7 +12,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class ModItems {
 	

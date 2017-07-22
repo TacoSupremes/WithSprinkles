@@ -8,40 +8,43 @@ import com.tacosupremes.withsprinkles.common.utils.EnchantUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class EnchantedBookRecipe extends ModRecipe {
+public class EnchantedBookRecipe extends ModRecipe 
+{
 
-	public EnchantedBookRecipe() {
+	public EnchantedBookRecipe() 
+	{
 		super("enchantBook");
 		
 	}
 
 	@Override
-	public boolean matches(InventoryCrafting inv, World worldIn) {
+	public boolean matches(InventoryCrafting inv, World worldIn) 
+	{
 		
 		boolean hasLeather = false;
 		
 		int paper = 0;
 		int oldPaper = 0;
 		
-		for(int x = 0; x < inv.getWidth(); x++){
+		for(int x = 0; x < inv.getWidth(); x++)
+		{
 			
-			for(int y = 0; y < inv.getHeight(); y++){
+			for(int y = 0; y < inv.getHeight(); y++)
+			{
 				
 				ItemStack is = inv.getStackInRowAndColumn(y, x);
 				
 				if(is.isEmpty())
 					continue;
 				
-				if(is.getItem() == Items.LEATHER){
+				if(is.getItem() == Items.LEATHER)
+				{
 					
 					if(hasLeather)
 						return false;
@@ -50,7 +53,8 @@ public class EnchantedBookRecipe extends ModRecipe {
 					continue;
 				}
 				
-				if(is.getItem() == ModItems.oldPaper){
+				if(is.getItem() == ModItems.oldPaper)
+				{
 					paper++;
 					oldPaper++;
 				}
@@ -64,19 +68,21 @@ public class EnchantedBookRecipe extends ModRecipe {
 		return oldPaper > 0 && paper == 3 && hasLeather;
 	}
 
-	
 	Random rand = new Random();
 	
 	@Override
-	public ItemStack getCraftingResult(InventoryCrafting inv) {
+	public ItemStack getCraftingResult(InventoryCrafting inv)
+	{
 	
 		ItemStack is = new ItemStack(Items.ENCHANTED_BOOK);
 		
 		int oldPaper = 0;
 		
-		for(int x = 0; x < inv.getWidth(); x++){
+		for(int x = 0; x < inv.getWidth(); x++)
+		{
 			
-			for(int y = 0; y < inv.getHeight(); y++){
+			for(int y = 0; y < inv.getHeight(); y++)
+			{
 				
 				ItemStack invs = inv.getStackInRowAndColumn(y, x);
 				
@@ -90,11 +96,8 @@ public class EnchantedBookRecipe extends ModRecipe {
 		Rarity r  = Rarity.values()[ Math.min(oldPaper - 1 + rand.nextInt(2), Rarity.values().length-1)];
 		
 		Enchantment e = EnchantUtils.randEnchantmentTier(rand, is, oldPaper == 3, oldPaper == 3 ? Rarity.VERY_RARE : r);
-		
-	//	EnchantmentHelper.addRandomEnchantment(random, stack, level, allowTreasure)
-		
-		
-		((ItemEnchantedBook)Items.ENCHANTED_BOOK).addEnchantment(is, new EnchantmentData(e, e.getMaxLevel()));
+
+		ItemEnchantedBook.addEnchantment(is, new EnchantmentData(e, e.getMaxLevel()));
 		
 		return is;
 	}
@@ -102,15 +105,17 @@ public class EnchantedBookRecipe extends ModRecipe {
 	
 	
 	@Override
-	public boolean canFit(int width, int height) {
-		
-		return width >= 2 && height >=2;
+	public boolean canFit(int width, int height) 
+	{	
+		return width >= 2 && height >= 2;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
-		
+	public ItemStack getRecipeOutput() 
+	{	
 		return new ItemStack(Items.ENCHANTED_BOOK);
 	}
 
+	
+	
 }
