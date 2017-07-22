@@ -46,6 +46,7 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	    {
 	        super(Material.ROCK,"sharedEnderChest");
 	        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+	        this.setHardness(0.7F);
 	    }
 
 	    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
@@ -82,27 +83,6 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	    }
 
 	    /**
-	     * Get the Item that this Block should drop when harvested.
-	     */
-	    public Item getItemDropped(IBlockState state, Random rand, int fortune)
-	    {
-	        return Item.getItemFromBlock(Blocks.OBSIDIAN);
-	    }
-
-	    /**
-	     * Returns the quantity of items to drop on block destruction.
-	     */
-	    public int quantityDropped(Random random)
-	    {
-	        return 8;
-	    }
-
-	    protected boolean canSilkHarvest()
-	    {
-	        return true;
-	    }
-
-	    /**
 	     * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
 	     * IBlockstate
 	     */
@@ -129,12 +109,13 @@ public class BlockSharedEnderChest extends BlockModContainer {
 	     */
 	    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	    {
-	     
-	 
+
 	             	if(!worldIn.isRemote)
-	            	 playerIn.openGui(WithSprinkles.instance, GuiHandler.SHARED_ENDER_CHEST_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());            	  
-	             
-	                return true;
+	             		playerIn.openGui(WithSprinkles.instance, GuiHandler.SHARED_ENDER_CHEST_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());            	               		
+	             	else
+	             		((TileSharedEnderChest)worldIn.getTileEntity(pos)).openChest();
+	                
+	             	return true;
 	            
 	    }
 	    

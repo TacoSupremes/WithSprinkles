@@ -26,6 +26,7 @@ public class ContainerSharedEnderChest extends Container {
 	        this.lowerChestInventory = chestInventory;
 	        this.numRows = 3;
 	        chestInventory.openInventory(playerOpen);
+	        chestInventory.openChest();
         
 	        EntityPlayer player;
 				
@@ -114,6 +115,7 @@ public class ContainerSharedEnderChest extends Container {
 	        super.onContainerClosed(playerIn);
 	        
 	        this.lowerChestInventory.closeInventory(playerIn);
+	        this.lowerChestInventory.closeChest();
 	    }
 	    
 	}

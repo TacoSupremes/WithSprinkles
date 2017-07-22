@@ -35,7 +35,6 @@ public class OfflinePlayerUtils
 	private static Map<UUID, InventoryEnderChest> mapEnder = new HashMap<UUID, InventoryEnderChest>(); 
 	
 	private static Map<UUID, String> UUIDtoName = new HashMap<UUID, String>(); 
-	
 
 	private static void writeOfflinePlayerNBT(UUID uuid)
 	{
@@ -119,9 +118,7 @@ public class OfflinePlayerUtils
 		nbt.setTag("EnderItems", OfflinePlayerUtils.getOfflineEnderChest(uuid).saveInventoryToNBT());
 		
 		map.put(uuid, nbt);
-		
-		
-		
+			
 	}
 	
 	private static void saveOfflineNBT(UUID uuid)
@@ -136,7 +133,8 @@ public class OfflinePlayerUtils
 	}
 	
 	@SubscribeEvent
-	public static void onPlayerJoinWorld(LoadFromFile event) {
+	public static void onPlayerJoinWorld(LoadFromFile event)
+	{
 		
 		UUID uuid = event.getEntityPlayer().getUniqueID();		
 		

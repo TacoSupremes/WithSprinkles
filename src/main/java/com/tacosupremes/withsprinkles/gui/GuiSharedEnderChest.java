@@ -1,5 +1,8 @@
 package com.tacosupremes.withsprinkles.gui;
 
+import com.tacosupremes.withsprinkles.common.blocks.tiles.TileSharedEnderChest;
+import com.tacosupremes.withsprinkles.gui.container.ContainerSharedEnderChest;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -20,7 +23,7 @@ public class GuiSharedEnderChest extends GuiContainer
     /** window height is calculated with these values; the more rows, the heigher */
     private final int inventoryRows;
 
-    public GuiSharedEnderChest(IInventory upperInv, IInventory lowerInv)
+    public GuiSharedEnderChest(IInventory upperInv, TileSharedEnderChest lowerInv)
     {
         super(new ContainerChest(upperInv, lowerInv, Minecraft.getMinecraft().player));
         this.upperChestInventory = upperInv;

@@ -51,6 +51,7 @@ public class WithSprinkles
 {
    
 	public static CreativeTabs tab;
+	
 	public static WSEventHandler events;
 	
 	@SidedProxy(clientSide = LibMisc.CLIENTPROXY, serverSide = LibMisc.COMMONPROXY)
@@ -121,11 +122,13 @@ public class WithSprinkles
 			
 			super.displayAllRelevantItems(l);
 			
-			for(Enchantment e : ModEnchantments.enchants){
+			for(Enchantment e : ModEnchantments.enchants)
+			{
 				
 				ItemStack is = new ItemStack(Items.ENCHANTED_BOOK, 1, 0);
 					
-					for(int i = 1; i <= e.getMaxLevel(); i++){
+					for(int i = 1; i <= e.getMaxLevel(); i++)
+					{
 						
 						ItemStack is2 = is.copy();
 						
@@ -140,8 +143,9 @@ public class WithSprinkles
     }
     
     
-    private static ResourceLocation register(String id) {
+    private static ResourceLocation register(String id)
+    {
         return LootTableList.register(new ResourceLocation(LibMisc.MODID, id));
- }
+    }
     
 }
