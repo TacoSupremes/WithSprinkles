@@ -18,7 +18,7 @@ public class ModBlocks {
 	
 	public static Block rainDetector;
 	
-	public static Block sharedEnderChest; //TODO: Shared Ender Chest
+	public static Block sharedEnderChest;
 	
 	public static Block enchantmentBuff;
 	

@@ -41,9 +41,9 @@ public class OfflinePlayerUtils
 		    File playerFile = new File(playersDirectory, uuid.toString() + ".dat");
 		    CompressedStreamTools.writeCompressed(map.get(uuid), new FileOutputStream(temp));
 
-		   if (playerFile.exists()) {
+		    if(playerFile.exists()) 
 		        playerFile.delete();
-		    }
+		    
 		    temp.renameTo(playerFile);
 		 
 		 
@@ -144,6 +144,9 @@ public class OfflinePlayerUtils
 	@SubscribeEvent
 	public static void onWorldClose(Unload event)
 	{
+		
+		if(event.getWorld().isRemote)
+			return;
 		
 		for(UUID uuid : map.keySet())
 		{

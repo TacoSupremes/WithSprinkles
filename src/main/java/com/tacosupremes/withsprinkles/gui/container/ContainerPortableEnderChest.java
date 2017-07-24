@@ -1,6 +1,7 @@
 package com.tacosupremes.withsprinkles.gui.container;
 
 import com.tacosupremes.withsprinkles.common.blocks.tiles.TileSharedEnderChest;
+import com.tacosupremes.withsprinkles.common.items.ItemPortableEnderChest;
 import com.tacosupremes.withsprinkles.common.utils.OfflinePlayerUtils;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,28 +12,26 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-public class ContainerSharedEnderChest extends Container {
+public class ContainerPortableEnderChest extends Container {
 	
-	    private final TileSharedEnderChest lowerChestInventory;
+	    private final ItemStack eye;
 	    private final int numRows;
 	    
 	    private InventoryEnderChest te;
 	
-	    public ContainerSharedEnderChest(IInventory playerInventory, TileSharedEnderChest chestInventory, EntityPlayer playerOpen)
+	    public ContainerPortableEnderChest(IInventory playerInventory, ItemStack eye, EntityPlayer playerOpen)
 	    {
-	        this.lowerChestInventory = chestInventory;
+	        this.eye = eye;
 	        this.numRows = 3;
-	        chestInventory.openInventory(playerOpen);
-	        chestInventory.openChest();
         
 	        EntityPlayer player;
 				
-	        player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(lowerChestInventory.uuid);
+	        player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(ItemPortableEnderChest.getUUID(eye));
 			
-	    	te = player == null ? OfflinePlayerUtils.getOfflineEnderChest(chestInventory.uuid) : player.getInventoryEnderChest();
+	    	te = player == null ? OfflinePlayerUtils.getOfflineEnderChest(ItemPortableEnderChest.getUUID(eye)) : player.getInventoryEnderChest();
 			
 	        
-	       
+	        
 	        int i = (this.numRows - 4) * 18;
 
 	        for (int j = 0; j < this.numRows; ++j)
@@ -106,16 +105,4 @@ public class ContainerSharedEnderChest extends Container {
 	        return itemstack;
 	    }
 
-	    /**
-	     * Called when the container is closed.
-	     */
-	    @Override
-		public void onContainerClosed(EntityPlayer playerIn)
-	    {
-	        super.onContainerClosed(playerIn);
-	        
-	        this.lowerChestInventory.closeInventory(playerIn);
-	        this.lowerChestInventory.closeChest();
-	    }
-	    
 	}
