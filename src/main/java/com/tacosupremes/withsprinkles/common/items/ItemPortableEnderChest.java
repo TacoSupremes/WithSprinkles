@@ -30,72 +30,69 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemPortableEnderChest extends ItemMod {
+public class ItemPortableEnderChest extends ItemMod
+{
 
-	public ItemPortableEnderChest() {
+	public ItemPortableEnderChest()
+	{
 		super("enderChest", 3);
-		
+
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
-		
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn)
+	{
+
 		BlockPos pos = player.getPosition();
-		
-		if(player.getHeldItem(handIn) == null)
-			 return super.onItemRightClick(worldIn, player, handIn);
 
-		if(player.getHeldItem(handIn).getItemDamage() == 0 || player.getHeldItem(handIn).getItemDamage() == 1)	
+		if (player.getHeldItem(handIn) == null)
+			return super.onItemRightClick(worldIn, player, handIn);
+
+		if (player.getHeldItem(handIn).getItemDamage() == 0 || player.getHeldItem(handIn).getItemDamage() == 1)
 			player.displayGUIChest(player.getInventoryEnderChest());
-		else{
+		else
+		{
 
-			if(!player.getHeldItem(handIn).hasTagCompound()){
+			if (!player.getHeldItem(handIn).hasTagCompound())
+			{
 				player.getHeldItem(handIn).setTagCompound(new NBTTagCompound());
-				
+
 				player.getHeldItem(handIn).getTagCompound().setString("PLAYER", player.getUniqueID().toString());
 				player.getHeldItem(handIn).getTagCompound().setString("PLAYERNAME", player.getName());
-		
-				
+
 			}
-			
-			if(!worldIn.isRemote)
-         		player.openGui(WithSprinkles.instance, GuiHandler.PORTABLE_ENDER_CHEST_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());      
-			
+
+			if (!worldIn.isRemote)
+				player.openGui(WithSprinkles.instance, GuiHandler.PORTABLE_ENDER_CHEST_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
+
 		}
-		
+
 		return super.onItemRightClick(worldIn, player, handIn);
 	}
-	
+
 	public static UUID getUUID(ItemStack is)
 	{
-		
-		if(is.hasTagCompound())
+
+		if (is.hasTagCompound())
 			return UUID.fromString(is.getTagCompound().getString("PLAYER"));
 
 		return null;
-		
+
 	}
-	
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	  public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-    {	
-		if(stack.getItemDamage() < 2)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+	{
+		if (stack.getItemDamage() < 2)
 			return;
-		
-		if(!stack.hasTagCompound())
+
+		if (!stack.hasTagCompound())
 			return;
-		
-		tooltip.add(I18n.translateToLocal(LibMisc.MODID+".bound") + " "+ stack.getTagCompound().getString("PLAYERNAME"));
-		
-	
+
+		tooltip.add(I18n.translateToLocal(LibMisc.MODID + ".bound") + " " + stack.getTagCompound().getString("PLAYERNAME"));
+
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
-
-
-	
-	
-	
 
 }

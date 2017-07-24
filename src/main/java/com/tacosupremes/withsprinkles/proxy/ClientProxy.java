@@ -14,10 +14,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-public class ClientProxy extends CommonProxy {
+public class ClientProxy extends CommonProxy
+{
 
 	@Override
-	public void registerRenders() 
+	public void registerRenders()
 	{
 		ModItems.registerRenders();
 		ModBlocks.registerRenders();
@@ -25,27 +26,21 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public boolean isShiftDown()
-	{	
-		return Minecraft.getMinecraft().currentScreen != null ? GuiScreen.isShiftKeyDown() : false;	
+	{
+		return Minecraft.getMinecraft().currentScreen != null ? GuiScreen.isShiftKeyDown() : false;
 	}
 
 	@Override
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit(FMLPreInitializationEvent event)
+	{
 		super.preInit(event);
-		
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSharedEnderChest.class, new TileSharedEnderChestRenderer());
 
 		ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(ModBlocks.sharedEnderChest), 0, TileSharedEnderChest.class);
-	
-		
-		
+
 		MinecraftForge.EVENT_BUS.register(ClientStuff.class);
-		
+
 	}
-	
-	
-	
-	
-	
+
 }

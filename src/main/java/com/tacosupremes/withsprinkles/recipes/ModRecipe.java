@@ -7,15 +7,17 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public abstract class ModRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
+public abstract class ModRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
+{
 
-	public ModRecipe(ResourceLocation res) {
+	public ModRecipe(ResourceLocation res)
+	{
 		RecipeHandler.addRecipe(res, this);
 	}
-	
-	public ModRecipe(String name) {
+
+	public ModRecipe(String name)
+	{
 		this(new ResourceLocation(LibMisc.MODID, name));
 	}
-	
-	
+
 }

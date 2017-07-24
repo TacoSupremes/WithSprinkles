@@ -4,13 +4,14 @@ import com.tacosupremes.withsprinkles.WithSprinkles;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class ClientStuff {
-	
-	
+public class ClientStuff
+{
+
 	@SubscribeEvent
-	public static void onRegister(ModelRegistryEvent event) {
-		
-			WithSprinkles.proxy.registerRenders();
+	public static void onRegister(ModelRegistryEvent event)
+	{
+
+		WithSprinkles.proxy.registerRenders();
 	}
 
 }

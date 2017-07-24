@@ -34,301 +34,289 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockEnderHopper extends BlockModContainer {
-	
-	 public static final PropertyDirection FACING = PropertyDirection.create("facing", new Predicate<EnumFacing>()
-	    {
-	        @Override
-			public boolean apply(EnumFacing p_apply_1_)
-	        {
-	            return p_apply_1_ != EnumFacing.UP;
-	        }
-	    });
-	 
+public class BlockEnderHopper extends BlockModContainer
+{
 
+	public static final PropertyDirection FACING = PropertyDirection.create("facing", new Predicate<EnumFacing>()
+	{
+		@Override
+		public boolean apply(EnumFacing p_apply_1_)
+		{
+			return p_apply_1_ != EnumFacing.UP;
+		}
+	});
 
-	//TODO: Make GUI TO SELECT TARGET SLOT 
-	public BlockEnderHopper() {
+	// TODO: Make GUI TO SELECT TARGET SLOT
+	public BlockEnderHopper()
+	{
 		super(Material.ROCK, "enderHopper");
 		this.setHardness(0.6F);
-		
+
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		
+	public TileEntity createNewTileEntity(World worldIn, int meta)
+	{
+
 		return new TileEnderHopper();
 	}
 
 	@Override
-	protected Class<? extends TileEntity> tile() {
-		
+	protected Class<? extends TileEntity> tile()
+	{
+
 		return TileEnderHopper.class;
 	}
 
-	
-
 	@Override
-	public void onBlockPlacedBy(World w, BlockPos pos, IBlockState state, EntityLivingBase placer,
-			ItemStack stack) {
-		
-		((TileEnderHopper)w.getTileEntity(pos)).uuid = placer.getUniqueID();
+	public void onBlockPlacedBy(World w, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+	{
+
+		((TileEnderHopper) w.getTileEntity(pos)).uuid = placer.getUniqueID();
 	}
-	
+
 	@Override
-	  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-	    {
-	        return FULL_BLOCK_AABB;
-	    }
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+	{
+		return FULL_BLOCK_AABB;
+	}
 
-	 
+	/**
+	 * Called by ItemBlocks just before a block is actually set in the world, to
+	 * allow for adjustments to the IBlockstate
+	 */
+	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+	{
+		EnumFacing enumfacing = facing.getOpposite();
 
-	    /**
-	     * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
-	     * IBlockstate
-	     */
-	    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-	    {
-	        EnumFacing enumfacing = facing.getOpposite();
+		if (enumfacing == EnumFacing.UP)
+		{
+			enumfacing = EnumFacing.DOWN;
+		}
 
-	        if (enumfacing == EnumFacing.UP)
-	        {
-	            enumfacing = EnumFacing.DOWN;
-	        }
+		return this.getDefaultState().withProperty(FACING, enumfacing);
+	}
 
-	        return this.getDefaultState().withProperty(FACING, enumfacing);
-	    }
+	/**
+	 * Checks if an IBlockState represents a block that is opaque and a full
+	 * cube.
+	 * 
+	 * @param state
+	 *            The block state to check.
+	 */
+	public boolean isFullyOpaque(IBlockState state)
+	{
+		return true;
+	}
 
-	  
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+	{
+		if (worldIn.isRemote)
+		{
+			return true;
+		}
+		else
+		{
+			TileEntity tileentity = worldIn.getTileEntity(pos);
 
-	    /**
-	     * Checks if an IBlockState represents a block that is opaque and a full cube.
-	     *  
-	     * @param state The block state to check.
-	     */
-	    public boolean isFullyOpaque(IBlockState state)
-	    {
-	        return true;
-	    }
+			if (tileentity instanceof TileEntityHopper)
+			{
+				playerIn.displayGUIChest((TileEntityHopper) tileentity);
+				playerIn.addStat(StatList.HOPPER_INSPECTED);
+			}
 
-	    
+			return true;
+		}
+	}
 
-	    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
-	    {
-	        if (worldIn.isRemote)
-	        {
-	            return true;
-	        }
-	        else
-	        {
-	            TileEntity tileentity = worldIn.getTileEntity(pos);
+	/**
+	 * Called when a neighboring block changes.
+	 */
 
-	            if (tileentity instanceof TileEntityHopper)
-	            {
-	                playerIn.displayGUIChest((TileEntityHopper)tileentity);
-	                playerIn.addStat(StatList.HOPPER_INSPECTED);
-	            }
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+	{
+		TileSimpleInventory.breakBlock(worldIn, pos, state);
 
-	            return true;
-	        }
-	    }
+		super.breakBlock(worldIn, pos, state);
+	}
 
-	    /**
-	     * Called when a neighboring block changes.
-	     */
-	   
+	/**
+	 * Get's the hopper's active status from the 8-bit of the metadata. Note
+	 * that the metadata stores whether the block is powered, so this returns
+	 * true when that bit is 0.
+	 */
 
-	    @Override
-		public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
-	    {
-	        TileSimpleInventory.breakBlock(worldIn, pos, state);
+	protected static final AxisAlignedBB BASE_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D);
+	protected static final AxisAlignedBB SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.125D);
+	protected static final AxisAlignedBB NORTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.875D, 1.0D, 1.0D, 1.0D);
+	protected static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(0.875D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
+	protected static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
 
-	        super.breakBlock(worldIn, pos, state);
-	    }
+	@Override
+	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
+	{
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, BASE_AABB);
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, EAST_AABB);
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, WEST_AABB);
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, SOUTH_AABB);
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, NORTH_AABB);
+	}
 
-	
-	    /**
-	     * Get's the hopper's active status from the 8-bit of the metadata. Note that the metadata stores whether the block
-	     * is powered, so this returns true when that bit is 0.
-	     */
-	 
-	    
-	    protected static final AxisAlignedBB BASE_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D);
-	    protected static final AxisAlignedBB SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.125D);
-	    protected static final AxisAlignedBB NORTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.875D, 1.0D, 1.0D, 1.0D);
-	    protected static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(0.875D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
-	    protected static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
+	/**
+	 * Called by ItemBlocks just before a block is actually set in the world, to
+	 * allow for adjustments to the IBlockstate
+	 */
+	@Override
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+	{
+		EnumFacing enumfacing = facing.getOpposite();
 
-	   
+		if (enumfacing == EnumFacing.UP)
+		{
+			enumfacing = EnumFacing.DOWN;
+		}
 
-	    @Override
-		public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
-	    {
-	        addCollisionBoxToList(pos, entityBox, collidingBoxes, BASE_AABB);
-	        addCollisionBoxToList(pos, entityBox, collidingBoxes, EAST_AABB);
-	        addCollisionBoxToList(pos, entityBox, collidingBoxes, WEST_AABB);
-	        addCollisionBoxToList(pos, entityBox, collidingBoxes, SOUTH_AABB);
-	        addCollisionBoxToList(pos, entityBox, collidingBoxes, NORTH_AABB);
-	    }
+		return this.getDefaultState().withProperty(FACING, enumfacing);
+	}
 
-	    /**
-	     * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
-	     * IBlockstate
-	     */
-	    @Override
-		public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-	    {
-	        EnumFacing enumfacing = facing.getOpposite();
+	/**
+	 * Called when the block is right clicked by a player.
+	 */
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	{
+		if (worldIn.isRemote)
+		{
+			return true;
+		}
+		else
+		{
+			TileEntity tileentity = worldIn.getTileEntity(pos);
 
-	        if (enumfacing == EnumFacing.UP)
-	        {
-	            enumfacing = EnumFacing.DOWN;
-	        }
+			if (tileentity instanceof TileEntityHopper)
+			{
+				playerIn.displayGUIChest((TileEntityHopper) tileentity);
+				playerIn.addStat(StatList.HOPPER_INSPECTED);
+			}
 
-	        return this.getDefaultState().withProperty(FACING, enumfacing);
-	    }
+			return true;
+		}
+	}
 
+	/**
+	 * The type of render function called. MODEL for mixed tesr and static
+	 * model, MODELBLOCK_ANIMATED for TESR-only, LIQUID for vanilla liquids,
+	 * INVISIBLE to skip all rendering
+	 */
+	@Override
+	public EnumBlockRenderType getRenderType(IBlockState state)
+	{
+		return EnumBlockRenderType.MODEL;
+	}
 
-	   
-	    /**
-	     * Called when the block is right clicked by a player.
-	     */
-	    @Override
-		public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-	    {
-	        if (worldIn.isRemote)
-	        {
-	            return true;
-	        }
-	        else
-	        {
-	            TileEntity tileentity = worldIn.getTileEntity(pos);
+	@Override
+	public boolean isFullCube(IBlockState state)
+	{
+		return false;
+	}
 
-	            if (tileentity instanceof TileEntityHopper)
-	            {
-	                playerIn.displayGUIChest((TileEntityHopper)tileentity);
-	                playerIn.addStat(StatList.HOPPER_INSPECTED);
-	            }
+	/**
+	 * Used to determine ambient occlusion and culling when rebuilding chunks
+	 * for render
+	 */
+	@Override
+	public boolean isOpaqueCube(IBlockState state)
+	{
+		return false;
+	}
 
-	            return true;
-	        }
-	    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
+	{
+		return true;
+	}
 
-	
-	   
+	public static EnumFacing getFacing(int meta)
+	{
+		return EnumFacing.getFront(meta & 7);
+	}
 
-	    /**
-	     * The type of render function called. MODEL for mixed tesr and static model, MODELBLOCK_ANIMATED for TESR-only,
-	     * LIQUID for vanilla liquids, INVISIBLE to skip all rendering
-	     */
-	    @Override
-		public EnumBlockRenderType getRenderType(IBlockState state)
-	    {
-	        return EnumBlockRenderType.MODEL;
-	    }
+	/**
+	 * Get's the hopper's active status from the 8-bit of the metadata. Note
+	 * that the metadata stores whether the block is powered, so this returns
+	 * true when that bit is 0.
+	 */
+	public static boolean isEnabled(int meta)
+	{
+		return (meta & 8) != 8;
+	}
 
-	    @Override
-		public boolean isFullCube(IBlockState state)
-	    {
-	        return false;
-	    }
+	@Override
+	public boolean hasComparatorInputOverride(IBlockState state)
+	{
+		return true;
+	}
 
-	    /**
-	     * Used to determine ambient occlusion and culling when rebuilding chunks for render
-	     */
-	    @Override
-		public boolean isOpaqueCube(IBlockState state)
-	    {
-	        return false;
-	    }
+	@Override
+	public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos)
+	{
+		return Container.calcRedstone(worldIn.getTileEntity(pos));
+	}
 
-	    @Override
-		@SideOnly(Side.CLIENT)
-	    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
-	    {
-	        return true;
-	    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public BlockRenderLayer getBlockLayer()
+	{
+		return BlockRenderLayer.CUTOUT_MIPPED;
+	}
 
-	    public static EnumFacing getFacing(int meta)
-	    {
-	        return EnumFacing.getFront(meta & 7);
-	    }
+	/**
+	 * Convert the given metadata into a BlockState for this Block
+	 */
+	@Override
+	public IBlockState getStateFromMeta(int meta)
+	{
+		return this.getDefaultState().withProperty(FACING, getFacing(meta));
+	}
 
-	    /**
-	     * Get's the hopper's active status from the 8-bit of the metadata. Note that the metadata stores whether the block
-	     * is powered, so this returns true when that bit is 0.
-	     */
-	    public static boolean isEnabled(int meta)
-	    {
-	        return (meta & 8) != 8;
-	    }
+	/**
+	 * Convert the BlockState into the correct metadata value
+	 */
+	@Override
+	public int getMetaFromState(IBlockState state)
+	{
+		int i = 0;
+		i = i | state.getValue(FACING).getIndex();
 
-	    @Override
-		public boolean hasComparatorInputOverride(IBlockState state)
-	    {
-	        return true;
-	    }
+		return i;
+	}
 
-	    @Override
-		public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos)
-	    {
-	        return Container.calcRedstone(worldIn.getTileEntity(pos));
-	    }
+	/**
+	 * Returns the blockstate with the given rotation from the passed
+	 * blockstate. If inapplicable, returns the passed blockstate.
+	 */
+	@Override
+	public IBlockState withRotation(IBlockState state, Rotation rot)
+	{
+		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
+	}
 
-	    @Override
-		@SideOnly(Side.CLIENT)
-	    public BlockRenderLayer getBlockLayer()
-	    {
-	        return BlockRenderLayer.CUTOUT_MIPPED;
-	    }
+	/**
+	 * Returns the blockstate with the given mirror of the passed blockstate. If
+	 * inapplicable, returns the passed blockstate.
+	 */
+	@Override
+	public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
+	{
+		return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
+	}
 
-	    /**
-	     * Convert the given metadata into a BlockState for this Block
-	     */
-	    @Override
-		public IBlockState getStateFromMeta(int meta)
-	    {
-	        return this.getDefaultState().withProperty(FACING, getFacing(meta));
-	    }
-
-	    /**
-	     * Convert the BlockState into the correct metadata value
-	     */
-	    @Override
-		public int getMetaFromState(IBlockState state)
-	    {
-	        int i = 0;
-	        i = i | state.getValue(FACING).getIndex();
-
-	      
-
-	        return i;
-	    }
-
-	    /**
-	     * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
-	     * blockstate.
-	     */
-	    @Override
-		public IBlockState withRotation(IBlockState state, Rotation rot)
-	    {
-	        return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
-	    }
-
-	    /**
-	     * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
-	     * blockstate.
-	     */
-	    @Override
-		public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
-	    {
-	        return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
-	    }
-
-	    @Override
-		protected BlockStateContainer createBlockState()
-	    {
-	        return new BlockStateContainer(this, new IProperty[] {FACING});
-	    }
+	@Override
+	protected BlockStateContainer createBlockState()
+	{
+		return new BlockStateContainer(this, new IProperty[] { FACING });
+	}
 
 }

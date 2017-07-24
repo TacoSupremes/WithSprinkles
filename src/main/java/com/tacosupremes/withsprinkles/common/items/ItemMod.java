@@ -12,95 +12,93 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 
-public class ItemMod extends Item{
-	
+public class ItemMod extends Item
+{
+
 	public int meta;
-	
-	
-	
-	public ItemMod(String s, int meta){	
+
+	public ItemMod(String s, int meta)
+	{
 		super();
 		this.setUnlocalizedName(s);
 		this.setCreativeTab(WithSprinkles.tab);
-		if(meta > 0)
+		if (meta > 0)
 			this.setHasSubtypes(true);
 		ModItems.items.add(this);
 		this.meta = meta;
 	}
 
-	
-	public ItemMod(String s){
-		this(s,0);
-		
+	public ItemMod(String s)
+	{
+		this(s, 0);
+
 	}
-	
-	
+
 	@Override
-	public Item setUnlocalizedName(String name) {
+	public Item setUnlocalizedName(String name)
+	{
 		super.setUnlocalizedName(name);
 		setRegistryName(new ResourceLocation(LibMisc.MODID + ":" + name));
 		ProxyRegistry.register(this);
 
 		return this;
 	}
-	
+
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
-		
-		if(stack.getItemDamage() > 0 && this.meta > 0)
-			return super.getUnlocalizedName()+stack.getItemDamage();
-		
-		
+	public String getUnlocalizedName(ItemStack stack)
+	{
+
+		if (stack.getItemDamage() > 0 && this.meta > 0)
+			return super.getUnlocalizedName() + stack.getItemDamage();
+
 		return super.getUnlocalizedName(stack);
 	}
 
-
-
 	@Override
-	public String getItemStackDisplayName(ItemStack stack) 
+	public String getItemStackDisplayName(ItemStack stack)
 	{
-		
-		if(this.meta == 0 || needsDifferentNames())
+
+		if (this.meta == 0 || needsDifferentNames())
 			return super.getItemStackDisplayName(stack);
-		
-		return I18n.translateToLocal(this.getUnlocalizedName(stack).replace(String.valueOf(stack.getMetadata()), "")+".name");
+
+		return I18n.translateToLocal(this.getUnlocalizedName(stack).replace(String.valueOf(stack.getMetadata()), "") + ".name");
 	}
 
 	@Override
-	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		
-		if(!needsDifferentNames())
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
+	{
+
+		if (!needsDifferentNames())
 			super.getSubItems(tab, items);
-			else{
-				
-				for(int i = 0; i<=meta; i++){
-					items.add(new ItemStack(this,1,i));
-				}
-				
-				
+		else
+		{
+
+			for (int i = 0; i <= meta; i++)
+			{
+				items.add(new ItemStack(this, 1, i));
 			}
-	
+
+		}
+
 	}
 
 	public boolean needsDifferentNames()
-	{		
+	{
 		return false;
 	}
-
 
 	public boolean skipVariants()
 	{
 		return false;
 	}
-	
+
 	public boolean hasOneModel()
 	{
 		return false;
 	}
-	
-	
+
 	public IItemColor getColor()
-	{	
+	{
 		return null;
 	}
 

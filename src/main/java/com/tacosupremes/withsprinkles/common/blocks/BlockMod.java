@@ -8,23 +8,25 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemBlock;
 
-public class BlockMod extends Block {
+public class BlockMod extends Block
+{
 
-	public BlockMod(Material materialIn, String s) {
+	public BlockMod(Material materialIn, String s)
+	{
 		super(materialIn);
 		this.setUnlocalizedName(s);
 		this.setCreativeTab(WithSprinkles.tab);
 		ModBlocks.blocks.add(this);
 	}
 
-	
 	@Override
-	public Block setUnlocalizedName(String name) {
+	public Block setUnlocalizedName(String name)
+	{
 		super.setUnlocalizedName(name);
 		setRegistryName(LibMisc.MODID + ":" + name);
 		ProxyRegistry.register(this);
 		ProxyRegistry.register(new ItemBlock(this).setRegistryName(LibMisc.MODID + ":" + name));
 		return this;
 	}
-	
+
 }

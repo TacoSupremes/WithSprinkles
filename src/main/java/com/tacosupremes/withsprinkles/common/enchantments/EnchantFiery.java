@@ -9,41 +9,43 @@ import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 
-public class EnchantFiery extends ModEnchantment {
+public class EnchantFiery extends ModEnchantment
+{
 
-	protected EnchantFiery() {
-		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND}, "fiery"); 	 
+	protected EnchantFiery()
+	{
+		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND }, "fiery");
 	}
 
 	@Override
-	public boolean canApply(ItemStack stack) {
-	
+	public boolean canApply(ItemStack stack)
+	{
+
 		return stack != null && (stack.getItem() instanceof ItemPickaxe || stack.getItem() instanceof ItemSpade || stack.getItem() instanceof ItemAxe);
 	}
 
 	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		
+	public boolean canApplyAtEnchantingTable(ItemStack stack)
+	{
+
 		return canApply(stack);
 	}
-	
-	 @Override
+
+	@Override
 	public boolean canApplyTogether(Enchantment ench)
-	    {
-	        return super.canApplyTogether(ench) && ench != Enchantments.SILK_TOUCH && ench != Enchantments.FORTUNE;
-	    }
+	{
+		return super.canApplyTogether(ench) && ench != Enchantments.SILK_TOUCH && ench != Enchantments.FORTUNE;
+	}
 
-	 
-	 @Override
+	@Override
 	public int getMinEnchantability(int enchantmentLevel)
-	 {
-	        return 15;
-	 }
+	{
+		return 15;
+	}
 
-	   
-	  @Override
+	@Override
 	public int getMaxEnchantability(int enchantmentLevel)
-	  {
-	        return super.getMinEnchantability(enchantmentLevel) + 50;
-	  }
+	{
+		return super.getMinEnchantability(enchantmentLevel) + 50;
+	}
 }

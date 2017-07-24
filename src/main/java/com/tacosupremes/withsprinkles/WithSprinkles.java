@@ -33,103 +33,103 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 @Mod(modid = LibMisc.MODID, version = LibMisc.VERSION)
 public class WithSprinkles
 {
-   
+
 	public static CreativeTabs tab;
-	
+
 	public static WSEventHandler events;
-	
+
 	@SidedProxy(clientSide = LibMisc.CLIENTPROXY, serverSide = LibMisc.COMMONPROXY)
 	public static CommonProxy proxy;
-	    
-    @Instance(LibMisc.MODID)
-    public static WithSprinkles instance;
-    
-    public static final Logger logger = LogManager.getLogManager().getLogger(LibMisc.MODID);
-    
-    public static final ResourceLocation oldPagesLoot = register("old_pages_loot");
 
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event)
-    {
-    	ModEnchantments.preInit();
-    	
-    	tab = new WSTab();
-    	
-    	proxy.preInit(event);
-    	
-    	ModItems.preInit();
-    	
-    	ModBlocks.preInit();
-    	
-    	ModRecipes.preInit();
-    	
-    	LibMisc.Ores.preInit();
+	@Instance(LibMisc.MODID)
+	public static WithSprinkles instance;
 
-    }
-    
-    @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-    	  events = new WSEventHandler();
-    	  
-    	  LibMisc.Ores.init();
-    	  
-    	  MinecraftForge.EVENT_BUS.register(events);
-    	  
-    	  MinecraftForge.EVENT_BUS.register(OfflinePlayerUtils.class);
-        
-    	  NetworkRegistry.INSTANCE.registerGuiHandler(WithSprinkles.instance, new GuiHandler());
-    }
-    
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event)
-    {
-    	  
-    }
+	public static final Logger logger = LogManager.getLogManager().getLogger(LibMisc.MODID);
 
-    public class WSTab extends CreativeTabs{
+	public static final ResourceLocation oldPagesLoot = register("old_pages_loot");
 
-		public WSTab() 
+	@EventHandler
+	public void preInit(FMLPreInitializationEvent event)
+	{
+		ModEnchantments.preInit();
+
+		tab = new WSTab();
+
+		proxy.preInit(event);
+
+		ModItems.preInit();
+
+		ModBlocks.preInit();
+
+		ModRecipes.preInit();
+
+		LibMisc.Ores.preInit();
+
+	}
+
+	@EventHandler
+	public void init(FMLInitializationEvent event)
+	{
+		events = new WSEventHandler();
+
+		LibMisc.Ores.init();
+
+		MinecraftForge.EVENT_BUS.register(events);
+
+		MinecraftForge.EVENT_BUS.register(OfflinePlayerUtils.class);
+
+		NetworkRegistry.INSTANCE.registerGuiHandler(WithSprinkles.instance, new GuiHandler());
+	}
+
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent event)
+	{
+
+	}
+
+	public class WSTab extends CreativeTabs
+	{
+
+		public WSTab()
 		{
-			super(CreativeTabs.getNextID(), LibMisc.MODID);		
+			super(CreativeTabs.getNextID(), LibMisc.MODID);
 		}
 
 		@Override
-		public ItemStack getTabIconItem() 
+		public ItemStack getTabIconItem()
 		{
 			return new ItemStack(Items.CAKE);
 		}
-		
+
 		@Override
-		public void displayAllRelevantItems(NonNullList<ItemStack> l) 
+		public void displayAllRelevantItems(NonNullList<ItemStack> l)
 		{
-			
+
 			super.displayAllRelevantItems(l);
-			
-			for(Enchantment e : ModEnchantments.enchants)
+
+			for (Enchantment e : ModEnchantments.enchants)
 			{
-				
+
 				ItemStack is = new ItemStack(Items.ENCHANTED_BOOK, 1, 0);
-					
-					for(int i = 1; i <= e.getMaxLevel(); i++)
-					{
-						
-						ItemStack is2 = is.copy();
-						
-						EnchantUtils.enchantItem(is2, e, i);
-						
-						l.add(is2);
-						
-					}			
+
+				for (int i = 1; i <= e.getMaxLevel(); i++)
+				{
+
+					ItemStack is2 = is.copy();
+
+					EnchantUtils.enchantItem(is2, e, i);
+
+					l.add(is2);
+
+				}
 			}
 		}
-	
-    }
-    
-    
-    private static ResourceLocation register(String id)
-    {
-        return LootTableList.register(new ResourceLocation(LibMisc.MODID, id));
-    }
-    
+
+	}
+
+	private static ResourceLocation register(String id)
+	{
+		return LootTableList.register(new ResourceLocation(LibMisc.MODID, id));
+	}
+
 }

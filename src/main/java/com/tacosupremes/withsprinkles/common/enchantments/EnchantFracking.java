@@ -5,30 +5,31 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 
-public class EnchantFracking extends ModEnchantment {
+public class EnchantFracking extends ModEnchantment
+{
 
 	protected EnchantFracking()
 	{
-		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND}, "fracking");
+		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND }, "fracking");
 	}
-	
+
 	@Override
-	public boolean canApply(ItemStack stack) {
-	
+	public boolean canApply(ItemStack stack)
+	{
+
 		return stack != null && stack.getItem() instanceof ItemPickaxe;
 	}
-	 
-	 @Override
-	public int getMinEnchantability(int enchantmentLevel)
-	 {
-	        return 15;
-	 }
 
-	   
-	  @Override
+	@Override
+	public int getMinEnchantability(int enchantmentLevel)
+	{
+		return 15;
+	}
+
+	@Override
 	public int getMaxEnchantability(int enchantmentLevel)
-	  {
-	        return super.getMinEnchantability(enchantmentLevel) + 50;
-	  }
+	{
+		return super.getMinEnchantability(enchantmentLevel) + 50;
+	}
 
 }
