@@ -12,7 +12,7 @@ public class EnchantExchange extends ModEnchantment
 
 	protected EnchantExchange()
 	{
-		super(Rarity.COMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND }, "exchange");
+		super(Rarity.COMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND }, "exchange");
 	}
 
 	@Override

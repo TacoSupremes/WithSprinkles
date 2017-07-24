@@ -14,7 +14,7 @@ public class EnchantFiery extends ModEnchantment
 
 	protected EnchantFiery()
 	{
-		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND }, "fiery");
+		super(Rarity.UNCOMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND }, "fiery");
 	}
 
 	@Override

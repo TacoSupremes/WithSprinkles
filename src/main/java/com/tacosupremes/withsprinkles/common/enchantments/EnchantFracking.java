@@ -10,7 +10,7 @@ public class EnchantFracking extends ModEnchantment
 
 	protected EnchantFracking()
 	{
-		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND }, "fracking");
+		super(Rarity.UNCOMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND }, "fracking");
 	}
 
 	@Override
@@ -19,6 +19,14 @@ public class EnchantFracking extends ModEnchantment
 
 		return stack != null && stack.getItem() instanceof ItemPickaxe;
 	}
+	
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack)
+	{
+	
+		return canApply(stack);
+	}
+
 
 	@Override
 	public int getMinEnchantability(int enchantmentLevel)

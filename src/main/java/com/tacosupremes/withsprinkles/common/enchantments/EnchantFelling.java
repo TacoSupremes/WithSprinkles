@@ -10,13 +10,22 @@ public class EnchantFelling extends ModEnchantment
 
 	protected EnchantFelling()
 	{
-		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND }, "felling");
+		super(Rarity.UNCOMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND }, "felling");
 	}
 
 	@Override
 	public boolean canApply(ItemStack stack)
 	{
 		return stack != null && stack.getItem() instanceof ItemAxe;
+	}
+
+	
+	
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack)
+	{
+	
+		return canApply(stack);
 	}
 
 	@Override
