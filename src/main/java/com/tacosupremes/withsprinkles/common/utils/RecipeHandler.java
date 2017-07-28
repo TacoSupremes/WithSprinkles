@@ -73,7 +73,12 @@ public final class RecipeHandler
 	public static void addShapedRecipe(ItemStack output, Object... inputs)
 	{
 		
-		if(!WithSprinkles.config.isItemEnabled(output.getItem()))		
+		if(Block.getBlockFromItem(output.getItem()) != null)
+		{
+			if(!WithSprinkles.config.isBlockEnabled(Block.getBlockFromItem(output.getItem())))		
+					return;
+		}
+		else if(!WithSprinkles.config.isItemEnabled(output.getItem()))		
 			return;
 		
 		

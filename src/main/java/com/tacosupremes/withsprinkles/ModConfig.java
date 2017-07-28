@@ -56,7 +56,7 @@ public class ModConfig
 	public boolean isBlockEnabled(Block obj)
 	{
 		
-		if(obj == null)
+		if(obj == null || bMap.get(obj) == null)			
 			return false;
 		
 		System.out.println(obj.getLocalizedName() + "  " + bMap.get(obj));
@@ -122,22 +122,6 @@ public class ModConfig
 	    	if(config.hasChanged()) 
 	    		config.save();
 	    }
-	}
-
-	public void postInit(FMLPostInitializationEvent event)
-	{
-		for(Block b : bMap.keySet())
-		{
-			if(!bMap.get(b))
-				b.setCreativeTab(null);
-		}	
-		
-		for(Item i : iMap.keySet())
-		{
-			if(!iMap.get(i))
-				i.setCreativeTab(null);
-		}
-		
 	}
 
 }

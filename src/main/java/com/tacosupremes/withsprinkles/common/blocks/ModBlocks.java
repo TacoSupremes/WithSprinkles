@@ -3,10 +3,14 @@ package com.tacosupremes.withsprinkles.common.blocks;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tacosupremes.withsprinkles.WithSprinkles;
 import com.tacosupremes.withsprinkles.common.items.ModItems;
+import com.tacosupremes.withsprinkles.common.lib.LibMisc;
+import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 
 public class ModBlocks
 {
@@ -35,6 +39,19 @@ public class ModBlocks
 		sharedEnderChest = new BlockSharedEnderChest();
 
 	}
+	
+	public static void register()
+	{
+		for (Block i : blocks)
+		{
+			if(WithSprinkles.config.isBlockEnabled(i))
+			{		
+				ProxyRegistry.register(i);
+				ProxyRegistry.register(new ItemBlock(i).setRegistryName(i.getRegistryName()));	
+			}
+		}
+		
+	}
 
 	public static void registerRenders()
 	{
@@ -45,4 +62,6 @@ public class ModBlocks
 		}
 
 	}
+
+	
 }

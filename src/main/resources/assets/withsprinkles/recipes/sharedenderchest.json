@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OEO",
+    "OHO",
+    "OOO"
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:obsidian",
+      "data": 0
+    },
+    "E": {
+      "item": "minecraft:ender_pearl",
+      "data": 0
+    },
+    "H": {
+      "item": "minecraft:ender_chest",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "withsprinkles:sharedenderchest",
+    "data": 0
+  }
+}

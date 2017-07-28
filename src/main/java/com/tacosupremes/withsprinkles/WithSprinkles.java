@@ -70,6 +70,10 @@ public class WithSprinkles
 		config = new ModConfig();
 		
 		config.preInit(event);
+		
+		ModItems.register();
+		
+		ModBlocks.register();
 
 		ModRecipes.preInit();
 
@@ -89,12 +93,6 @@ public class WithSprinkles
 		MinecraftForge.EVENT_BUS.register(OfflinePlayerUtils.class);
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(WithSprinkles.instance, new GuiHandler());
-	}
-
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent event)
-	{
-		config.postInit(event); 
 	}
 
 	public class WSTab extends CreativeTabs

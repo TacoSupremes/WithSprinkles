@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "withsprinkles:enderchest",
+      "data": 0
+    }
+  ],
+
+  "result": {
+    "item": "withsprinkles:enderchest",
+    "data": 2
+  }
+}

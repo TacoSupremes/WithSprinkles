@@ -38,8 +38,6 @@ public abstract class BlockModContainer extends BlockContainer
 	{
 		super.setUnlocalizedName(name);
 		setRegistryName(LibMisc.MODID + ":" + name);
-		ProxyRegistry.register(this);
-		ProxyRegistry.register(new ItemBlock(this).setRegistryName(LibMisc.MODID + ":" + name));
 		return this;
 	}
 

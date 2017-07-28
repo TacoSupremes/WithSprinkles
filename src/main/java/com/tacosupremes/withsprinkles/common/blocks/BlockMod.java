@@ -24,8 +24,6 @@ public class BlockMod extends Block
 	{
 		super.setUnlocalizedName(name);
 		setRegistryName(LibMisc.MODID + ":" + name);
-		ProxyRegistry.register(this);
-		ProxyRegistry.register(new ItemBlock(this).setRegistryName(LibMisc.MODID + ":" + name));
 		return this;
 	}
 

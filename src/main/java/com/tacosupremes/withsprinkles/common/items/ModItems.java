@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntFunction;
 
+import com.tacosupremes.withsprinkles.WithSprinkles;
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
+import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -42,6 +44,15 @@ public class ModItems
 		portableEnderChest = new ItemPortableEnderChest();
 
 		oldPaper = new ItemOldPaper();
+	}
+	
+	public static void register()
+	{
+		for(ItemMod i : items)
+		{		
+			if(WithSprinkles.config.isItemEnabled(i))
+				ProxyRegistry.register(i);
+		}
 	}
 
 	public static void registerRenders()

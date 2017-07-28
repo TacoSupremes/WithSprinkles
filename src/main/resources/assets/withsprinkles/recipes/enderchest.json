@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RRR",
+    "#T#",
+    "RRR"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:ender_pearl",
+      "data": 0
+    },
+    "T": {
+      "item": "minecraft:ender_eye",
+      "data": 0
+    },
+    "R": {
+      "item": "minecraft:obsidian",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "withsprinkles:enderchest",
+    "data": 0
+  }
+}

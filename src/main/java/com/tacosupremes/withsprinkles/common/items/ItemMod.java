@@ -39,8 +39,6 @@ public class ItemMod extends Item
 	{
 		super.setUnlocalizedName(name);
 		setRegistryName(new ResourceLocation(LibMisc.MODID + ":" + name));
-		ProxyRegistry.register(this);
-
 		return this;
 	}
 
