@@ -1,22 +1,22 @@
 {
   "rewards": {
     "recipes": [
-      "withsprinkles:refillgem"
+      "withsprinkles:raindetector"
     ]
   },
   "criteria": {
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "withsprinkles:refillgem"
+        "recipe": "withsprinkles:raindetector"
       }
     },
-    "has_glowstone": {
+    "has_bucket": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:glowstone_dust"
+            "item": "minecraft:bucket"
           }
         ]
       }
@@ -26,7 +26,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_glowstone"
+      "has_bucket"
       
     ]
   ]

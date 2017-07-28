@@ -1,22 +1,22 @@
 {
   "rewards": {
     "recipes": [
-      "withsprinkles:refillgem"
+      "withsprinkles:enderhopper"
     ]
   },
   "criteria": {
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "withsprinkles:refillgem"
+        "recipe": "withsprinkles:enderhopper"
       }
     },
-    "has_glowstone": {
+    "has_ender_pearl": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:glowstone_dust"
+            "item": "minecraft:ender_pearl"
           }
         ]
       }
@@ -26,7 +26,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_glowstone"
+      "has_ender_pearl"
       
     ]
   ]

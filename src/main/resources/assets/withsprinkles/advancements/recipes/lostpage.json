@@ -1,33 +1,38 @@
 {
   "rewards": {
     "recipes": [
-      "withsprinkles:refillgem"
+      "withsprinkles:lostpage",
+      "withsprinkles:lostpage2",
+      "withsprinkles:lostpage3"
     ]
   },
   "criteria": {
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "withsprinkles:refillgem"
+        "recipe": "withsprinkles:lostpage"
       }
     },
-    "has_glowstone": {
+    "has_lost_page": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:glowstone_dust"
+            "item": "withsprinkles:oldpaper"
           }
         ]
       }
-    }
+    },
+    "enchanted_item": {
+            "trigger": "minecraft:enchanted_item"
+        }
   }
   ,
   "requirements": [
     [
       "has_the_recipe",
-      "has_glowstone"
-      
+      "has_lost_page",
+      "enchanted_item"    
     ]
   ]
 }
