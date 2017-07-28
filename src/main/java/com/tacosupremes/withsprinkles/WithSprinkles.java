@@ -65,7 +65,7 @@ public class WithSprinkles
 
 		ModItems.preInit();
 
-		ModBlocks.preInit();
+		ModBlocks.preInit(); 	
 		
 		config = new ModConfig();
 		
