@@ -29,12 +29,14 @@ public class ModItems
 	// public static Item oreCompass;
 
 	// public static Item enchantBook;
+	
+	// TODO: FISHING STUFF
 
 	public static Item portableEnderChest;
 
 	public static Item oldPaper;
 
-	public static Item testItem;
+	public static Item testItem; 
 
 	public static void preInit()
 	{

@@ -21,7 +21,7 @@
         ]
       }
     }
-  },
+  ,
     "has_redstone": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
@@ -33,6 +33,7 @@
       }
     }
   },
+  
   "requirements": [
     [
       "has_the_recipe",
