@@ -60,6 +60,8 @@ public class ItemMod extends Item
 
 		if (this.meta == 0 || needsDifferentNames())
 			return super.getItemStackDisplayName(stack);
+		
+		
 
 		return I18n.translateToLocal(this.getUnlocalizedName(stack).replace(String.valueOf(stack.getMetadata()), "") + ".name");
 	}
@@ -100,6 +102,11 @@ public class ItemMod extends Item
 	public IItemColor getColor()
 	{
 		return null;
+	}
+
+	public String getLocalizedName()
+	{
+		return I18n.translateToLocal(this.getUnlocalizedName() + ".name");
 	}
 
 }

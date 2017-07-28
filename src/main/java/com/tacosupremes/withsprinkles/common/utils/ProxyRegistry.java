@@ -1,11 +1,17 @@
 package com.tacosupremes.withsprinkles.common.utils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import com.google.common.collect.Multimap;
 import com.google.common.collect.MultimapBuilder;
+import com.tacosupremes.withsprinkles.WithSprinkles;
+import com.tacosupremes.withsprinkles.common.enchantments.ModEnchantment;
+
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -23,6 +29,7 @@ public class ProxyRegistry
 
 	public static <T extends IForgeRegistryEntry<T>> void register(IForgeRegistryEntry<T> obj)
 	{
+
 		entries.put(obj.getRegistryType(), obj);
 
 		if (obj instanceof ItemBlock)
@@ -76,6 +83,7 @@ public class ProxyRegistry
 	@SubscribeEvent
 	public static void onRegistryEvent(RegistryEvent.Register event)
 	{
+
 		Class<?> type = event.getRegistry().getRegistrySuperType();
 
 		if (entries.containsKey(type))
@@ -84,6 +92,15 @@ public class ProxyRegistry
 
 			for (IForgeRegistryEntry<?> entry : ourEntries)
 			{
+
+				if(entry instanceof Enchantment)
+				{
+	
+					if(!WithSprinkles.config.isEnchantEnabled((Enchantment)entry))
+						continue;
+					
+				}
+				
 				event.getRegistry().register(entry);
 
 			}

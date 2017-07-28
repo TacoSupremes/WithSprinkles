@@ -96,10 +96,6 @@ public class ModItems
 		if (i == null)
 			return;
 
-		// System.out.println(":"+i.getUnlocalizedName()+meta);
-		// Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i,
-		// meta, new ModelResourceLocation(i.getRegistryName()+ (meta == 0 ? ""
-		// : String.valueOf(meta)), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(i, meta, new ModelResourceLocation(i.getRegistryName() + (meta == 0 ? "" : String.valueOf(meta)), "inventory"));
 
 	}
@@ -110,8 +106,6 @@ public class ModItems
 		if (i == null)
 			return;
 
-		// Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i,
-		// meta, new ModelResourceLocation(i.getRegistryName(), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(i, meta, new ModelResourceLocation(i.getRegistryName(), "inventory"));
 
 	}

@@ -19,7 +19,9 @@ import java.util.Set;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.tacosupremes.withsprinkles.WithSprinkles;
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -48,6 +50,10 @@ public final class RecipeHandler
 
 	public static void addShapelessRecipe(ItemStack output, Object... inputs)
 	{
+		
+		if(!WithSprinkles.config.isItemEnabled(output.getItem()))		
+			return;		
+		
 		String namespace = getNamespace();
 		NonNullList<Ingredient> ingredients = NonNullList.create();
 
@@ -66,6 +72,11 @@ public final class RecipeHandler
 
 	public static void addShapedRecipe(ItemStack output, Object... inputs)
 	{
+		
+		if(!WithSprinkles.config.isItemEnabled(output.getItem()))		
+			return;
+		
+		
 		String namespace = getNamespace();
 		ArrayList<String> pattern = Lists.newArrayList();
 		Map<String, Ingredient> key = Maps.newHashMap();

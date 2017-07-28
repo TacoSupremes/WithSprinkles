@@ -35,6 +35,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.tacosupremes.withsprinkles.common.enchantments.ModEnchantments;
+import com.tacosupremes.withsprinkles.common.items.ModItems;
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
 import com.tacosupremes.withsprinkles.common.utils.BlockUtils;
 
@@ -142,7 +143,10 @@ public class WSEventHandler
 		{
 
 			if (name.contains("minecraft:chests"))
-				event.getTable().addPool(getAdditive(WithSprinkles.oldPagesLoot));
+			{
+				if(WithSprinkles.config.isItemEnabled(ModItems.oldPaper))	
+					event.getTable().addPool(getAdditive(WithSprinkles.oldPagesLoot));
+			}
 
 		}
 		catch (Exception exc)

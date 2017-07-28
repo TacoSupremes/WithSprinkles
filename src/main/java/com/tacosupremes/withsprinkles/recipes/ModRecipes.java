@@ -1,5 +1,6 @@
 package com.tacosupremes.withsprinkles.recipes;
 
+import com.tacosupremes.withsprinkles.WithSprinkles;
 import com.tacosupremes.withsprinkles.common.blocks.ModBlocks;
 import com.tacosupremes.withsprinkles.common.items.ModItems;
 import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
@@ -30,7 +31,10 @@ public class ModRecipes
 
 		RecipeHandler.addShapedRecipe(ProxyRegistry.newStack(ModBlocks.sharedEnderChest), "RER", "RDR", "RRR", 'R', ProxyRegistry.newStack(Blocks.OBSIDIAN), 'D', ProxyRegistry.newStack(Blocks.ENDER_CHEST), 'E', ProxyRegistry.newStack(Items.ENDER_PEARL));
 
-		EnchantedBookRecipe r = new EnchantedBookRecipe();
+		EnchantedBookRecipe r;
+		
+		if(WithSprinkles.config.isItemEnabled(ModItems.oldPaper))
+			r = new EnchantedBookRecipe();
 	}
 
 }
