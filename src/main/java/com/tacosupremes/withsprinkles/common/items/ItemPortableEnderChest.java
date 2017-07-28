@@ -36,7 +36,7 @@ public class ItemPortableEnderChest extends ItemMod
 	public ItemPortableEnderChest()
 	{
 		super("enderChest", 3);
-
+		this.setMaxStackSize(1);
 	}
 
 	@Override

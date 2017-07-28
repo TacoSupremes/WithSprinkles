@@ -94,7 +94,7 @@ public class WithSprinkles
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		config.postInit(event);
+		config.postInit(event); 
 	}
 
 	public class WSTab extends CreativeTabs
