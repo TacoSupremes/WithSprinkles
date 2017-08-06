@@ -4,8 +4,6 @@ import com.tacosupremes.withsprinkles.WithSprinkles;
 import com.tacosupremes.withsprinkles.common.blocks.ModBlocks;
 import com.tacosupremes.withsprinkles.common.items.ModItems;
 import com.tacosupremes.withsprinkles.common.utils.ProxyRegistry;
-import com.tacosupremes.withsprinkles.common.utils.RecipeHandler;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 

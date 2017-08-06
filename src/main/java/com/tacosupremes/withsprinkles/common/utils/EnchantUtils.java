@@ -30,7 +30,7 @@ public class EnchantUtils
 
 		if (is.getItem() == Items.ENCHANTED_BOOK)
 		{
-			ItemEnchantedBook.addEnchantment(is, new EnchantmentData(e, lvl));
+			Items.ENCHANTED_BOOK.addEnchantment(is, new EnchantmentData(e, lvl));
 			return;
 		}
 

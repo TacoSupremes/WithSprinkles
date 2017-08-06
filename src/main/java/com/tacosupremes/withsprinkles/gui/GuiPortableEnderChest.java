@@ -37,16 +37,7 @@ public class GuiPortableEnderChest extends GuiContainer
 		this.ySize = 114 + this.inventoryRows * 18;
 	}
 
-	/**
-	 * Draws the screen and all the components in it.
-	 */
-	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks)
-	{
-		this.drawDefaultBackground();
-		super.drawScreen(mouseX, mouseY, partialTicks);
-		this.renderHoveredToolTip(mouseX, mouseY);
-	}
+
 
 	/**
 	 * Draw the foreground layer for the GuiContainer (everything in front of
@@ -55,8 +46,8 @@ public class GuiPortableEnderChest extends GuiContainer
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{
-		this.fontRenderer.drawString(Blocks.ENDER_CHEST.getLocalizedName(), 8, 6, 4210752);
-		this.fontRenderer.drawString(this.upperChestInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
+		this.fontRendererObj.drawString(Blocks.ENDER_CHEST.getLocalizedName(), 8, 6, 4210752);
+		this.fontRendererObj.drawString(this.upperChestInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
 	}
 
 	/**

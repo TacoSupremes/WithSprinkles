@@ -1,32 +1,20 @@
 package com.tacosupremes.withsprinkles.common.items;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.List;
 import java.util.UUID;
-
-import javax.annotation.Nullable;
 
 import com.tacosupremes.withsprinkles.WithSprinkles;
 import com.tacosupremes.withsprinkles.common.lib.LibMisc;
 import com.tacosupremes.withsprinkles.gui.GuiHandler;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.SaveHandler;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -82,8 +70,8 @@ public class ItemPortableEnderChest extends ItemMod
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-	{
+	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+	  {
 		if (stack.getItemDamage() < 2)
 			return;
 
@@ -92,7 +80,7 @@ public class ItemPortableEnderChest extends ItemMod
 
 		tooltip.add(I18n.translateToLocal(LibMisc.MODID + ".bound") + " " + stack.getTagCompound().getString("PLAYERNAME"));
 
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 
 }

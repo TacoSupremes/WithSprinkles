@@ -12,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class ClientProxy extends CommonProxy
@@ -35,12 +36,22 @@ public class ClientProxy extends CommonProxy
 	{
 		super.preInit(event);
 
+	//	MinecraftForge.EVENT_BUS.register(ClientStuff.class);
+
+	}
+
+	@Override
+	public void init(FMLInitializationEvent event) 
+	{		
+		registerRenders();
+		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSharedEnderChest.class, new TileSharedEnderChestRenderer());
 
 		ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(ModBlocks.sharedEnderChest), 0, TileSharedEnderChest.class);
 
-		MinecraftForge.EVENT_BUS.register(ClientStuff.class);
-
+	//	MinecraftForge.EVENT_BUS.register(ClientStuff.class);
 	}
+	
+	
 
 }

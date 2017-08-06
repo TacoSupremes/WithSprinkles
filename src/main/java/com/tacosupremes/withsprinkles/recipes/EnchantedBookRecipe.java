@@ -12,6 +12,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
 public class EnchantedBookRecipe extends ModRecipe
@@ -98,21 +99,28 @@ public class EnchantedBookRecipe extends ModRecipe
 
 		Enchantment e = EnchantUtils.randEnchantmentTier(rand, is, oldPaper == 3, oldPaper == 3 ? Rarity.VERY_RARE : r);
 
-		ItemEnchantedBook.addEnchantment(is, new EnchantmentData(e, e.getMaxLevel()));
+		Items.ENCHANTED_BOOK.addEnchantment(is, new EnchantmentData(e, e.getMaxLevel()));
 
 		return is;
 	}
 
 	@Override
-	public boolean canFit(int width, int height)
-	{
-		return width >= 2 && height >= 2;
+	public int getRecipeSize() {
+		// TODO Auto-generated method stub
+		return 4;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput()
-	{
+	public ItemStack getRecipeOutput() {
+		// TODO Auto-generated method stub
 		return new ItemStack(Items.ENCHANTED_BOOK);
 	}
+
+	@Override
+	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

@@ -47,7 +47,7 @@ public class ModBlocks
 			if(WithSprinkles.config.isBlockEnabled(i))
 			{		
 				ProxyRegistry.register(i);
-				ProxyRegistry.register(new ItemBlock(i).setRegistryName(i.getRegistryName()));	
+				//ProxyRegistry.register(new ItemBlock(i).setRegistryName(i.getRegistryName()));	
 			}
 		}
 		

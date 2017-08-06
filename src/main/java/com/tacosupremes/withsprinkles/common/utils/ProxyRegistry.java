@@ -18,28 +18,36 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ProxyRegistry
 {
 
-	private static Multimap<Class<?>, IForgeRegistryEntry<?>> entries = MultimapBuilder.hashKeys().arrayListValues().build();
+	//private static Multimap<Class<?>, IForgeRegistryEntry<?>> entries = MultimapBuilder.hashKeys().arrayListValues().build();
 
 	private static HashMap<Block, Item> temporaryItemBlockMap = new HashMap();
 
-	public static <T extends IForgeRegistryEntry<T>> void register(IForgeRegistryEntry<T> obj)
+	public static void register(Item obj)
 	{
 
-		entries.put(obj.getRegistryType(), obj);
-
-		if (obj instanceof ItemBlock)
-		{
-			ItemBlock iblock = (ItemBlock) obj;
-			Block block = iblock.getBlock();
-			temporaryItemBlockMap.put(block, iblock);
-		}
+		GameRegistry.register(obj);
+		
 	}
 
+	public static void register(Block obj)
+	{
+
+		GameRegistry.register(obj);
+		GameRegistry.register(new ItemBlock(obj).setRegistryName(obj.getUnlocalizedName().substring(5)));
+		
+	}
+	
+	public static void register(Enchantment obj)
+	{
+
+		GameRegistry.register(obj);
+		
+	}
 	private static Item getItemMapping(Block block)
 	{
 		Item i = Item.getItemFromBlock(block);
@@ -80,31 +88,6 @@ public class ProxyRegistry
 		return new ItemStack(item, size, meta);
 	}
 
-	@SubscribeEvent
-	public static void onRegistryEvent(RegistryEvent.Register event)
-	{
 
-		Class<?> type = event.getRegistry().getRegistrySuperType();
-
-		if (entries.containsKey(type))
-		{
-			Collection<IForgeRegistryEntry<?>> ourEntries = entries.get(type);
-
-			for (IForgeRegistryEntry<?> entry : ourEntries)
-			{
-
-				if(entry instanceof Enchantment)
-				{
-	
-					if(!WithSprinkles.config.isEnchantEnabled((Enchantment)entry))
-						continue;
-					
-				}
-				
-				event.getRegistry().register(entry);
-
-			}
-		}
-	}
 
 }

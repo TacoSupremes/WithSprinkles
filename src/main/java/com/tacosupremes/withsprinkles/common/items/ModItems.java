@@ -53,7 +53,7 @@ public class ModItems
 		for(ItemMod i : items)
 		{		
 			if(WithSprinkles.config.isItemEnabled(i))
-				ProxyRegistry.register(i);
+				ProxyRegistry.register((Item)i);
 		}
 	}
 
@@ -109,8 +109,8 @@ public class ModItems
 		if (i == null)
 			return;
 
-		ModelLoader.setCustomModelResourceLocation(i, meta, new ModelResourceLocation(i.getRegistryName() + (meta == 0 ? "" : String.valueOf(meta)), "inventory"));
-
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i, meta, new ModelResourceLocation(LibMisc.MODID+":"+i.getUnlocalizedName().substring(5)+ (meta == 0 ? "" : String.valueOf(meta)), "inventory"));
+		  
 	}
 
 	public static void registerItemRenderSameModel(Item i, int meta)
@@ -119,19 +119,11 @@ public class ModItems
 		if (i == null)
 			return;
 
-		ModelLoader.setCustomModelResourceLocation(i, meta, new ModelResourceLocation(i.getRegistryName(), "inventory"));
-
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i, meta, new ModelResourceLocation(LibMisc.MODID+":"+i.getUnlocalizedName().substring(5), "inventory"));
+	  	
 	}
 
-	public static void registerItemAllMeta(Item item, int range)
-	{
-		registerItemMetas(item, range, i -> item.getRegistryName().getResourcePath());
-	}
-
-	public static void registerItemAppendMeta(Item item, int maxExclusive, String loc)
-	{
-		registerItemMetas(item, maxExclusive, i -> loc + i);
-	}
+	
 
 	public static void registerItemMetas(Item item, int maxExclusive, IntFunction<String> metaToName)
 	{

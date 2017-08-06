@@ -87,6 +87,8 @@ public class WithSprinkles
 		events = new WSEventHandler();
 
 		LibMisc.Ores.init();
+		
+		proxy.init(event);
 
 		MinecraftForge.EVENT_BUS.register(events);
 

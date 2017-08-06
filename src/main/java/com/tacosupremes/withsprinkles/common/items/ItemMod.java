@@ -65,11 +65,11 @@ public class ItemMod extends Item
 	}
 
 	@Override
-	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
+	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> items)
 	{
 
 		if (!needsDifferentNames())
-			super.getSubItems(tab, items);
+			super.getSubItems(itemIn, tab, items);
 		else
 		{
 
