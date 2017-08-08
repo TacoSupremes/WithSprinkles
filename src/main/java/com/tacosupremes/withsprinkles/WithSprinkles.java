@@ -75,8 +75,6 @@ public class WithSprinkles
 		
 		ModBlocks.register();
 
-		ModRecipes.preInit();
-
 		LibMisc.Ores.preInit();
 
 	}
@@ -96,6 +94,13 @@ public class WithSprinkles
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(WithSprinkles.instance, new GuiHandler());
 	}
+	
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent event)
+	{
+		ModRecipes.preInit();
+	}
+	
 
 	public class WSTab extends CreativeTabs
 	{
