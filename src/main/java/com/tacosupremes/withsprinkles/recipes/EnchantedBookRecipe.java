@@ -105,22 +105,29 @@ public class EnchantedBookRecipe extends ModRecipe
 	}
 
 	@Override
-	public int getRecipeSize() {
-		// TODO Auto-generated method stub
+	public int getRecipeSize() 
+	{
+		
 		return 4;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
-		// TODO Auto-generated method stub
+	public ItemStack getRecipeOutput()
+	{
 		return new ItemStack(Items.ENCHANTED_BOOK);
 	}
 
-	@Override
-	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv)
+	{
+        NonNullList<ItemStack> nonnulllist = NonNullList.<ItemStack>withSize(inv.getSizeInventory(), ItemStack.EMPTY);
 
+        for (int i = 0; i < nonnulllist.size(); ++i)
+	    {
+        	ItemStack itemstack = inv.getStackInSlot(i);
+        	
+	        nonnulllist.set(i, net.minecraftforge.common.ForgeHooks.getContainerItem(itemstack));    
+	    }
+	        return nonnulllist;
+	    }
 
 }
