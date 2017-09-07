@@ -1,5 +1,7 @@
 package com.tacosupremes.withsprinkles.common.enchantments;
 
+import com.tacosupremes.withsprinkles.WithSprinkles;
+
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemAxe;
@@ -19,7 +21,7 @@ public class EnchantExchange extends ModEnchantment
 	public boolean canApply(ItemStack stack)
 	{
 
-		return stack != null && (stack.getItem() instanceof ItemPickaxe || stack.getItem() instanceof ItemSpade || stack.getItem() instanceof ItemAxe);
+		return stack != null && super.canApply(stack) && (stack.getItem() instanceof ItemPickaxe || stack.getItem() instanceof ItemSpade || stack.getItem() instanceof ItemAxe);
 	}
 
 	@Override

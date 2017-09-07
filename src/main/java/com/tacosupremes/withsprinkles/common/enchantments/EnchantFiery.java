@@ -21,7 +21,7 @@ public class EnchantFiery extends ModEnchantment
 	public boolean canApply(ItemStack stack)
 	{
 
-		return stack != null && (stack.getItem() instanceof ItemPickaxe || stack.getItem() instanceof ItemSpade || stack.getItem() instanceof ItemAxe);
+		return stack != null && super.canApply(stack) && (stack.getItem() instanceof ItemPickaxe || stack.getItem() instanceof ItemSpade || stack.getItem() instanceof ItemAxe);
 	}
 
 	@Override
