@@ -41,7 +41,7 @@ public class ModItems
 	public static void preInit()
 	{
 
-		refillGem = new ItemRefiller();
+	//	refillGem = new ItemRefiller();
 
 		portableEnderChest = new ItemPortableEnderChest();
 
