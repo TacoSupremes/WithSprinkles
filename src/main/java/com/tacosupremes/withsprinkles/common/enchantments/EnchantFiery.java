@@ -1,5 +1,7 @@
 package com.tacosupremes.withsprinkles.common.enchantments;
 
+import com.tacosupremes.withsprinkles.WithSprinkles;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.init.Enchantments;
@@ -48,4 +50,5 @@ public class EnchantFiery extends ModEnchantment
 	{
 		return super.getMinEnchantability(enchantmentLevel) + 50;
 	}
+	
 }

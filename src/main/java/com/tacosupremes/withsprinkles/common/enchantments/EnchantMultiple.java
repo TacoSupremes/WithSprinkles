@@ -1,5 +1,7 @@
 package com.tacosupremes.withsprinkles.common.enchantments;
 
+import com.tacosupremes.withsprinkles.WithSprinkles;
+
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -42,5 +44,5 @@ public class EnchantMultiple extends ModEnchantment
 	{
 		return super.canApply(stack) && stack.hasTagCompound() ? !stack.getTagCompound().hasKey("MULTIPLEMODE") : true;
 	}
-
+	
 }

@@ -18,6 +18,8 @@ public class ModBlocks
 	public static List<Block> blocks = new ArrayList<Block>();
 
 	public static Block autoDropper;
+	
+	public static Block autoDispenser;
 
 	public static Block enderHopper;
 
@@ -32,11 +34,15 @@ public class ModBlocks
 
 		autoDropper = new BlockAutoDropper();
 
+		autoDispenser = new BlockAutoDispenser();
+		
 		enderHopper = new BlockEnderHopper();
 
 		rainDetector = new BlockRainDetector();
 
 		sharedEnderChest = new BlockSharedEnderChest();
+		
+		
 
 	}
 	

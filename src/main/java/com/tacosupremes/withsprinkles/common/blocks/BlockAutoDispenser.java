@@ -1,6 +1,6 @@
 package com.tacosupremes.withsprinkles.common.blocks;
 
-import com.tacosupremes.withsprinkles.common.blocks.tiles.TileAutoDropper;
+import com.tacosupremes.withsprinkles.common.blocks.tiles.TileAutoDispenser;
 import com.tacosupremes.withsprinkles.common.blocks.tiles.TileSimpleInventory;
 
 import net.minecraft.block.BlockDirectional;
@@ -19,31 +19,30 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockAutoDropper extends BlockModContainer
+public class BlockAutoDispenser extends BlockModContainer 
 {
 
-	public static final PropertyDirection FACING = BlockDirectional.FACING;
-
-	public BlockAutoDropper()
+    public static final PropertyDirection FACING = BlockDirectional.FACING;
+	
+	public BlockAutoDispenser()
 	{
-		super(Material.ROCK, "autoDropper");
+		super(Material.ROCK, "autoDispenser");
 		this.setHardness(0.3F);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta)
+	public TileEntity createNewTileEntity(World worldIn, int meta) 
 	{
-
-		return new TileAutoDropper();
+		return new TileAutoDispenser();
 	}
 
 	@Override
-	protected Class<? extends TileEntity> tile()
+	protected Class<? extends TileEntity> tile() 
 	{
-
-		return TileAutoDropper.class;
+		return TileAutoDispenser.class;
 	}
+	
 
 	@Override
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)

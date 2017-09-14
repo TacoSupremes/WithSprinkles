@@ -42,5 +42,4 @@ public class EnchantExchange extends ModEnchantment
 	{
 		return super.getMinEnchantability(enchantmentLevel) + 50;
 	}
-
 }

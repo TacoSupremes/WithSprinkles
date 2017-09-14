@@ -9,7 +9,7 @@ import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 
-public class ModEnchantment extends Enchantment
+public abstract class ModEnchantment extends Enchantment
 {
 
 	protected ModEnchantment(Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot[] slots, String name)
@@ -20,15 +20,12 @@ public class ModEnchantment extends Enchantment
 		this.setRegistryName(LibMisc.MODID, name);
 		ProxyRegistry.register(this);
 		ModEnchantments.enchants.add(this);
-
 	}
 
 	@Override
-	public boolean canApply(ItemStack stack) {
-		
-		return WithSprinkles.config.isEnchantEnabled(this) && super.canApply(stack);
+	public boolean canApply(ItemStack stack) 
+	{	
+		return WithSprinkles.config.isEnchantEnabled(this);
 	}
-	
-	
 
 }

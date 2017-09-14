@@ -1,5 +1,7 @@
 package com.tacosupremes.withsprinkles.common.enchantments;
 
+import com.tacosupremes.withsprinkles.WithSprinkles;
+
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemAxe;
@@ -19,12 +21,9 @@ public class EnchantFelling extends ModEnchantment
 		return stack != null && super.canApply(stack) && stack.getItem() instanceof ItemAxe;
 	}
 
-	
-	
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack)
 	{
-	
 		return canApply(stack);
 	}
 
@@ -39,5 +38,5 @@ public class EnchantFelling extends ModEnchantment
 	{
 		return super.getMinEnchantability(enchantmentLevel) + 50;
 	}
-
+	
 }

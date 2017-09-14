@@ -1,9 +1,11 @@
 itemGroup.withsprinkles=With Sprinkles
+
 tile.autoDropper.name=Auto Dropper
 tile.enderHopper.name=Obsidian Hopper
 tile.rainDetector.name=Rain Detector
 tile.sharedEnderChest.name=Bound Ender Chest
-item.refillGem.name=Sorting Gem
+tile.autoDispenser.name=Auto Dispenser
+
 item.oldPaper.name=Lost Page
 item.enderChest.name=Infused Eye of Ender
 enchantment.withsprinkles:exchange=Exchange
