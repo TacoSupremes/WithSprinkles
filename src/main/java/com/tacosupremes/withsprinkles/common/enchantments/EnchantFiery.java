@@ -20,20 +20,6 @@ public class EnchantFiery extends ModEnchantment
 	}
 
 	@Override
-	public boolean canApply(ItemStack stack)
-	{
-
-		return stack != null && super.canApply(stack) && (stack.getItem() instanceof ItemPickaxe || stack.getItem() instanceof ItemSpade || stack.getItem() instanceof ItemAxe);
-	}
-
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack)
-	{
-
-		return canApply(stack);
-	}
-
-	@Override
 	public boolean canApplyTogether(Enchantment ench)
 	{
 		return super.canApplyTogether(ench) && ench != Enchantments.SILK_TOUCH && ench != Enchantments.FORTUNE;

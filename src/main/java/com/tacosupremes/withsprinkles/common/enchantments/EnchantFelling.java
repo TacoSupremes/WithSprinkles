@@ -18,7 +18,7 @@ public class EnchantFelling extends ModEnchantment
 	@Override
 	public boolean canApply(ItemStack stack)
 	{
-		return stack != null && super.canApply(stack) && stack.getItem() instanceof ItemAxe;
+		return stack != null && super.canApply(stack) && stack.getItem().getToolClasses(stack).contains("axe");
 	}
 
 	@Override

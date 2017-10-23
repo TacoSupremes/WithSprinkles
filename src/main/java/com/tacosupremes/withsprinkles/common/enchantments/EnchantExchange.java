@@ -18,20 +18,6 @@ public class EnchantExchange extends ModEnchantment
 	}
 
 	@Override
-	public boolean canApply(ItemStack stack)
-	{
-
-		return stack != null && super.canApply(stack) && (stack.getItem() instanceof ItemPickaxe || stack.getItem() instanceof ItemSpade || stack.getItem() instanceof ItemAxe);
-	}
-
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack)
-	{
-
-		return canApply(stack);
-	}
-
-	@Override
 	public int getMinEnchantability(int enchantmentLevel)
 	{
 		return 5 + (enchantmentLevel - 1) * 5;

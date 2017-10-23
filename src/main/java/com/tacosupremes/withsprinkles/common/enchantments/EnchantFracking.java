@@ -19,7 +19,7 @@ public class EnchantFracking extends ModEnchantment
 	public boolean canApply(ItemStack stack)
 	{
 
-		return stack != null && super.canApply(stack) && stack.getItem() instanceof ItemPickaxe;
+		return stack != null && super.canApply(stack) && stack.getItem().getToolClasses(stack).contains("pickaxe");
 	}
 	
 	@Override
