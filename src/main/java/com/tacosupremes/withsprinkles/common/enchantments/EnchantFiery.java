@@ -1,5 +1,7 @@
 package com.tacosupremes.withsprinkles.common.enchantments;
 
+import com.tacosupremes.withsprinkles.WithSprinkles;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.init.Enchantments;
@@ -15,20 +17,6 @@ public class EnchantFiery extends ModEnchantment
 	protected EnchantFiery()
 	{
 		super(Rarity.UNCOMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND }, "fiery");
-	}
-
-	@Override
-	public boolean canApply(ItemStack stack)
-	{
-
-		return stack != null && (stack.getItem() instanceof ItemPickaxe || stack.getItem() instanceof ItemSpade || stack.getItem() instanceof ItemAxe);
-	}
-
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack)
-	{
-
-		return canApply(stack);
 	}
 
 	@Override
@@ -48,4 +36,5 @@ public class EnchantFiery extends ModEnchantment
 	{
 		return super.getMinEnchantability(enchantmentLevel) + 50;
 	}
+	
 }

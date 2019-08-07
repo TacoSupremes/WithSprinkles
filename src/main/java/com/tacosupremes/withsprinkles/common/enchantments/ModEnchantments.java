@@ -22,7 +22,6 @@ public class ModEnchantments
 
 	public static void preInit()
 	{
-
 		exchange = new EnchantExchange();
 
 		fiery = new EnchantFiery();
@@ -32,7 +31,6 @@ public class ModEnchantments
 		felling = new EnchantFelling();
 
 		fracking = new EnchantFracking();
-
 	}
 
 }

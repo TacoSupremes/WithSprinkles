@@ -78,7 +78,6 @@ public class WithSprinkles
 		ModRecipes.preInit();
 
 		LibMisc.Ores.preInit();
-
 	}
 
 	@EventHandler
@@ -97,7 +96,6 @@ public class WithSprinkles
 
 	public class WSTab extends CreativeTabs
 	{
-
 		public WSTab()
 		{
 			super(CreativeTabs.getNextID(), LibMisc.MODID);
@@ -126,13 +124,11 @@ public class WithSprinkles
 
 				for (int i = 1; i <= e.getMaxLevel(); i++)
 				{
-
 					ItemStack is2 = is.copy();
 
 					EnchantUtils.enchantItem(is2, e, i);
 
 					l.add(is2);
-
 				}
 			}
 		}
@@ -143,5 +139,4 @@ public class WithSprinkles
 	{
 		return LootTableList.register(new ResourceLocation(LibMisc.MODID, id));
 	}
-
 }
