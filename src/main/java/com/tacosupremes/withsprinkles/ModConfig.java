@@ -59,7 +59,7 @@ public class ModConfig
 		if(obj == null || bMap.get(obj) == null)			
 			return false;
 		
-		System.out.println(obj.getLocalizedName() + "  " + bMap.get(obj));
+		System.out.println(obj.getUnlocalizedName() + "  " + bMap.get(obj));
 		return bMap.get(obj);
 	}
 	
@@ -101,6 +101,8 @@ public class ModConfig
 	        Property isBlockEnabledProp = config.get(Configuration.CATEGORY_GENERAL, "is" + i.getRegistryName().getResourcePath() + "Enabled",  "true", "Whether the " + i.getLocalizedName() + " is enabled");
 
 	        bMap.put(i, isBlockEnabledProp.getBoolean());
+	        
+	        System.out.println(i.getUnlocalizedName() + ": is enabled " + isBlockEnabledProp.getBoolean());
 	        
 	        }
 	        

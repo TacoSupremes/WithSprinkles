@@ -193,16 +193,21 @@ public class WSEventHandler
 
 		if (!event.getItemStack().hasTagCompound())
 			return;
+		
+		
+		if (event.getItemStack().getItem() instanceof ItemArmor || event.getItemStack().getItem() instanceof ItemFishingRod)
+		{
+
+			event.setCanceled(true);
+			event.setCancellationResult(EnumActionResult.FAIL);
+			return;
+		}
+		
+		
+	
 
 		if ((EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()) > 0))
 		{
-
-			if (event.getItemStack().getItem() instanceof ItemArmor || event.getItemStack().getItem() instanceof ItemFishingRod)
-			{
-
-				event.setCanceled(true);
-				event.setCancellationResult(EnumActionResult.FAIL);
-			}
 
 			if (!event.getItemStack().getTagCompound().hasKey("MULTIPLELVL"))
 			{
@@ -211,6 +216,12 @@ public class WSEventHandler
 				event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 1);
 
 				event.getItemStack().getTagCompound().setTag("ench1", event.getItemStack().getTagCompound().getTagList("ench", 10));
+				
+				if(event.getItemStack().hasDisplayName())
+				{
+					event.getItemStack().getTagCompound().setString("name1", event.getItemStack().getDisplayName());
+					event.getItemStack().clearCustomName();
+				}
 
 				event.getItemStack().getTagCompound().removeTag("ench");
 
@@ -232,7 +243,14 @@ public class WSEventHandler
 						case (0) :
 						{
 							event.getItemStack().getTagCompound().setTag("ench1", event.getItemStack().getEnchantmentTagList());
+							if(event.getItemStack().hasDisplayName())
+							{
+								event.getItemStack().getTagCompound().setString("name1", event.getItemStack().getDisplayName());
+								event.getItemStack().clearCustomName();
+							}
 							event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench2", 10));
+							if(!event.getItemStack().getTagCompound().getString("name2").isEmpty())
+								event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name2"));
 							event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 1);
 							break;
 						}
@@ -240,7 +258,16 @@ public class WSEventHandler
 						case (1) :
 						{
 							event.getItemStack().getTagCompound().setTag("ench2", event.getItemStack().getEnchantmentTagList());
+							
+							if(event.getItemStack().hasDisplayName())
+							{
+								event.getItemStack().getTagCompound().setString("name2", event.getItemStack().getDisplayName());
+								event.getItemStack().clearCustomName();
+							}
 							event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench3", 10));
+							if(!event.getItemStack().getTagCompound().getString("name3").isEmpty())
+								event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name3"));
+							
 							event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 2);
 							break;
 						}
@@ -248,7 +275,15 @@ public class WSEventHandler
 						case (2) :
 						{
 							event.getItemStack().getTagCompound().setTag("ench3", event.getItemStack().getEnchantmentTagList());
+							if(event.getItemStack().hasDisplayName())
+							{
+								event.getItemStack().getTagCompound().setString("name3", event.getItemStack().getDisplayName());
+								event.getItemStack().clearCustomName();
+							}
 							event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench1", 10));
+							if(!event.getItemStack().getTagCompound().getString("name1").isEmpty())
+								event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name1"));
+							
 							event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 0);
 							break;
 						}
@@ -268,10 +303,20 @@ public class WSEventHandler
 					}
 
 					NBTTagList ench = event.getItemStack().getTagCompound().getTagList("ench2", 10);
-
+					
+					
 					event.getItemStack().getTagCompound().setTag("ench1", event.getItemStack().getEnchantmentTagList());
+					
+					if(event.getItemStack().hasDisplayName())
+					{
+						event.getItemStack().getTagCompound().setString("name1", event.getItemStack().getDisplayName());
+						event.getItemStack().clearCustomName();
+					}
 
 					event.getItemStack().getTagCompound().setTag("ench", ench);
+					
+					if(!event.getItemStack().getTagCompound().getString("name2").isEmpty())
+						event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name2"));
 
 					event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 1);
 
@@ -303,13 +348,6 @@ public class WSEventHandler
 
 			}
 
-			if (event.getItemStack().getItem() instanceof ItemArmor || event.getItemStack().getItem() instanceof ItemFishingRod)
-			{
-
-				event.setCanceled(true);
-				event.setCancellationResult(EnumActionResult.FAIL);
-			}
-
 			if (event.getItemStack().getTagCompound().getInteger("MULTIPLELVL") > 1)
 			{
 
@@ -321,7 +359,14 @@ public class WSEventHandler
 					case (0) :
 					{
 						event.getItemStack().getTagCompound().setTag("ench1", event.getItemStack().getEnchantmentTagList());
+						if(event.getItemStack().hasDisplayName())
+						{
+							event.getItemStack().getTagCompound().setString("name1", event.getItemStack().getDisplayName());
+							event.getItemStack().clearCustomName();
+						}
 						event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench2", 10));
+						if(!event.getItemStack().getTagCompound().getString("name2").isEmpty())
+							event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name2"));
 						event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 1);
 						break;
 					}
@@ -329,7 +374,16 @@ public class WSEventHandler
 					case (1) :
 					{
 						event.getItemStack().getTagCompound().setTag("ench2", event.getItemStack().getEnchantmentTagList());
+						
+						if(event.getItemStack().hasDisplayName())
+						{
+							event.getItemStack().getTagCompound().setString("name2", event.getItemStack().getDisplayName());
+							event.getItemStack().clearCustomName();
+						}
 						event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench3", 10));
+						if(!event.getItemStack().getTagCompound().getString("name3").isEmpty())
+							event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name3"));
+						
 						event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 2);
 						break;
 					}
@@ -337,7 +391,15 @@ public class WSEventHandler
 					case (2) :
 					{
 						event.getItemStack().getTagCompound().setTag("ench3", event.getItemStack().getEnchantmentTagList());
+						if(event.getItemStack().hasDisplayName())
+						{
+							event.getItemStack().getTagCompound().setString("name3", event.getItemStack().getDisplayName());
+							event.getItemStack().clearCustomName();
+						}
 						event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench1", 10));
+						if(!event.getItemStack().getTagCompound().getString("name1").isEmpty())
+							event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name1"));
+						
 						event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 0);
 						break;
 					}
@@ -351,8 +413,19 @@ public class WSEventHandler
 				NBTTagList ench = event.getItemStack().getTagCompound().getTagList("ench1", 10);
 
 				event.getItemStack().getTagCompound().setTag("ench2", event.getItemStack().getEnchantmentTagList());
+				
+				if(event.getItemStack().hasDisplayName())
+				{
+					event.getItemStack().getTagCompound().setString("name2", event.getItemStack().getDisplayName());
+					event.getItemStack().clearCustomName();
+				}
 
 				event.getItemStack().getTagCompound().setTag("ench", ench);
+				
+				if(!event.getItemStack().getTagCompound().getString("name1").isEmpty())
+					event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name1"));
+				
+				
 
 				event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 0);
 
