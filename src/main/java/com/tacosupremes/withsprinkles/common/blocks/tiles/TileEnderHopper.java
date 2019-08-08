@@ -3,6 +3,7 @@ package com.tacosupremes.withsprinkles.common.blocks.tiles;
 import java.util.UUID;
 
 import com.tacosupremes.withsprinkles.common.blocks.BlockEnderHopper;
+import com.tacosupremes.withsprinkles.common.blocks.ModBlocks;
 import com.tacosupremes.withsprinkles.common.utils.InventoryUtils;
 import com.tacosupremes.withsprinkles.common.utils.OfflinePlayerUtils;
 
@@ -22,7 +23,6 @@ public class TileEnderHopper extends TileSimpleInventory
 	@Override
 	public int getSizeInventory()
 	{
-
 		return 1;
 	}
 
@@ -47,7 +47,7 @@ public class TileEnderHopper extends TileSimpleInventory
 
 		EnumFacing enumf = BlockEnderHopper.getFacing(this.getBlockMetadata());
 
-		if (InventoryUtils.getInventory(getWorld(), getPos().up()) != null && this.getWorld().getBlockState(getPos().up()).getBlock() != Blocks.ENDER_CHEST)
+		if (InventoryUtils.getInventory(getWorld(), getPos().up()) != null && (this.getWorld().getBlockState(getPos().up()).getBlock() != Blocks.ENDER_CHEST && this.getWorld().getBlockState(getPos().up()).getBlock() != ModBlocks.sharedEnderChest))
 		{
 
 			IInventory ii = InventoryUtils.getInventory(getWorld(), getPos().up());
@@ -95,8 +95,39 @@ public class TileEnderHopper extends TileSimpleInventory
 			}
 
 		}
+		else if (this.getWorld().getBlockState(getPos().up()).getBlock() == ModBlocks.sharedEnderChest)
+		{
+			
+			UUID shared = ((TileSharedEnderChest) this.getWorld().getTileEntity(pos.up())).uuid;
 
-		if (InventoryUtils.getInventory(getWorld(), getPos().add(enumf.getDirectionVec())) != null && this.getWorld().getBlockState(getPos().up()).getBlock() == Blocks.ENDER_CHEST)
+			ItemStack is = this.getStackInSlot(0);
+
+			EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(shared);
+
+			InventoryEnderChest ii = player == null ? OfflinePlayerUtils.getOfflineEnderChest(shared) : player.getInventoryEnderChest();
+
+			for (int i = 18; i < 27; i++)
+			{
+
+				if (ii.getStackInSlot(i).isEmpty())
+					continue;
+
+				if (is == null || is.isEmpty())
+				{
+					this.setInventorySlotContents(0, ii.decrStackSize(i, 1));
+					ii.markDirty();
+					this.markDirty();
+
+				}
+
+			}
+			
+		}
+		
+		
+		
+
+		if (InventoryUtils.getInventory(getWorld(), getPos().add(enumf.getDirectionVec())) != null && (this.getWorld().getBlockState(getPos().up()).getBlock() == Blocks.ENDER_CHEST || this.getWorld().getBlockState(getPos().up()).getBlock() == ModBlocks.sharedEnderChest))
 		{
 
 			if (this.getStackInSlot(0).isEmpty())
@@ -118,6 +149,75 @@ public class TileEnderHopper extends TileSimpleInventory
 			EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(uuid);
 
 			InventoryEnderChest ii = player == null ? OfflinePlayerUtils.getOfflineEnderChest(uuid) : player.getInventoryEnderChest();
+
+			int slotChosen = -1;
+
+			for (int i = 18; i < 27; i++)
+			{
+
+				if (!ii.getStackInSlot(i).isEmpty())
+				{
+
+					if (ii.getStackInSlot(i).getItem() == is.getItem() && ii.getStackInSlot(i).getItemDamage() == is.getItemDamage())
+					{
+
+						if (ii.getStackInSlot(i).getCount() == ii.getStackInSlot(i).getMaxStackSize())
+							continue;
+
+						if (is.getCount() + ii.getStackInSlot(i).getCount() <= is.getMaxStackSize())
+						{
+
+							ii.setInventorySlotContents(i, new ItemStack(is.getItem(), is.getCount() + ii.getStackInSlot(i).getCount(), is.getItemDamage()));
+							this.setInventorySlotContents(0, ItemStack.EMPTY);
+							ii.markDirty();
+							this.markDirty();
+							return;
+						}
+						else
+						{
+
+							ii.setInventorySlotContents(i, new ItemStack(is.getItem(), is.getMaxStackSize(), is.getItemDamage()));
+							this.setInventorySlotContents(0, new ItemStack(is.getItem(), is.getCount() + ii.getStackInSlot(i).getCount() - is.getMaxStackSize(), is.getItemDamage()));
+							ii.markDirty();
+							this.markDirty();
+							return;
+
+						}
+
+					}
+
+				}
+				else
+				{
+					slotChosen = i;
+					break;
+				}
+
+			}
+
+			if (slotChosen != -1)
+			{
+				ii.setInventorySlotContents(slotChosen, is);
+				this.setInventorySlotContents(0, ItemStack.EMPTY);
+				ii.markDirty();
+				this.markDirty();
+			}
+
+		}
+		else if (this.getWorld().getBlockState(getPos().add(enumf.getDirectionVec())).getBlock() == ModBlocks.sharedEnderChest)
+		{
+
+			if (this.getStackInSlot(0).isEmpty())
+				return;
+
+			ItemStack is = this.getStackInSlot(0);
+			
+			UUID shared = ((TileSharedEnderChest) this.getWorld().getTileEntity(getPos().add(enumf.getDirectionVec()))).uuid;
+
+
+			EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(shared);
+
+			InventoryEnderChest ii = player == null ? OfflinePlayerUtils.getOfflineEnderChest(shared) : player.getInventoryEnderChest();
 
 			int slotChosen = -1;
 

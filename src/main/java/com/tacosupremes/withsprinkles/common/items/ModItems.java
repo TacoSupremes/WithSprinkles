@@ -36,7 +36,8 @@ public class ModItems
 
 	public static Item oldPaper;
 
-
+	public static Item filter;
+	
 
 	public static void preInit()
 	{
@@ -46,6 +47,9 @@ public class ModItems
 		portableEnderChest = new ItemPortableEnderChest();
 
 		oldPaper = new ItemOldPaper();
+		
+		filter = new ItemFilter();
+		
 	}
 	
 	public static void register()
