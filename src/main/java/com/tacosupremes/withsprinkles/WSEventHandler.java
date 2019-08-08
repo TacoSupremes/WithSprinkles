@@ -44,7 +44,6 @@ public class WSEventHandler
 	@SubscribeEvent
 	public void onPlayerBreaking(BreakEvent event)
 	{
-
 		if (event.getPlayer().getHeldItem(EnumHand.MAIN_HAND) != null)
 		{
 
@@ -56,9 +55,7 @@ public class WSEventHandler
 
 			if (!event.getPlayer().isSneaking())
 				handleExchange(event);
-
 		}
-
 	}
 
 	private void handleFelling(BreakEvent event)
@@ -202,8 +199,6 @@ public class WSEventHandler
 			event.setCancellationResult(EnumActionResult.FAIL);
 			return;
 		}
-		
-		
 	
 
 		if ((EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()) > 0))
@@ -214,8 +209,16 @@ public class WSEventHandler
 
 				event.getItemStack().getTagCompound().setInteger("MULTIPLELVL", EnchantmentHelper.getEnchantmentLevel(ModEnchantments.multiple, event.getItemStack()));
 				event.getItemStack().getTagCompound().setInteger("MULTIPLEMODE", 1);
+				
+				
 
 				event.getItemStack().getTagCompound().setTag("ench1", event.getItemStack().getTagCompound().getTagList("ench", 10));
+				
+				if(event.getItemStack().getRepairCost() > 0)
+				{
+					event.getItemStack().getTagCompound().setInteger("rc1", event.getItemStack().getRepairCost());
+					event.getItemStack().setRepairCost(0);
+				}
 				
 				if(event.getItemStack().hasDisplayName())
 				{
@@ -248,6 +251,14 @@ public class WSEventHandler
 								event.getItemStack().getTagCompound().setString("name1", event.getItemStack().getDisplayName());
 								event.getItemStack().clearCustomName();
 							}
+							
+							if(event.getItemStack().getRepairCost() > 0)
+							{
+								event.getItemStack().getTagCompound().setInteger("rc1", event.getItemStack().getRepairCost());
+							}
+							
+							event.getItemStack().setRepairCost(event.getItemStack().getTagCompound().getInteger("rc2"));
+							
 							event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench2", 10));
 							if(!event.getItemStack().getTagCompound().getString("name2").isEmpty())
 								event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name2"));
@@ -264,6 +275,14 @@ public class WSEventHandler
 								event.getItemStack().getTagCompound().setString("name2", event.getItemStack().getDisplayName());
 								event.getItemStack().clearCustomName();
 							}
+							
+							if(event.getItemStack().getRepairCost() > 0)
+							{
+								event.getItemStack().getTagCompound().setInteger("rc2", event.getItemStack().getRepairCost());
+							}
+							
+							event.getItemStack().setRepairCost(event.getItemStack().getTagCompound().getInteger("rc3"));
+							
 							event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench3", 10));
 							if(!event.getItemStack().getTagCompound().getString("name3").isEmpty())
 								event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name3"));
@@ -280,6 +299,13 @@ public class WSEventHandler
 								event.getItemStack().getTagCompound().setString("name3", event.getItemStack().getDisplayName());
 								event.getItemStack().clearCustomName();
 							}
+							
+							if(event.getItemStack().getRepairCost() > 0)
+							{
+								event.getItemStack().getTagCompound().setInteger("rc3", event.getItemStack().getRepairCost());
+							}
+							
+							event.getItemStack().setRepairCost(event.getItemStack().getTagCompound().getInteger("rc1"));
 							event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench1", 10));
 							if(!event.getItemStack().getTagCompound().getString("name1").isEmpty())
 								event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name1"));
@@ -312,8 +338,19 @@ public class WSEventHandler
 						event.getItemStack().getTagCompound().setString("name1", event.getItemStack().getDisplayName());
 						event.getItemStack().clearCustomName();
 					}
+					
+					if(event.getItemStack().getRepairCost() > 0)
+					{
+						event.getItemStack().getTagCompound().setInteger("rc1", event.getItemStack().getRepairCost());
+						event.getItemStack().setRepairCost(0);
+					}
 
+				
+					event.getItemStack().setRepairCost(event.getItemStack().getTagCompound().getInteger("rc2"));
+					
 					event.getItemStack().getTagCompound().setTag("ench", ench);
+					
+					
 					
 					if(!event.getItemStack().getTagCompound().getString("name2").isEmpty())
 						event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name2"));
@@ -364,6 +401,14 @@ public class WSEventHandler
 							event.getItemStack().getTagCompound().setString("name1", event.getItemStack().getDisplayName());
 							event.getItemStack().clearCustomName();
 						}
+						
+						if(event.getItemStack().getRepairCost() > 0)
+						{
+							event.getItemStack().getTagCompound().setInteger("rc1", event.getItemStack().getRepairCost());
+						}
+						
+						event.getItemStack().setRepairCost(event.getItemStack().getTagCompound().getInteger("rc2"));
+						
 						event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench2", 10));
 						if(!event.getItemStack().getTagCompound().getString("name2").isEmpty())
 							event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name2"));
@@ -380,6 +425,14 @@ public class WSEventHandler
 							event.getItemStack().getTagCompound().setString("name2", event.getItemStack().getDisplayName());
 							event.getItemStack().clearCustomName();
 						}
+						
+						if(event.getItemStack().getRepairCost() > 0)
+						{
+							event.getItemStack().getTagCompound().setInteger("rc2", event.getItemStack().getRepairCost());
+						}
+						
+						event.getItemStack().setRepairCost(event.getItemStack().getTagCompound().getInteger("rc3"));
+						
 						event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench3", 10));
 						if(!event.getItemStack().getTagCompound().getString("name3").isEmpty())
 							event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name3"));
@@ -396,6 +449,13 @@ public class WSEventHandler
 							event.getItemStack().getTagCompound().setString("name3", event.getItemStack().getDisplayName());
 							event.getItemStack().clearCustomName();
 						}
+						
+						if(event.getItemStack().getRepairCost() > 0)
+						{
+							event.getItemStack().getTagCompound().setInteger("rc3", event.getItemStack().getRepairCost());
+						}
+						
+						event.getItemStack().setRepairCost(event.getItemStack().getTagCompound().getInteger("rc1"));
 						event.getItemStack().getTagCompound().setTag("ench", event.getItemStack().getTagCompound().getTagList("ench1", 10));
 						if(!event.getItemStack().getTagCompound().getString("name1").isEmpty())
 							event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name1"));
@@ -422,6 +482,15 @@ public class WSEventHandler
 
 				event.getItemStack().getTagCompound().setTag("ench", ench);
 				
+				if(event.getItemStack().getRepairCost() > 0)
+				{
+					event.getItemStack().getTagCompound().setInteger("rc2", event.getItemStack().getRepairCost());
+				}
+
+			
+				event.getItemStack().setRepairCost(event.getItemStack().getTagCompound().getInteger("rc1"));
+				
+				
 				if(!event.getItemStack().getTagCompound().getString("name1").isEmpty())
 					event.getItemStack().setStackDisplayName(event.getItemStack().getTagCompound().getString("name1"));
 				
@@ -434,6 +503,7 @@ public class WSEventHandler
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
 	private void handleMultiple(ItemTooltipEvent event)
 	{
 
