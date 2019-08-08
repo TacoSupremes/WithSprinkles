@@ -19,6 +19,11 @@ public class ModRecipes
 		
 		if(WithSprinkles.config.isItemEnabled(ModItems.oldPaper))
 			r = new EnchantedBookRecipe();
+		
+		FilterRecipe f;
+		
+		if(WithSprinkles.config.isBlockEnabled(ModBlocks.enderHopper))
+		 f = new FilterRecipe();
 	}
 
 }

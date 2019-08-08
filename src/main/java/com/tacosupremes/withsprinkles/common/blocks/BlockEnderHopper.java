@@ -109,26 +109,6 @@ public class BlockEnderHopper extends BlockModContainer
 		return true;
 	}
 
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
-	{
-		if (worldIn.isRemote)
-		{
-			return true;
-		}
-		else
-		{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
-
-			if (tileentity instanceof TileEntityHopper)
-			{
-				playerIn.displayGUIChest((TileEntityHopper) tileentity);
-				playerIn.addStat(StatList.HOPPER_INSPECTED);
-			}
-
-			return true;
-		}
-	}
-
 	/**
 	 * Called when a neighboring block changes.
 	 */
@@ -184,24 +164,29 @@ public class BlockEnderHopper extends BlockModContainer
 	 * Called when the block is right clicked by a player.
 	 */
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(World w, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		if (worldIn.isRemote)
+		if(!player.getHeldItem(hand).isEmpty())
 		{
-			return true;
-		}
-		else
-		{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
-
-			if (tileentity instanceof TileEntityHopper)
+			if(((TileEnderHopper) w.getTileEntity(pos)).getStackInSlot(1) == ItemStack.EMPTY)
 			{
-				playerIn.displayGUIChest((TileEntityHopper) tileentity);
-				playerIn.addStat(StatList.HOPPER_INSPECTED);
-			}
-
-			return true;
+				((TileEnderHopper) w.getTileEntity(pos)).setInventorySlotContents(1, player.getHeldItem(hand).splitStack(1));		
+				return true;
+			}	
 		}
+		else if(player.isSneaking())
+		{
+			if(((TileEnderHopper) w.getTileEntity(pos)).getStackInSlot(1) != ItemStack.EMPTY)
+			{		
+				player.setHeldItem(hand, ((TileEnderHopper) w.getTileEntity(pos)).getStackInSlot(1).splitStack(1));
+				((TileEnderHopper) w.getTileEntity(pos)).setInventorySlotContents(1, ItemStack.EMPTY);
+				((TileEnderHopper) w.getTileEntity(pos)).cmpA = null;
+				((TileEnderHopper) w.getTileEntity(pos)).markDirty();
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	/**
